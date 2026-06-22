@@ -1,0 +1,218 @@
+# criteria.yaml — TEMPLATE
+#
+# How this file works:
+#   - Every threshold is a 3-field block:
+#       recommended:  <value>      # written by generators/recommend-criteria.md — READ ONLY
+#       rationale:    "<text>"     # written by recommend-criteria.md — READ ONLY
+#       your_value:   <value>      # YOU edit this. The diagnosis uses your_value, never recommended.
+#   - In a fresh template these are placeholders (null / "TBD"). Run Phase 3 to populate them.
+#   - After Phase 3, review and change only your_value where you disagree.
+#
+# Currency: all money values are in the account's reporting currency (see account-context.md).
+# Windows: "_30d" suffix = normalised to a trailing-30-day rate (the diagnosis divides L6M cost by 6).
+
+meta:
+  account_slug: "TBD"               # must match clients/<slug>/ and data-inputs/<slug>/
+  reporting_currency: "USD"
+  generated_by: null                # filled by recommend-criteria.md
+  generated_on: null
+  notes: ""
+
+# ---------------------------------------------------------------------------
+# A. Spend & signal floors — when is there enough data to judge a keyword?
+# ---------------------------------------------------------------------------
+A_spend_and_signal_floors:
+  spend_min_30d:
+    recommended: null
+    rationale: "TBD — set from the per-keyword 30d cost distribution in benchmarks.md. Keywords below this go to Monitor (low data) unless they clear a signal floor below."
+    your_value: null
+  fft_min_for_signal:
+    recommended: null
+    rationale: "TBD — minimum count of the BIDDING SIGNAL conversion (e.g. First Free Trial) in the window for a keyword to be judged on CPA rather than parked in Monitor."
+    your_value: null
+  signup_min_for_top_of_funnel:
+    recommended: null
+    rationale: "TBD — minimum count of the top-of-funnel proxy conversion (e.g. Signed Up) for a low-spend keyword to qualify for Monitor (has signal) rather than Monitor (low data)."
+    your_value: null
+
+# ---------------------------------------------------------------------------
+# B. CPA targets — blended + per-campaign-type
+# ---------------------------------------------------------------------------
+B_cpa_targets:
+  # The signal CPA the diagnosis judges most keywords against (thin-volume accounts
+  # judge against the bidding signal, e.g. First Free Trial CPA).
+  target_fft_cpa_blended:
+    recommended: null
+    rationale: "TBD — blended target CPA for the bidding-signal conversion across the whole account."
+    your_value: null
+  target_kpi_cpa_blended:
+    recommended: null
+    rationale: "TBD — blended target CPA for the business-KPI conversion (e.g. First Subs). Used where KPI volume is sufficient and in the campaign-health snapshot."
+    your_value: null
+  per_campaign_type:
+    brand:
+      target_fft_cpa:
+        recommended: null
+        rationale: "TBD — brand campaigns usually run a much tighter CPA than non-brand."
+        your_value: null
+      target_kpi_cpa:
+        recommended: null
+        rationale: "TBD"
+        your_value: null
+    non_brand:
+      target_fft_cpa:
+        recommended: null
+        rationale: "TBD — the default tier; usually equals target_fft_cpa_blended."
+        your_value: null
+      target_kpi_cpa:
+        recommended: null
+        rationale: "TBD"
+        your_value: null
+    competitor:
+      target_fft_cpa:
+        recommended: null
+        rationale: "TBD — competitor conquesting usually tolerates a higher CPA than non-brand."
+        your_value: null
+      target_kpi_cpa:
+        recommended: null
+        rationale: "TBD"
+        your_value: null
+
+  # B.1 — how a campaign is classified into a type. Substring match (case-insensitive)
+  # on the campaign name. Order = priority; first match wins; anything unmatched = non_brand.
+  campaign_type_rules:
+    - match_campaign_contains: ["brand", "branded"]
+      type: brand
+    - match_campaign_contains: ["competitor", "conquest", "vs", "alternative"]
+      type: competitor
+    # implicit fallthrough → non_brand
+
+  # B.2 — optional user-defined CPA tiers beyond brand/non_brand/competitor (e.g. by geo or audience).
+  # Each tier: a name, a match rule (campaign-name substring or geo code), and its own targets.
+  # Leave empty unless you need finer-grained targets than the 3 standard types.
+  custom_tiers: []
+    # - name: "core_builders"
+    #   match_campaign_contains: ["core", "app builder"]
+    #   target_fft_cpa: { recommended: null, rationale: "TBD", your_value: null }
+    #   target_kpi_cpa: { recommended: null, rationale: "TBD", your_value: null }
+
+# ---------------------------------------------------------------------------
+# C. IS Lost (Rank) gates — when does losing impression share become a Fix?
+# ---------------------------------------------------------------------------
+C_is_lost_rank_gates:
+  is_lost_rank_fix_flag:
+    recommended: null
+    rationale: "TBD — IS Lost (Rank) at or above this on a converting keyword flags Fix-Bid (you're leaving volume on the table you could afford). Brand campaigns usually get a tighter gate."
+    your_value: null
+  is_lost_rank_high_spend_alert:
+    recommended: null
+    rationale: "TBD — IS Lost (Rank) at or above this WHILE a keyword spends heavily without converting is a different problem (bidding into a losing auction) — goes to the High-Spend Alerts sheet."
+    your_value: null
+  per_campaign_type_overrides:
+    brand:
+      is_lost_rank_fix_flag: { recommended: null, rationale: "TBD — usually tighter, e.g. 20%, for a defend-share posture.", your_value: null }
+    competitor: {}
+    non_brand: {}
+
+# ---------------------------------------------------------------------------
+# D. Quality Score gates
+# ---------------------------------------------------------------------------
+D_quality_score_gates:
+  qs_severe:
+    recommended: null
+    rationale: "TBD — QS at or below this is a severe drag; Fix-QS becomes a top priority for the keyword."
+    your_value: null
+  qs_watchlist:
+    recommended: null
+    rationale: "TBD — QS in [qs_severe+1 .. this] is a watchlist band — note it, don't make it the headline action."
+    your_value: null
+  qs_clear:
+    recommended: null
+    rationale: "TBD — QS at or above this is fine; QS is not a contributing cause for the keyword."
+    your_value: null
+
+# ---------------------------------------------------------------------------
+# E. Cannibalization decision logic (PMax STR vs Search keyword)
+# ---------------------------------------------------------------------------
+E_cannibalization:
+  cannibalization_winner_signal:
+    recommended: "fft_cpa"
+    rationale: "Which metric decides the winner when the same query converts on both PMax and Search: 'fft_cpa' (lower bidding-signal CPA wins) or 'kpi_cpa'."
+    your_value: "fft_cpa"
+  winning_margin:
+    recommended: null
+    rationale: "TBD — the winner's CPA must be at least this fraction better (e.g. 0.20 = 20% lower) before we call it; closer than that = 'no clear winner, monitor'."
+    your_value: null
+  min_fft_either_side:
+    recommended: null
+    rationale: "TBD — both the PMax side AND the Search side need at least this many bidding-signal conversions before a cannibalization verdict is trustworthy."
+    your_value: null
+  both_losing_threshold:
+    recommended: null
+    rationale: "TBD — if BOTH sides convert above (target CPA × this), the recommendation is 'kill the query on both', not 'pick a winner'."
+    your_value: null
+  min_combined_spend:
+    recommended: null
+    rationale: "TBD — combined PMax+Search spend on the query must clear this for it to be worth a cannibalization row at all."
+    your_value: null
+
+# ---------------------------------------------------------------------------
+# F. New Keyword Suggestion gates  ⭐ (replaces the old PMax→Search graduation)
+# ---------------------------------------------------------------------------
+# Three tiers, strictest first. A query that already exists as a Search exact/phrase
+# keyword is never suggested. See generators/run-diagnose.md for the full tier logic.
+F_new_keyword_suggestions:
+  new_kw_strict_min_fft:
+    recommended: 2
+    rationale: "Strict tier: a query needs >=2 bidding-signal conversions to be worth promoting with high confidence."
+    your_value: 2
+  new_kw_strict_cpa_ratio:
+    recommended: 1.10
+    rationale: "Strict tier: the query's bidding-signal CPA must be <= target CPA x 1.10 (converting at/near target)."
+    your_value: 1.10
+  new_kw_moderate_cpa_ratio:
+    recommended: 1.50
+    rationale: "Moderate tier: same as strict but tolerates CPA up to target x 1.50 — worth testing, not a slam dunk."
+    your_value: 1.50
+  new_kw_min_query_length_words:
+    recommended: 3
+    rationale: "Exclude very short queries — too broad to add as a clean exact/phrase keyword, and usually already covered."
+    your_value: 3
+  new_kw_min_cost:
+    recommended: 20
+    rationale: "Exclude queries that have spent less than this — not enough money behind the signal to trust it."
+    your_value: 20
+  new_kw_aggressive_min_clicks:
+    recommended: 50
+    rationale: "Aggressive tier: a query with no conversions but >= this many clicks AND that's a close variant of an existing Search keyword may still be worth a controlled test."
+    your_value: 50
+  new_kw_aggressive_min_fft:
+    recommended: 1
+    rationale: "Aggressive tier: still wants at least this many bidding-signal conversions (set to 0 to allow pure-click candidates; 1 keeps it conservative)."
+    your_value: 1
+
+# ---------------------------------------------------------------------------
+# G. Bucketing tie-breakers
+# ---------------------------------------------------------------------------
+G_bucketing_tiebreakers:
+  pause_threshold_spend_no_fft:
+    recommended: null
+    rationale: "TBD — a keyword that has spent at least this much with ZERO bidding-signal conversions goes to Pause (not Monitor)."
+    your_value: null
+  dormant_definition:
+    recommended: null
+    rationale: "TBD — a keyword whose 30d cost is below this AND with no conversions is treated as dormant: it lands in Monitor (low data) and is excluded from High-Spend Alerts and most Fix logic."
+    your_value: null
+
+# ---------------------------------------------------------------------------
+# H. Negative keyword generation (from the search-terms reports)
+# ---------------------------------------------------------------------------
+H_negative_generation:
+  negative_min_spend_account_level:
+    recommended: null
+    rationale: "TBD — a search term must have wasted at least this much (account-wide, no/poor conversions) to be proposed as an account-level negative."
+    your_value: null
+  negative_max_fft_for_neg_candidate:
+    recommended: null
+    rationale: "TBD — a search term with more than this many bidding-signal conversions is never a negative candidate, no matter how much it spent."
+    your_value: null
