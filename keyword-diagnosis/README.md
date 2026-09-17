@@ -1,5 +1,7 @@
 # paid-search-keyword-diagnose
 
+> This is the original keyword-diagnosis workflow, now the `keyword-diagnosis/` module of [Paid-Search-Ops](../README.md). All paths below are relative to this folder. The search-term module lives in [`../search-term-diagnosis/`](../search-term-diagnosis/README.md).
+
 ## What this project does
 
 This tool takes a Google Ads account's exported reports and produces a **per-keyword diagnosis**: every enabled Search keyword is placed into one of 8 buckets (Keep / Fix→Keep / Fix→Decide / Move to PMax / Pause / Monitor×3), each Fix keyword gets a **concrete, account-specific Fix instruction** (e.g. "Raise tCPA to ~$140 — converts at $128, IS Lost (Rank) 74%", not "consider lifting bids"), and the whole account gets a **campaign health snapshot** plus PMax intent clustering, PMax↔Search cannibalization, and new-keyword suggestions. It is deliberately **narrow**: it diagnoses keywords and surfaces campaign health. It is **not** an account-level strategy SOP, an audience-segmentation framework, an ad-copy generator, or a campaign-structure planner.
