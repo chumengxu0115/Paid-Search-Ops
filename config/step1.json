@@ -1,0 +1,40 @@
+{
+  "_comment": "Step 1 configuration. Values under 'thresholds' with null are operator-owned and intentionally unset; null blocks only dependent decision checks, never descriptive metrics.",
+  "currency": "USD",
+  "money_tolerance": "0.005",
+  "coverage_tolerance": "0.01",
+  "event_mapping": {
+    "Regs": {"canonical": "signup", "status": "operator_mapping_for_exercise"},
+    "Subs": {"canonical": "paid_sub", "status": "operator_mapping_for_exercise_event_definitions_unverified"},
+    "FFT": {"canonical": "fft", "status": "unavailable"}
+  },
+  "search_terms_schema": {
+    "term": "Search term",
+    "match_type": "Match type",
+    "clicks": "Clicks",
+    "cost": "Cost",
+    "signup": "Regs",
+    "paid_sub": "Subs",
+    "cost_per_sub_supplied": "Cost/sub"
+  },
+  "channels_schema": {
+    "channel": "channel",
+    "q2_spend": "q2_spend",
+    "q2_subs": "q2_subs",
+    "q2_cost_per_sub_supplied": "q2_cost_per_sub_reported",
+    "q1_cost_per_sub_supplied": "q1_cost_per_sub",
+    "allowable_cost_per_sub": "allowable_cost_per_sub"
+  },
+  "aggregate_channel_labels": ["Paid total"],
+  "expected_totals": {
+    "sample_cost": "337470",
+    "sample_subs": "1843",
+    "channel_spend_excluding_aggregate": "1623000",
+    "channel_subs_excluding_aggregate": "11982"
+  },
+  "thresholds": {
+    "min_cost": null,
+    "min_subs": null,
+    "min_signups": null
+  }
+}

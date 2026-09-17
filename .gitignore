@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+.env
+.env.*
+review/audit-request.txt
+
+# Local drafting history and launch helpers; not public project documentation
+review/
+reference/
+audit_with_claude.py
+build_with_claude.py
+context/BUILD_STEP_1.md
+operator/
+*operator_feedback*.json

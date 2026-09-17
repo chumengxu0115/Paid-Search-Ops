@@ -1,0 +1,171 @@
+{
+  "_comment": "Model-authored review v2 (Claude Code). Independent of diagnosis v1: written from output/step1, config/account_context.json and methodology priors only; no operator interview answers. Numbers are never typed here; placeholders are filled and validated by src/build_review_v2.py.",
+  "author": "claude-code-model-interpretation",
+  "version": "v2",
+  "aliases": {
+    "core": "st_dd3412fed286",
+    "free": "st_7397eeb3716a",
+    "howto": "st_2fe617db21cf",
+    "nocode": "st_98934dc150fb",
+    "vibe": "st_a3029027e1c6",
+    "enterprise": "st_6de9a251f911",
+    "internal": "st_a9cf56135541",
+    "github": "st_429e31f7f0f8",
+    "scaffold": "st_66770c31f114"
+  },
+  "groups": {
+    "below_allowable": ["core", "nocode", "vibe", "internal", "scaffold"],
+    "above_allowable": ["free", "howto", "github", "enterprise"],
+    "head_plus_modifier": ["core", "free", "github"],
+    "use_case_or_competitor": ["nocode", "internal", "scaffold"],
+    "cheapest_three_cpc": ["github", "free", "howto"],
+    "top_three_spend": ["core", "free", "howto"],
+    "phrase_rows": ["core", "free"]
+  },
+  "correlations": {
+    "sub_rate_vs_cost_per_sub": {"x": "paid_sub_per_signup", "y": "cost_per_sub_recomputed"},
+    "cost_per_signup_vs_cost_per_sub": {"x": "cost_per_signup", "y": "cost_per_sub_recomputed"},
+    "signup_rate_vs_cost_per_sub": {"x": "signup_per_click", "y": "cost_per_sub_recomputed"},
+    "cpc_vs_sub_rate": {"x": "cpc", "y": "paid_sub_per_signup"},
+    "cpc_vs_sub_rate_excl_enterprise": {"x": "cpc", "y": "paid_sub_per_signup", "exclude": ["enterprise"]}
+  },
+  "patterns": [
+    {
+      "id": "P1",
+      "title": "Signup-to-sub rate, not cost per signup, separates the sample",
+      "observed": "Cost per signup sits in a narrow band for eight of nine terms ({t_free_cost_per_signup} to {t_vibe_cost_per_signup}; enterprise is the outlier at {t_enterprise_cost_per_signup}), while cost/sub spans {t_scaffold_cost_per_sub} to {t_enterprise_cost_per_sub}. Rank correlation of sub/signup with cost/sub is {rho_sub_rate_vs_cost_per_sub} (n={n_sub_rate_vs_cost_per_sub}); of cost/signup with cost/sub only {rho_cost_per_signup_vs_cost_per_sub}. Sub/signup ranges from {min_observed_sub_rate_pct} (free, github) to {max_observed_sub_rate_pct} (scaffold).",
+      "supporting": ["free", "github", "howto", "scaffold", "internal", "nocode"],
+      "counterexamples": ["enterprise"],
+      "explanations": [
+        "Intent mismatch: some queries bring people who register but were never going to pay (tutorial seekers, free seekers, developers looking for a repo).",
+        "Post-click mismatch: the landing page or onboarding does not serve those intents even though they could pay.",
+        "Lag: same-window subs undercount terms whose users take longer to convert; the ratio would rise with cohort-aligned data.",
+        "Signup definition: 'Regs' may include very low-commitment registrations for some traffic, inflating signups without intent."
+      ],
+      "distinguishing_evidence": "Cohort-aligned subs (60/90-day) separate lag from the rest; an FFT/activation event per term separates dead registrations from engaged ones; landing-page and query-mix review separates intent from post-click mismatch."
+    },
+    {
+      "id": "P2",
+      "title": "The sample splits into two performance tiers around the allowable, and the sample as a whole is above it",
+      "observed": "Five terms below $181 account for {g_below_allowable_cost_share_pct} of sample cost and {g_below_allowable_sub_share_pct} of sample subs at {g_below_allowable_cost_per_sub}/sub (sub/signup {g_below_allowable_sub_rate_pct}). Four terms above $181 account for {g_above_allowable_cost_share_pct} of cost and {g_above_allowable_sub_share_pct} of subs at {g_above_allowable_cost_per_sub}/sub (sub/signup {g_above_allowable_sub_rate_pct}). The nine rows together run at {sample_cost_per_sub}/sub, above the allowable and above the scope benchmark {benchmark}; by subtraction, the unseen remainder of the scope runs at {remainder_cost_per_sub}.",
+      "supporting": ["core", "nocode", "vibe", "internal", "scaffold", "free", "howto", "github", "enterprise"],
+      "counterexamples": ["vibe", "howto"],
+      "explanations": [
+        "Descriptive only: the split uses the same metric it groups by, so it is a summary, not an independent finding. Vibe coding ({t_vibe_ratio_to_allowable}) and how-to ({t_howto_ratio_to_allowable}) sit close to the boundary and could move across it with lag or small count changes.",
+        "The nine rows may be a curated 'hardest' subset of the scope rather than a representative slice: the remainder ({remainder_cost_per_sub}) is cheaper per sub than each of the three largest rows, including the core term ({t_core_cost_per_sub}).",
+        "The scope benchmark being below the allowable while the sample is above it means efficiency in the scope is carried by terms not shown."
+      ],
+      "distinguishing_evidence": "The full search-term report for the scope (the remaining ~35% of spend)."
+    },
+    {
+      "id": "P3",
+      "title": "Cheaper clicks, worse conversion",
+      "observed": "The three cheapest CPCs in the sample are github ({t_github_cpc}), free ({t_free_cpc}) and how-to ({t_howto_cpc}); together they are {g_cheapest_three_cpc_cost_share_pct} of sample cost, {g_cheapest_three_cpc_sub_share_pct} of subs, and convert signups at {g_cheapest_three_cpc_sub_rate_pct}. Rank correlation of CPC with sub/signup is {rho_cpc_vs_sub_rate} across all nine and {rho_cpc_vs_sub_rate_excl_enterprise} when enterprise is excluded. The four highest CPCs among non-enterprise terms (scaffold {t_scaffold_cpc}, internal {t_internal_cpc}, no-code {t_nocode_cpc}, vibe {t_vibe_cpc}) are also the four highest sub/signup rates in the sample ({t_scaffold_paid_sub_per_signup_pct}, {t_internal_paid_sub_per_signup_pct}, {t_nocode_paid_sub_per_signup_pct}, {t_vibe_paid_sub_per_signup_pct}).",
+      "supporting": ["github", "free", "howto", "scaffold", "internal", "nocode"],
+      "counterexamples": ["enterprise"],
+      "explanations": [
+        "Auction pricing reflects other advertisers' assessment of commercial intent: queries competitors bid up are the ones that convert.",
+        "Modifier words (free, github, how to) mark a non-buying stage regardless of price.",
+        "Braid's landing pages serve buying intents well and non-buying intents poorly; cheap traffic is not inherently worse.",
+        "Enterprise breaks the pattern because its CPC is set by a different competitor set (enterprise platforms) while its self-serve conversion is low for reasons unrelated to price."
+      ],
+      "distinguishing_evidence": "Auction insights and competitor overlap per query; landing-page review; whether enterprise visitors appear in any sales pipeline."
+    },
+    {
+      "id": "P4",
+      "title": "Specific use-case and competitor terms convert best; head-plus-modifier terms do not",
+      "observed": "The three use-case/competitor terms (no-code, internal tools, scaffold alternative) are {g_use_case_or_competitor_cost_share_pct} of sample cost but {g_use_case_or_competitor_sub_share_pct} of subs, at {g_use_case_or_competitor_cost_per_sub}/sub with sub/signup {g_use_case_or_competitor_sub_rate_pct}. The three terms built on the head phrase 'ai app builder' (core, free, github) are {g_head_plus_modifier_cost_share_pct} of cost and {g_head_plus_modifier_sub_share_pct} of subs at {g_head_plus_modifier_cost_per_sub}/sub; within that group the modifier decides everything (core {t_core_cost_per_sub}, free {t_free_cost_per_sub}, github {t_github_cost_per_sub}).",
+      "supporting": ["nocode", "internal", "scaffold", "free", "github"],
+      "counterexamples": ["vibe", "enterprise"],
+      "explanations": [
+        "Specificity of buying intent: someone naming a use case or a competitor has already decided to buy something.",
+        "Linguistic form is not the driver: 'vibe coding app builder' is head-plus-modifier and converts at {t_vibe_paid_sub_per_signup_pct}; 'enterprise app development platform' is use-case-shaped and converts at {t_enterprise_paid_sub_per_signup_pct}.",
+        "Volume effect: the use-case terms are small ({g_use_case_or_competitor_cost}); small terms can look efficient because they have not yet been scaled into worse inventory."
+      ],
+      "distinguishing_evidence": "Impression share for the use-case terms (are they small because of low demand or low share?), and the query mix under each broad-match row."
+    },
+    {
+      "id": "P5",
+      "title": "Break-even arithmetic: which above-allowable terms are within reach of observed conversion rates",
+      "observed": "At current cost, meeting $181 would require: how-to {t_howto_subs_needed} subs ({t_howto_sub_rate_needed_pct} of its signups, {t_howto_subs_multiple_needed} its observed subs); free {t_free_subs_needed} subs ({t_free_sub_rate_needed_pct}, {t_free_subs_multiple_needed}); github {t_github_subs_needed} subs ({t_github_sub_rate_needed_pct}, {t_github_subs_multiple_needed}); enterprise {t_enterprise_subs_needed} subs ({t_enterprise_sub_rate_needed_pct}, {t_enterprise_subs_multiple_needed}). The best sub/signup observed anywhere in the sample is {max_observed_sub_rate_pct}.",
+      "supporting": ["howto", "free", "github", "enterprise"],
+      "counterexamples": [],
+      "explanations": [
+        "How-to needs a sub rate ({t_howto_sub_rate_needed_pct}) that four other terms already exceed; a lag or landing-page effect of that size is plausible and is the cheapest thing to test.",
+        "Free and github need rates that other terms reach, but three to five times their own; lag alone would have to be very large to close that.",
+        "Enterprise needs a sub rate above anything observed in the sample. Under Subs as the KPI it cannot reach $181 through conversion at its current cost per click; only a lower CPC or a different KPI (sales-assisted leads) changes that. This is arithmetic, not a recommendation."
+      ],
+      "distinguishing_evidence": "Cohort-aligned conversion by term; whether an enterprise sales path exists and is tracked."
+    },
+    {
+      "id": "P6",
+      "title": "Signup rate is a weaker signal than sub rate, and small counts limit two terms",
+      "observed": "Signup/click ranks against cost/sub at {rho_signup_rate_vs_cost_per_sub}, weaker than sub/signup ({rho_sub_rate_vs_cost_per_sub}). 'free' is the clearest counterexample: the second-highest signup rate ({t_free_signup_per_click_pct}) and the worst cost/sub. Two terms have very few subs (enterprise {t_enterprise_paid_sub}, github {t_github_paid_sub}), so their sub/signup rates are the least stable; no operator data-sufficiency threshold has been set.",
+      "supporting": ["free", "howto"],
+      "counterexamples": ["scaffold", "internal"],
+      "explanations": [
+        "A high signup rate on a 'free' query is expected regardless of intent to pay; signup rate measures the ease of registering, not the intent behind it.",
+        "For scaffold and internal tools, high signup rate and high sub rate coincide, so signup rate is informative for buying-intent queries and misleading for others.",
+        "Small-count terms could look materially different with one quarter more data."
+      ],
+      "distinguishing_evidence": "Operator min_cost / min_subs thresholds; an FFT or activation event that separates engaged signups from registrations."
+    },
+    {
+      "id": "P7",
+      "title": "Match type shows no pattern and cannot be read as keyword structure",
+      "observed": "Two rows are Phrase (core, free) and carry {g_phrase_rows_cost_share_pct} of sample cost at {g_phrase_rows_cost_per_sub}/sub; seven are Broad. Broad rows span the best ({t_scaffold_cost_per_sub}) and worst ({t_enterprise_cost_per_sub}) cost/sub. The column records the match type that triggered the search term, not the keyword or ad group behind it.",
+      "supporting": ["scaffold", "enterprise"],
+      "counterexamples": [],
+      "explanations": [
+        "Broad match is grouping heterogeneous queries under each row; the row-level ratio may hide better and worse sub-intents.",
+        "The two Phrase rows may come from one keyword or two; nothing in the data says which."
+      ],
+      "distinguishing_evidence": "Keyword and ad-group columns, or the search-term report grouped by keyword."
+    }
+  ],
+  "observed_vs_explanations": [
+    {"observation": "free: {t_free_signup} signups (most in sample), {t_free_paid_sub} subs, sub/signup {t_free_paid_sub_per_signup_pct}", "explanations": "no free tier and searchers leave; free tier exists and converts after a lag; landing page contradicts the 'free' promise", "settling_evidence": "product fact on free tier; 90-day cohort conversion for this term; landing-page review"},
+    {"observation": "github: cheapest CPC {t_github_cpc}, sub/signup {t_github_paid_sub_per_signup_pct}, {t_github_paid_sub} subs", "explanations": "developer audience not served; open-source seekers who never intended to buy; low count instability", "settling_evidence": "product fact on GitHub/code export; ad and landing page for the query; another period of data"},
+    {"observation": "enterprise: CPC {t_enterprise_cpc}, cost/signup {t_enterprise_cost_per_signup}, {t_enterprise_paid_sub} subs, needs {t_enterprise_sub_rate_needed_pct} sub rate to meet $181", "explanations": "enterprise buyers convert through sales, not self-serve; term is off-target; count too small to judge", "settling_evidence": "whether a sales path exists and whether these signups appear as leads"},
+    {"observation": "how-to: sub/signup {t_howto_paid_sub_per_signup_pct}, needs {t_howto_sub_rate_needed_pct} to meet $181", "explanations": "tutorial seekers; broad match mixing intents; slower conversion for learners", "settling_evidence": "query mix under the row; cohort-aligned subs; a template/tutorial landing-page test"},
+    {"observation": "use-case/competitor terms: {g_use_case_or_competitor_cost_per_sub}/sub on {g_use_case_or_competitor_cost_share_pct} of cost", "explanations": "high buying intent; small terms not yet scaled; already isolated in the account", "settling_evidence": "impression share and existing keyword coverage"},
+    {"observation": "sample {sample_cost_per_sub} vs scope {benchmark} vs remainder {remainder_cost_per_sub}", "explanations": "sample is the hardest subset; period misalignment; different attribution", "settling_evidence": "full scope search-term report with dates"}
+  ],
+  "actions": {
+    "justified_now": [
+      {"action": "Request the full scope search-term report with dates, keyword and ad-group columns", "why": "P2 and P7: the sample is {sample_coverage_pct} of scope spend and {sample_sub_coverage_pct} of scope subs, runs above the allowable while the scope runs below it, and no row can be tied to a keyword. Every structural decision depends on this."},
+      {"action": "Pull cohort-aligned (60/90-day) subs by search term and an FFT/activation event if one exists", "why": "P1 and P6: sub/signup drives the whole sample; lag and dead registrations are the two explanations the data cannot separate."},
+      {"action": "Review the ad and landing page served to the free, github, how-to and enterprise queries", "why": "P1 and P3: intent mismatch and post-click mismatch produce the same numbers; this is the cheapest way to tell them apart and needs no account change."},
+      {"action": "Pull impression share for the five below-allowable terms", "why": "P4: efficient small terms are only expansion candidates if they are share-limited rather than demand-limited."},
+      {"action": "Ask the operator for min_cost / min_subs thresholds", "why": "P6: two terms have {t_enterprise_paid_sub} and {t_github_paid_sub} subs; whether that is actionable is a policy, not a data, question."},
+      {"action": "Treat cost per signup as unsafe for bidding on this sample until validated", "why": "P1: cost/signup correlates with cost/sub at only {rho_cost_per_signup_vs_cost_per_sub}; optimising to it would favour the free and github queries. This is a measurement caution, not an account change."}
+    ],
+    "requires_evidence": [
+      {"action": "Any negative keyword (free, github, enterprise, how to)", "needs": "product facts (free tier, GitHub feature, enterprise path), the query mix each negative would block in the remaining ~35% of scope, and the campaign/ad-group scope", "why": "the data shows low conversion, not irrelevance; a phrase negative would also block unseen queries whose performance is unknown"},
+      {"action": "Bid changes on any term", "needs": "the bidding strategy in use (manual, tCPA, tROAS, maximise conversions) and the keyword each term maps to", "why": "under automated bidding, per-term bid advice is not executable; under tCPA the target, not the bid, is the lever"},
+      {"action": "New ad groups or keyword additions for use-case/competitor terms", "needs": "existing keyword list and structure, impression share, and (for scaffold) trademark policy check", "why": "they may already be isolated; adding a duplicate keyword changes nothing except internal competition"},
+      {"action": "Scaling the core term", "needs": "impression share / lost IS (budget vs rank) for its keyword", "why": "below-allowable performance says nothing about headroom"},
+      {"action": "Declaring enterprise off-target", "needs": "whether a sales-assisted path exists and whether the {t_enterprise_signup} signups produced leads", "why": "P5 shows it cannot meet $181 on self-serve subs, but that is the wrong test if the buyer converts through sales"},
+      {"action": "Choosing between the lag and intent explanations for free", "needs": "cohort-aligned conversion for this term specifically", "why": "the term would need {t_free_subs_multiple_needed} its observed subs; only cohort data shows whether that is within reach"}
+    ]
+  },
+  "v1_review": [
+    {"v1_statement": "'ai app builder' is 'the core/head keyword' and other rows are 'broad-match spillover'", "unsupported_assumption": "The data has no keyword column; match type is the triggered type. Which keyword served each row, and whether the two Phrase rows share a keyword, is unknown.", "v2_position": "Describe rows as search terms only; keyword structure is a missing input (P7)."},
+    {"v1_statement": "Proposed phrase negatives on 'free', 'github', 'enterprise', 'how to'", "unsupported_assumption": "A phrase negative blocks every query containing the word, including the unseen ~35% of scope spend and any query on other terms (e.g. a 'free' query that converts). Impact outside the nine rows is unknown; ad-group vs campaign scope is unknown.", "v2_position": "Keep negatives conditional, and add the requirement to see what each would block in the full report before proposing a match type."},
+    {"v1_statement": "'Bid down', 'lower bid', 'capped bid' for free and how-to", "unsupported_assumption": "Assumes manual or bid-cap control. The bidding strategy is unknown; under tCPA/maximise conversions there is no per-term bid to lower.", "v2_position": "Replace with 'reduce exposure by the lever the bidding strategy allows' and list the strategy as a missing input."},
+    {"v1_statement": "'Isolate into its own ad group' for six terms", "unsupported_assumption": "Assumes these terms are not already in dedicated ad groups and that the account is structured by intent. Structure is unknown; v1 did flag a coverage check but still framed isolation as the default action.", "v2_position": "Coverage check is the action; isolation is one possible outcome of it."},
+    {"v1_statement": "'scaffold alternative' is a 'clear expansion candidate'", "unsupported_assumption": "'Clear' overstates: {t_scaffold_paid_sub} subs on {t_scaffold_cost_share_pct} of spend with no impression share data. It is the best ratio in the sample; headroom is unknown.", "v2_position": "Best-performing small term; expansion depends on impression share and existing competitor coverage."},
+    {"v1_statement": "Enterprise: 'route to a demo/contact landing page'", "unsupported_assumption": "Assumes an enterprise motion and a demo page exist.", "v2_position": "P5: state the arithmetic (needs {t_enterprise_sub_rate_needed_pct} sub rate) and make the sales-path question the only decision input."},
+    {"v1_statement": "'Removing free leaves the rest at $159.17' presented as a useful scenario", "unsupported_assumption": "Arithmetic is correct and was labelled as such, but it implicitly treats the term's spend as removable without affecting other rows or the unseen remainder.", "v2_position": "Keep as arithmetic; do not use it to imply a post-negative cost/sub."},
+    {"v1_statement": "Reddit 'slightly above' allowable", "unsupported_assumption": "Judgement word on a channel comparison whose attribution basis is unknown.", "v2_position": "Report the ratio only."},
+    {"v1_statement": "Least-certain term is 'free ai app builder'", "unsupported_assumption": "A defensible judgement, but v1 did not show the alternative: how-to is the term closest to the allowable and the most likely to flip on lag or landing page alone (P5).", "v2_position": "Present both candidates with the evidence that would resolve each; the operator picks."}
+  ],
+  "least_certain": {
+    "text": "Two terms compete for 'least certain', for different reasons; the data does not rank them.",
+    "candidates": [
+      {"term": "free ai app builder", "why": "Largest swing: {t_free_cost_share_pct} of sample spend and the most signups. Needs {t_free_subs_multiple_needed} its observed subs to meet $181. The one piece of information: cohort-aligned free-to-paid conversion for this term (and whether a free tier exists at all)."},
+      {"term": "how to build an ai app", "why": "Closest to the line: needs a sub rate of {t_howto_sub_rate_needed_pct} against {t_howto_paid_sub_per_signup_pct} observed, a gap that lag or a landing-page change could close. The one piece of information: the query mix under this broad-match row (tutorial vs tool seekers)."}
+    ]
+  },
+  "method_note": "Cross-term patterns are computed over {term_count} rows; Spearman rank correlations at this n indicate direction, not strength, and are reported to two decimals only for readability. Groups are arithmetic sums of the rows listed. 'Subs needed at $181' is cost divided by the allowable, rounded up, at current cost: it is a break-even statement, not a forecast, and assumes nothing about what would happen to cost if conversion changed. No posture is chosen and the allowable is not adjusted. The methodology prior (bid on an early signal, judge on paid subs) is applied only as a caution in P1/P6: on this sample the early signals (signup rate, cost per signup) would mislead."
+}

@@ -1,0 +1,9 @@
+rank_by_q2_spend,channel,is_aggregate,q2_spend,q2_subs,q2_cost_per_sub_recomputed,q2_cost_per_sub_supplied,q2_cost_per_sub_matches_supplied,q1_cost_per_sub_supplied,q1_verifiable,qoq_cost_per_sub_change_abs,qoq_cost_per_sub_change_rel,allowable_cost_per_sub,gap_to_allowable_abs,cost_per_sub_to_allowable_ratio,share_of_paid_spend,share_of_paid_subs
+1,Google Non-Brand,false,701000,4348,161.2236,161.22,true,147.5,false,13.7236,0.093041,181,-19.7764,0.890738,0.431916,0.362878
+2,Meta prospecting,false,360000,1810,198.8950,198.9,true,224.15,false,-25.2550,-0.112670,142,56.8950,1.400669,0.221811,0.151060
+3,Google Branded (US + Intl),false,228000,3900,58.4615,58.46,true,58.85,false,-0.3885,-0.006601,196,-137.5385,0.298273,0.140481,0.325488
+4,Google Performance Max,false,118000,410,287.8049,287.8,true,161.42,false,126.3849,0.782957,181,106.8049,1.590082,0.072705,0.034218
+5,TikTok,false,90000,474,189.8734,189.87,true,375,false,-185.1266,-0.493671,,,,0.055453,0.039559
+6,Meta retargeting,false,66000,700,94.2857,94.29,true,69.57,false,24.7157,0.355264,142,-47.7143,0.663984,0.040665,0.058421
+7,Reddit,false,60000,340,176.4706,176.47,true,200.96,false,-24.4894,-0.121862,158,18.4706,1.116902,0.036969,0.028376
+,Paid total,true,1623000,11982,135.4532,135.47,false,133.09,false,2.3632,0.017756,180,-44.5468,0.752518,,

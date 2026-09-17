@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Search Ops · Braid dashboard</title>
+<meta name="description" content="Local dashboard for the Braid search-term analysis: verified metrics, reviewed insights, conditional recommendations and operator feedback.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232444df'/%3E%3Cpath d='M8 23V16M16 23V9M24 23V5' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="./"><span class="mark" aria-hidden="true">↗</span>Search Ops<span class="muted"> / Braid</span></a>
+  <div class="header-right">
+    <span class="badge">INTERVIEW DATA · SIMULATED</span>
+    <span id="version-badge" class="badge muted-badge">loading…</span>
+  </div>
+</header>
+<main>
+  <div class="heading">
+    <div>
+      <p class="eyebrow">PAID SEARCH / SEARCH-TERM DIAGNOSIS</p>
+      <h1>Evidence, hypotheses and human decisions.</h1>
+      <p>Figures calculated and validated by Python (step 1). Saved reasoning authored by Claude Code and reviewed (v2.2). Decisions are yours; nothing here changes an ad account.</p>
+    </div>
+    <div class="feedback-controls" aria-label="Operator feedback">
+      <span id="save-status" class="save-status" aria-live="polite">Notes are saved on this browser only.</span>
+      <button id="export-feedback" class="secondary">Export feedback for Claude Code</button>
+      <label class="secondary file-label" for="import-feedback">Import feedback JSON</label>
+      <input id="import-feedback" type="file" accept="application/json,.json" hidden>
+    </div>
+  </div>
+  <div id="load-error" class="notice error" role="alert" hidden></div>
+  <div class="notice"><strong>Simulated interview exercise</strong> Nine search terms and a channel summary supplied for a candidate brief; not real Bubble, Runway or Braid account performance. No dates, campaign IDs, FFT, revenue or cohort data. Ratios are descriptive.</div>
+  <div id="import-message" class="notice" role="status" hidden></div>
+
+  <nav aria-label="Dashboard views">
+    <button class="active" data-tab="insights">01 Business Insights</button>
+    <button data-tab="terms">02 Search Terms</button>
+    <button data-tab="plan">03 Action Plan</button>
+    <button data-tab="log">04 Data &amp; Run Log</button>
+  </nav>
+
+  <section id="insights" class="view" aria-labelledby="insights-title">
+    <h2 id="insights-title" class="sr-only">Business Insights</h2>
+    <p class="cta-row"><a id="review-terms-link" class="cta-link" href="#terms">Review terms &amp; add your input →</a><span class="small">Nine terms, sorted by spend. Your notes stay on this browser.</span></p>
+    <section class="kpis" id="level-cards" aria-label="Four distinct levels"></section>
+    <div class="two-col">
+      <article class="card" id="reference-card"></article>
+      <article class="card" id="posture-card">
+        <p class="eyebrow">STRATEGIC POSTURE</p>
+        <h2>Which branch of the saved recommendations to show</h2>
+        <p class="small">Selecting a posture displays the recommendation branch already written for it. It does not rerun the model, change the $181 allowable, or decide anything on your behalf.</p>
+        <fieldset id="posture-select" class="segmented">
+          <legend class="sr-only">Strategic posture</legend>
+          <label><input type="radio" name="posture" value="" checked> Not selected</label>
+          <label><input type="radio" name="posture" value="scale"> Scale</label>
+          <label><input type="radio" name="posture" value="maintain_efficiency"> Maintain efficiency</label>
+        </fieldset>
+        <p id="posture-note" class="small"></p>
+      </article>
+    </div>
+    <div class="toolbar"><div><h2>Paid channels (Q2 label)</h2><p>Recomputed cost/sub next to supplied values · Paid total is an aggregate, excluded from ranking and shares · Q1 cannot be recomputed</p></div></div>
+    <div class="table-wrap"><table id="channel-table"><thead><tr><th>#</th><th class="left">Channel</th><th>Spend</th><th>Subs</th><th>Cost/sub (recomputed)</th><th>Supplied</th><th>Q1 (supplied)</th><th>Allowable</th><th>vs allowable</th><th>Share of spend</th></tr></thead><tbody></tbody></table></div>
+    <ul id="channel-observations" class="obs-list"></ul>
+    <div class="toolbar"><div><h2>Cross-term insights (review v2.2)</h2><p>Observed facts, supporting terms and counterexamples, then possible explanations. Expand a pattern for details.</p></div></div>
+    <div id="patterns" class="patterns"></div>
+    <div class="toolbar"><div><h2 id="branch-title">Recommendation branch by term</h2><p>Saved conditional recommendations; the selected posture chooses which branch is shown.</p></div></div>
+    <div class="table-wrap"><table id="branch-table"><thead><tr><th>Search term</th><th>Cost/sub</th><th>Lean (posture-independent)</th><th id="branch-col">Branch</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section id="terms" class="view" hidden aria-labelledby="terms-title">
+    <div class="toolbar"><div><h2 id="terms-title" tabindex="-1">Search terms, sorted by spend</h2><p>Select a term to inspect evidence and add your notes · FFT is unavailable in this dataset, never zero</p></div></div>
+    <div class="workspace">
+      <div class="table-wrap"><table id="term-table"><thead><tr><th>Search term</th><th>Cost</th><th>Signups</th><th>Subs</th><th>Signup → sub</th><th>Cost/sub</th><th>vs $181</th><th>vs benchmark</th><th>Decision</th></tr></thead><tbody></tbody></table></div>
+      <aside id="detail" aria-label="Selected search term" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section id="plan" class="view" hidden aria-labelledby="plan-title">
+    <h2 id="plan-title" class="sr-only">Action Plan</h2>
+    <div class="notice"><strong>Model proposals vs human decisions</strong> Everything below is a conditional proposal from the saved analysis. The “Operator decision” column shows your own decision from the Search Terms view. A note does not approve anything, and no action is executed or simulated here.</div>
+    <div class="toolbar"><div><h2>Conditional negative candidates</h2><p>Pending confirmation of the named fact · match type is proposed · campaign/ad-group scope unknown, not import-ready</p></div></div>
+    <div class="table-wrap"><table id="negatives-table"><thead><tr><th>Search term</th><th>Proposed negative</th><th>Match type</th><th>Status</th><th>Confirmation required</th><th>Becomes actionable if</th><th>Does not apply if</th><th>Operator decision</th></tr></thead><tbody></tbody></table></div>
+    <div class="toolbar"><div><h2>Addition / isolation candidates</h2><p>Each requires the listed pre-checks; existing keywords and account structure are unknown</p></div></div>
+    <div class="table-wrap"><table id="additions-table"><thead><tr><th>Search term</th><th>Action</th><th>Pre-check before adding</th><th>Note</th><th>Operator decision</th></tr></thead><tbody></tbody></table></div>
+    <div class="toolbar"><div><h2>Landing-page tests</h2><p>Proposed tests; measured on cohort-aligned subs where stated</p></div></div>
+    <div class="table-wrap"><table id="lp-table"><thead><tr><th>Search term</th><th>Test</th><th>Pre-check</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+    <div class="two-col">
+      <article class="card" id="least-certain"></article>
+      <article class="card" id="bidding-signal"></article>
+    </div>
+    <div class="two-col">
+      <article class="card" id="justified-now"></article>
+      <article class="card" id="requires-evidence"></article>
+    </div>
+  </section>
+
+  <section id="log" class="view" hidden aria-labelledby="log-title">
+    <h2 id="log-title" class="sr-only">Data and Run Log</h2>
+    <div class="health-grid">
+      <article id="checks-card"></article>
+      <article id="versions-card"></article>
+      <article id="authorship-card">
+        <p class="eyebrow">WHO DID WHAT</p>
+        <h2>Python calculated, Claude Code authored, humans decide</h2>
+        <ul>
+          <li><strong>Python (src/compute_metrics.py):</strong> parsed the two CSVs, recomputed every ratio with decimal arithmetic, reconciled totals and wrote the checks shown here.</li>
+          <li><strong>Claude Code:</strong> authored the saved interpretation (diagnosis v1, then independent review v2 → v2.1 → v2.2). Every number in that text is filled from the step 1 output by a build script that fails on an unknown reference.</li>
+          <li><strong>This dashboard:</strong> renders the canonical JSON and stores your notes in this browser. There is no live model call, no runtime log of an AI run, and no ad-account connection.</li>
+        </ul>
+      </article>
+      <article id="handoff-card">
+        <p class="eyebrow">REANALYSIS HANDOFF</p>
+        <h2>How your feedback reaches the next analysis</h2>
+        <ol>
+          <li>Add notes, answers and decisions in Search Terms. They autosave to this browser only.</li>
+          <li>Click <strong>Export feedback for Claude Code</strong> to download <code>operator_feedback.json</code>. It carries the analysis identity so it cannot be applied to a different dataset.</li>
+          <li>Save the file into the project (e.g. <code>operator/operator_feedback.json</code>) and ask Claude Code to produce a new review version that consumes it. The canonical baseline stays unchanged; a new version is built alongside it.</li>
+          <li>Import the same file here later to restore notes on another browser.</li>
+        </ol>
+        <p class="small">There is no “reanalyze” button because no model runs inside this page.</p>
+      </article>
+      <article id="missing-card" class="span-2"></article>
+      <article id="warnings-card" class="span-2"></article>
+      <article id="storage-card" class="span-2"></article>
+    </div>
+  </section>
+
+  <footer>Search Ops dashboard · Local preview · Interview exercise, not account performance · No live account connection</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "levels_are_distinct": true,
+  "note": "Sample cost/sub describes only the nine rows. It is not the scope's or the account's cost/sub.",
+  "all_google_non_brand": {
+    "level": "all_google_non_brand",
+    "source": "channel_summary.csv row 'Google Non-Brand' (Q2 label)",
+    "spend": "701000",
+    "paid_sub": "4348",
+    "cost_per_sub_recomputed": "161.2236",
+    "cost_per_sub_supplied": "161.22",
+    "allowable_cost_per_sub": "181",
+    "period_alignment_with_scope": "unverified: channel table says Q2, scope says 'last quarter'; no year or dates",
+    "scope_share_of_non_brand_spend_if_same_period": "0.741797"
+  },
+  "scope": {
+    "level": "non_brand_ai_app_builder_scope",
+    "label": "Non-Brand ai app builder",
+    "period_label": "last quarter",
+    "exact_dates": null,
+    "spend": "520000",
+    "paid_sub": "3100",
+    "cost_per_sub_recomputed": "167.7419",
+    "cost_per_sub_supplied": "167.74",
+    "cost_per_sub_matches_supplied": true,
+    "allowable_cost_per_sub": "181",
+    "allowable_status": "confirmed_by_assignment_for_non_brand"
+  },
+  "sample": {
+    "level": "nine_term_sample",
+    "term_count": 9,
+    "cost": "337470",
+    "paid_sub": "1843",
+    "cost_per_sub_recomputed": "183.1091",
+    "spend_coverage_of_scope_actual": "0.648981",
+    "spend_coverage_of_scope_reported": "0.65",
+    "coverage_reported_is_approximate": true,
+    "coverage_tolerance": "0.01",
+    "coverage_within_tolerance": true,
+    "sub_coverage_of_scope": "0.594516"
+  },
+  "remainder": {
+    "label": "subtraction_within_stated_scope",
+    "definition": "scope totals minus nine-term sample totals; no individual search terms are known or invented",
+    "spend": "182530",
+    "paid_sub": "1257",
+    "cost_per_sub": "145.2108",
+    "sub_share_of_scope": "0.405484"
+  }
+}
