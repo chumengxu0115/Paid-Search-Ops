@@ -4,14 +4,14 @@ Plain HTML/CSS/JavaScript, no dependencies, no build step. Reads `output/canonic
 
 ## Run
 
-From the project root (the page fetches `../output/canonical/...`, so the server must serve the project root):
+From the module folder `search-term-diagnosis/` (the page fetches `../output/canonical/...`, so the server must serve that folder or a parent of it):
 
 ```bash
 python3 src/build_canonical.py            # only if output/canonical/ is missing or stale
 python3 -m http.server 8781 --bind 127.0.0.1
 ```
 
-Open <http://127.0.0.1:8781/ui/>. Views are addressable: `#insights`, `#terms`, `#plan`, `#log`. Port 8765 is used by the reference prototype; pick any other free port.
+Open <http://127.0.0.1:8781/ui/> (or <http://127.0.0.1:8781/search-term-diagnosis/ui/> if you serve the repository root). Views are addressable: `#insights`, `#terms`, `#plan`, `#log`. Port 8765 is used by the reference prototype; pick any other free port.
 
 ## What it does / does not do
 

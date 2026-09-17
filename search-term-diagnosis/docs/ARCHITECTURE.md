@@ -8,7 +8,7 @@ Architectural inspiration: [GrowthOS](https://github.com/scottjs12/GrowthOS) by 
 
 | Layer | What it holds | Where it lives | Rule |
 |---|---|---|---|
-| Reusable methodology (Bubble-informed) | Funnel framing (Clicks → Signup → FFT → Paid Sub), bidding signal vs business KPI, review by spend, data-sufficiency before action, thresholds owned by the operator | `README.md` (principles), `config/account_context.json → methodology_priors`, the original [keyword-diagnose](https://github.com/chumengxu0115/paid-search-keyword-diagnose) repository | Labelled as priors; never treated as facts about the current account |
+| Reusable methodology (Bubble-informed) | Funnel framing (Clicks → Signup → FFT → Paid Sub), bidding signal vs business KPI, review by spend, data-sufficiency before action, thresholds owned by the operator | `README.md` (principles), `config/account_context.json → methodology_priors`, the original keyword workflow in [`../../keyword-diagnosis/`](../../keyword-diagnosis/README.md) | Labelled as priors; never treated as facts about the current account |
 | Account context (Braid, simulated exercise) | Confirmed facts from the brief, scope levels, allowable, event mappings, unknown product capabilities, fixtures | `context/BRIEF.md`, `context/braid-confirmed.json`, `config/account_context.json`, `config/step1.json`, `data/` | Referenced, not duplicated; unknown fields stay `unknown`, never filled by inference |
 
 Every role reads the same context files. A role may add to its own outputs; it may not rewrite the context layer. Changing a confirmed fact is a human edit to the context files followed by a new authored version.
@@ -101,7 +101,7 @@ Every role reads the same context files. A role may add to its own outputs; it m
 
 **Handoffs.** Sends existing-keyword coverage and keyword health to 3 and 6; receives search-term candidates from 6 for coverage checks.
 
-**Status.** Exists as a separate project: [paid-search-keyword-diagnose](https://github.com/chumengxu0115/paid-search-keyword-diagnose) (commits dated June 22, 2026; embedded Python in `generators/run-diagnose.md`). Not integrated into this repository and not run on the Braid data, which lacks the columns it needs. Only its principles were carried over (see the methodology layer above).
+**Status.** Exists as the sibling module [`keyword-diagnosis/`](../../keyword-diagnosis/README.md) in this repository (its own history, commits dated June 22, 2026; embedded Python in `generators/run-diagnose.md`). Not wired to this module's context layer and not run on the Braid data, which lacks the columns it needs. Only its principles were carried over (see the methodology layer above).
 
 ### 6. Search-Term Diagnosis (implemented)
 

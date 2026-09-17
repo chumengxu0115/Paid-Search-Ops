@@ -2,7 +2,7 @@
 
 ## Before you start
 
-- Serve the repository root (`python3 -m http.server 8781 --bind 127.0.0.1`) and open <http://127.0.0.1:8781/ui/>.
+- From `search-term-diagnosis/`, run `python3 -m http.server 8781 --bind 127.0.0.1` and open <http://127.0.0.1:8781/ui/>.
 - The demo reads the saved canonical artifact; nothing depends on a live model response.
 - Use one browser profile so notes persist. Do not open `?selftest=1` in that profile.
 
@@ -10,7 +10,7 @@
 
 "At Bubble I built a keyword-diagnosis workflow. For this exercise I carried the principles over to a separate search-term tool and ran it on the supplied Braid data: connect acquisition cost to subscriptions, show exactly what is missing, and keep the decision with the operator."
 
-If asked, show the original repository (commits dated June 22, 2026). The method transferred; the implementation was rebuilt for different inputs.
+If asked, show the sibling `keyword-diagnosis/` module (its commits are dated June 22, 2026). The method transferred; the implementation was rebuilt for different inputs.
 
 ## 1:00–2:30 · Business Insights
 

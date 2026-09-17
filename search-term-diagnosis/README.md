@@ -1,8 +1,10 @@
-# Search Ops
+# Search-Term Diagnosis (Search Ops)
+
+> Module of [Paid-Search-Ops](../README.md). Commands below run from this folder (`search-term-diagnosis/`). The original keyword workflow is the sibling module [`../keyword-diagnosis/`](../keyword-diagnosis/README.md).
 
 A paid-search **search-term** diagnostic workflow built with Claude Code: Python calculates and validates the evidence, Claude Code authors the interpretation, and a dependency-free local dashboard shows the saved results and records human judgment.
 
-The methodology comes from my [keyword-diagnose project](https://github.com/chumengxu0115/paid-search-keyword-diagnose) (first committed June 22, 2026) and my experience running paid search for Bubble. This repository is a separate implementation for search-term data; it does not claim that the original keyword tool runs these inputs.
+The methodology comes from my [keyword-diagnosis workflow](../keyword-diagnosis/README.md) (first committed June 22, 2026, now the sibling module in this repository) and my experience running paid search for Bubble. This repository is a separate implementation for search-term data; it does not claim that the original keyword tool runs these inputs.
 
 ## The business problem
 
@@ -64,7 +66,7 @@ Search Ops is designed as six paid-search roles that share one account-context l
 | 2 | Campaign | Campaign structure, budgets, bidding strategy and lever availability | Defined only |
 | 3 | Ad Group | Intent grouping, match-type policy, scoped negatives, coverage checks | Defined only |
 | 4 | Ad Copy | Ad/landing-page fit per intent, test design | Defined only |
-| 5 | Keyword Diagnosis | Keyword-level buckets, campaign health, PMax intent, cannibalisation | Exists as the separate [keyword-diagnose](https://github.com/chumengxu0115/paid-search-keyword-diagnose) project; not integrated |
+| 5 | Keyword Diagnosis | Keyword-level buckets, campaign health, PMax intent, cannibalisation | Exists as the sibling module [`../keyword-diagnosis/`](../keyword-diagnosis/README.md); shares this repository, not yet a shared context layer |
 | 6 | Search-Term Diagnosis | Term metrics, cross-term patterns, conditional recommendations, candidates, missing-data register, dashboard | **Implemented** (this repository) |
 
 The architecture document includes one proposed handoff example using the existing search-term findings; it is a proposed workflow, not an executed multi-agent run. Role and handoff structure is inspired by [GrowthOS](https://github.com/scottjs12/GrowthOS) (Scott Schmidt), adapted to a single, non-executing paid-search function.
@@ -74,9 +76,11 @@ The architecture document includes one proposed handoff example using the existi
 Python 3.9+ standard library only; no packages, no API key.
 
 ```bash
-# View the saved demo (serve from the repository root; port 8765 is used by another local prototype)
+# View the saved demo (serve this folder; the page fetches ../output/canonical/ relative to ui/)
+cd search-term-diagnosis
 python3 -m http.server 8781 --bind 127.0.0.1
 # then open http://127.0.0.1:8781/ui/
+# (serving the repository root instead: open http://127.0.0.1:8781/search-term-diagnosis/ui/)
 
 # Reproduce the saved analysis from the fixtures
 python3 src/compute_metrics.py                                        # → output/step1/
