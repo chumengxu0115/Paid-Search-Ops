@@ -1,0 +1,59 @@
+{
+  "_comment": "Editable account context for Braid. Every field carries a status: 'confirmed' (source-backed), 'unknown' (not yet supplied), 'prior' (operator/methodology experience, not a Braid fact), 'computed' (from output/step1). Do not fill unknowns with guesses. Bubble experience is a methodology source only.",
+  "account": "Braid",
+  "data_status": "synthetic_interview_exercise",
+  "business_model": {
+    "target_customer": {"value": null, "status": "unknown",
+      "why_it_matters": "decides whether developer (github), enterprise and internal-tool intents are on-target"},
+    "product_category": {"value": "ai app builder (from the scope label)", "status": "confirmed",
+      "source": "candidate brief scope label 'Non-Brand ai app builder'"},
+    "subscription_model": {"value": null, "status": "unknown",
+      "why_it_matters": "what a 'Sub' is (monthly/annual, self-serve vs sales-assisted) and whether one sub is comparable across terms"},
+    "free_to_paid_path": {"value": null, "status": "unknown",
+      "why_it_matters": "whether a free tier exists; if so, 'free' searches may be on-path and signup->sub lag applies"},
+    "enterprise_offering": {"value": null, "status": "unknown",
+      "why_it_matters": "if enterprise deals close via sales, self-serve Subs undercount the value of enterprise-intent terms"},
+    "developer_integrations": {"value": null, "status": "unknown",
+      "why_it_matters": "whether 'github' intent (export code / import repo) is served by the product"},
+    "no_code_positioning": {"value": null, "status": "unknown",
+      "why_it_matters": "whether 'without code' and 'vibe coding' audiences match the product's positioning"},
+    "customer_value": {"value": null, "status": "unknown",
+      "why_it_matters": "LTV/margin needed to judge whether $181 per sub is right for any given intent"},
+    "conversion_cycle": {"value": null, "status": "unknown",
+      "why_it_matters": "signup->paid lag; without it, Subs in the same window as Regs may be immature for some terms"},
+    "main_competitor": {"value": "Scaffold", "status": "confirmed", "source": "candidate brief"}
+  },
+  "strategic_posture": {
+    "selected": null,
+    "options": ["scale", "maintain_efficiency"],
+    "status": "not_selected_by_operator",
+    "note": "The diagnosis shows conditional handling under both options and does not choose."
+  },
+  "allowable": {
+    "non_brand_cost_per_sub": 181,
+    "currency": "USD",
+    "status": "confirmed",
+    "source": "candidate brief (Task 1); applies to Non-Brand search terms",
+    "per_term_applicability": "used as the operator-supplied ceiling for each term; not raised or adjusted here"
+  },
+  "performance_benchmark": {
+    "scope_cost_per_sub_recomputed": 167.7419,
+    "scope_label": "Non-Brand ai app builder",
+    "status": "computed",
+    "source": "output/step1/scope_summary.json -> scope.cost_per_sub_recomputed (520000 / 3100)",
+    "note": "descriptive benchmark of the scope the terms belong to; not a business target"
+  },
+  "event_mapping": {
+    "Regs": {"canonical": "signup", "status": "operator_mapping_for_exercise"},
+    "Subs": {"canonical": "paid_sub", "status": "operator_mapping_for_exercise_event_definitions_unverified"},
+    "FFT": {"canonical": "fft", "status": "unavailable"}
+  },
+  "methodology_priors": {
+    "source": "Bubble keyword-diagnose methodology (reference/keyword-diagnose); priors, not Braid facts",
+    "funnel": "clicks -> signup -> FFT -> paid sub",
+    "bidding_signal_vs_kpi": "bid on an early, high-volume signal; judge on paid subs; verify the lag before reuse",
+    "review_order": "by spend, then check data sufficiency and attribution before acting",
+    "data_sufficiency_thresholds": {"min_cost": null, "min_subs": null, "min_signups": null,
+      "status": "unset; operator to supply; not invented"}
+  }
+}

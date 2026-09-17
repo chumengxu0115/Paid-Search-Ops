@@ -1,0 +1,1202 @@
+{
+  "meta": {
+    "step": "step2-diagnosis-v1",
+    "author": "claude-code-model-interpretation",
+    "status_legend": {
+      "fact": "taken from supplied data or confirmed context",
+      "hypothesis": "model interpretation; not verified",
+      "to_confirm": "needs product/data/operator input before it can become a decision"
+    },
+    "posture_selected": null,
+    "allowable": {
+      "non_brand_cost_per_sub": 181,
+      "currency": "USD",
+      "status": "confirmed",
+      "source": "candidate brief (Task 1); applies to Non-Brand search terms",
+      "per_term_applicability": "used as the operator-supplied ceiling for each term; not raised or adjusted here"
+    },
+    "benchmark": {
+      "scope_cost_per_sub_recomputed": 167.7419,
+      "scope_label": "Non-Brand ai app builder",
+      "status": "computed",
+      "source": "output/step1/scope_summary.json -> scope.cost_per_sub_recomputed (520000 / 3100)",
+      "note": "descriptive benchmark of the scope the terms belong to; not a business target"
+    },
+    "sources": {
+      "step1_metrics_search_terms_sha256": "14f0778e64d90d6c40702744145621add31fee58a22e656084ec293f7aed043f",
+      "step1_metrics_channels_sha256": "7702cbd4fb6b2557bca4b296bf736f52d08741aa639d6585b41cad367ff86dc2",
+      "step1_scope_summary_sha256": "593419324ef418845d19ccae2f3fe63eafe4a30dbdf7b5ef0d1e36b6ea55a8ca",
+      "step1_checks_sha256": "461ebb4fd68c31a8ee8f877baaed0c58198e3b659d237fe143afc0317476d4af",
+      "account_context_sha256": "9bd4a272d2923f4cbd1d883c0a8173f3f76a495525b4b81280a9824280a3b30b",
+      "authoring_sha256": "f9702020d48452c4dd93eb4d35cb1ea974749b46206b600c6789ccf0c6061f03"
+    },
+    "validation": {
+      "terms_covered": 9,
+      "all_term_ids_resolved": true,
+      "all_placeholders_resolved": true,
+      "benchmark_matches_step1": true,
+      "step1_checks_overall": "pass"
+    }
+  },
+  "account_context": {
+    "_comment": "Editable account context for Braid. Every field carries a status: 'confirmed' (source-backed), 'unknown' (not yet supplied), 'prior' (operator/methodology experience, not a Braid fact), 'computed' (from output/step1). Do not fill unknowns with guesses. Bubble experience is a methodology source only.",
+    "account": "Braid",
+    "data_status": "synthetic_interview_exercise",
+    "business_model": {
+      "target_customer": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "decides whether developer (github), enterprise and internal-tool intents are on-target"
+      },
+      "product_category": {
+        "value": "ai app builder (from the scope label)",
+        "status": "confirmed",
+        "source": "candidate brief scope label 'Non-Brand ai app builder'"
+      },
+      "subscription_model": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "what a 'Sub' is (monthly/annual, self-serve vs sales-assisted) and whether one sub is comparable across terms"
+      },
+      "free_to_paid_path": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "whether a free tier exists; if so, 'free' searches may be on-path and signup->sub lag applies"
+      },
+      "enterprise_offering": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "if enterprise deals close via sales, self-serve Subs undercount the value of enterprise-intent terms"
+      },
+      "developer_integrations": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "whether 'github' intent (export code / import repo) is served by the product"
+      },
+      "no_code_positioning": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "whether 'without code' and 'vibe coding' audiences match the product's positioning"
+      },
+      "customer_value": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "LTV/margin needed to judge whether $181 per sub is right for any given intent"
+      },
+      "conversion_cycle": {
+        "value": null,
+        "status": "unknown",
+        "why_it_matters": "signup->paid lag; without it, Subs in the same window as Regs may be immature for some terms"
+      },
+      "main_competitor": {
+        "value": "Scaffold",
+        "status": "confirmed",
+        "source": "candidate brief"
+      }
+    },
+    "strategic_posture": {
+      "selected": null,
+      "options": [
+        "scale",
+        "maintain_efficiency"
+      ],
+      "status": "not_selected_by_operator",
+      "note": "The diagnosis shows conditional handling under both options and does not choose."
+    },
+    "allowable": {
+      "non_brand_cost_per_sub": 181,
+      "currency": "USD",
+      "status": "confirmed",
+      "source": "candidate brief (Task 1); applies to Non-Brand search terms",
+      "per_term_applicability": "used as the operator-supplied ceiling for each term; not raised or adjusted here"
+    },
+    "performance_benchmark": {
+      "scope_cost_per_sub_recomputed": 167.7419,
+      "scope_label": "Non-Brand ai app builder",
+      "status": "computed",
+      "source": "output/step1/scope_summary.json -> scope.cost_per_sub_recomputed (520000 / 3100)",
+      "note": "descriptive benchmark of the scope the terms belong to; not a business target"
+    },
+    "event_mapping": {
+      "Regs": {
+        "canonical": "signup",
+        "status": "operator_mapping_for_exercise"
+      },
+      "Subs": {
+        "canonical": "paid_sub",
+        "status": "operator_mapping_for_exercise_event_definitions_unverified"
+      },
+      "FFT": {
+        "canonical": "fft",
+        "status": "unavailable"
+      }
+    },
+    "methodology_priors": {
+      "source": "Bubble keyword-diagnose methodology (reference/keyword-diagnose); priors, not Braid facts",
+      "funnel": "clicks -> signup -> FFT -> paid sub",
+      "bidding_signal_vs_kpi": "bid on an early, high-volume signal; judge on paid subs; verify the lag before reuse",
+      "review_order": "by spend, then check data sufficiency and attribution before acting",
+      "data_sufficiency_thresholds": {
+        "min_cost": null,
+        "min_subs": null,
+        "min_signups": null,
+        "status": "unset; operator to supply; not invented"
+      }
+    }
+  },
+  "scope_levels": {
+    "levels_are_distinct": true,
+    "note": "Sample cost/sub describes only the nine rows. It is not the scope's or the account's cost/sub.",
+    "all_google_non_brand": {
+      "level": "all_google_non_brand",
+      "source": "channel_summary.csv row 'Google Non-Brand' (Q2 label)",
+      "spend": "701000",
+      "paid_sub": "4348",
+      "cost_per_sub_recomputed": "161.2236",
+      "cost_per_sub_supplied": "161.22",
+      "allowable_cost_per_sub": "181",
+      "period_alignment_with_scope": "unverified: channel table says Q2, scope says 'last quarter'; no year or dates",
+      "scope_share_of_non_brand_spend_if_same_period": "0.741797"
+    },
+    "scope": {
+      "level": "non_brand_ai_app_builder_scope",
+      "label": "Non-Brand ai app builder",
+      "period_label": "last quarter",
+      "exact_dates": null,
+      "spend": "520000",
+      "paid_sub": "3100",
+      "cost_per_sub_recomputed": "167.7419",
+      "cost_per_sub_supplied": "167.74",
+      "cost_per_sub_matches_supplied": true,
+      "allowable_cost_per_sub": "181",
+      "allowable_status": "confirmed_by_assignment_for_non_brand"
+    },
+    "sample": {
+      "level": "nine_term_sample",
+      "term_count": 9,
+      "cost": "337470",
+      "paid_sub": "1843",
+      "cost_per_sub_recomputed": "183.1091",
+      "spend_coverage_of_scope_actual": "0.648981",
+      "spend_coverage_of_scope_reported": "0.65",
+      "coverage_reported_is_approximate": true,
+      "coverage_tolerance": "0.01",
+      "coverage_within_tolerance": true,
+      "sub_coverage_of_scope": "0.594516"
+    },
+    "remainder": {
+      "label": "subtraction_within_stated_scope",
+      "definition": "scope totals minus nine-term sample totals; no individual search terms are known or invented",
+      "spend": "182530",
+      "paid_sub": "1257",
+      "cost_per_sub": "145.2108",
+      "sub_share_of_scope": "0.405484"
+    }
+  },
+  "channel_context_observations": [
+    "Google Non-Brand is the largest channel (43.2% of paid spend) at $161.22/sub, below its $181 allowable, and up from supplied Q1 $147.50. Q1 cannot be recomputed.",
+    "Google Performance Max ($287.80/sub vs $181 allowable) and Meta prospecting ($198.90/sub vs $142) are the channels above allowable. Reddit is slightly above ($158). These are descriptive comparisons; causes are not established here.",
+    "Paid total supplied cost/sub ($135.47) differs from the recomputed $135.45; cause unknown, both retained.",
+    "TikTok has no allowable; no gap is computed."
+  ],
+  "terms": [
+    {
+      "rank_by_cost": 1,
+      "term_id": "st_dd3412fed286",
+      "search_term": "ai app builder",
+      "match_type_source": "Phrase",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "34000",
+          "cost": "102000",
+          "signup": "4760",
+          "paid_sub": "690",
+          "cpc": "3.0000",
+          "cost_per_signup": "21.4286",
+          "signup_per_click": "0.140000",
+          "paid_sub_per_signup": "0.144958",
+          "cost_per_sub_recomputed": "147.8261",
+          "cost_per_sub_supplied": "147.83",
+          "sample_cost_share": "0.302249",
+          "sample_sub_share": "0.374390",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "0.816719",
+          "gap_to_allowable": "-33.1739",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "0.8812711671919776752260466824",
+          "gap_to_benchmark": "-19.9158",
+          "sample_without_term_cost_per_sub": "204.2237640936686903729401561"
+        },
+        "summary": "Largest term: 30.2% of sample spend and 37.4% of sample subs. Cost/sub $147.83 is 0.82x of the $181 allowable and 0.88x of the scope benchmark ($167.74). Signup rate 14.0%, signup->sub 14.5%. Phrase match on the core category term.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Core category intent: user wants a tool that builds AI apps. Closest match to the scope label itself.",
+        "confidence": "high",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "147.8261",
+          "ratio": "0.8167187845303867403314917127",
+          "gap": "-33.1739",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "147.8261",
+          "ratio": "0.8812711671919776752260466824",
+          "gap": "-19.9158",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "existing keyword and match type this term is served by",
+          "limits": "whether it is already the head keyword or a broad-match spillover; bid/isolation decisions",
+          "status": "to_confirm"
+        },
+        {
+          "item": "impression share / lost IS",
+          "limits": "whether there is headroom to scale on this term at all",
+          "status": "to_confirm"
+        },
+        {
+          "item": "conversion lag",
+          "limits": "whether 690 subs are mature for the same-period 4,760 signups",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Primary expansion candidate: below allowable with the most volume. Confirm headroom (impression share) before raising bids or budget; adding spend without headroom would not add subs.",
+        "maintain_efficiency": "Keep as is. It anchors the sample below the benchmark; no change unless a cohort-aligned cost/sub comes in above $181.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Pull impression share and top-of-page rate for the matching keyword(s).",
+        "Confirm which keyword/ad group serves this phrase-match term."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 2,
+      "term_id": "st_7397eeb3716a",
+      "search_term": "free ai app builder",
+      "match_type_source": "Phrase",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "29500",
+          "cost": "61950",
+          "signup": "5600",
+          "paid_sub": "112",
+          "cpc": "2.1000",
+          "cost_per_signup": "11.0625",
+          "signup_per_click": "0.189831",
+          "paid_sub_per_signup": "0.020000",
+          "cost_per_sub_recomputed": "553.1250",
+          "cost_per_sub_supplied": "553.13",
+          "sample_cost_share": "0.183572",
+          "sample_sub_share": "0.060770",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "3.055939",
+          "gap_to_allowable": "372.1250",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "3.297476659081600959569433755",
+          "gap_to_benchmark": "385.3831",
+          "sample_without_term_cost_per_sub": "159.1681109185441941074523397"
+        },
+        "summary": "Second-largest spend (18.4% of sample). Highest signup count in the sample (5,600, 19.0% of clicks) and cheapest signups ($11.06), but signup->sub is 2.0%, so cost/sub is $553.13: 3.06x of allowable and 3.30x of the benchmark. Removing it arithmetically leaves the rest of the sample at $159.17/sub (arithmetic, not a forecast).",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Price-sensitive or exploratory intent: wants to try without paying. Whether that is on-path depends entirely on whether Braid has a free tier and how long free->paid takes.",
+        "confidence": "medium",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "553.1250",
+          "ratio": "3.055939226519337016574585635",
+          "gap": "372.1250",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "553.1250",
+          "ratio": "3.297476659081600959569433755",
+          "gap": "385.3831",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "does Braid have a free tier, and what is the free->paid conversion window",
+          "limits": "whether the 112 subs are immature (lag) or the intent is genuinely low-value; the whole negative-vs-keep decision",
+          "status": "to_confirm"
+        },
+        {
+          "item": "FFT or activation events for these signups",
+          "limits": "whether the 5,600 signups show product usage or are dead accounts",
+          "status": "to_confirm"
+        },
+        {
+          "item": "landing page shown",
+          "limits": "whether the 'free' promise on the SERP is matched or contradicted post-click",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Do not scale on cost/sub; the signup volume is attractive only if a bidding signal (FFT/activation) confirms these signups progress. Candidate to isolate into its own ad group with a free-tier landing page and a lower bid so it stops sharing budget with the core term.",
+        "maintain_efficiency": "Conditional negative on 'free' (phrase) if the product has no free tier or the free cohort does not convert after the lag window. If a free tier exists, isolate and cap rather than negate: this term produces the most signups in the sample.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Ask product: free tier yes/no, and the median days from free signup to paid.",
+        "Pull cohort-aligned subs for these signups (60/90-day) instead of same-window subs.",
+        "Check the landing page for this term against the 'free' promise."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 3,
+      "term_id": "st_2fe617db21cf",
+      "search_term": "how to build an ai app",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "22000",
+          "cost": "52800",
+          "signup": "2860",
+          "paid_sub": "210",
+          "cpc": "2.4000",
+          "cost_per_signup": "18.4615",
+          "signup_per_click": "0.130000",
+          "paid_sub_per_signup": "0.073427",
+          "cost_per_sub_recomputed": "251.4286",
+          "cost_per_sub_supplied": "251.43",
+          "sample_cost_share": "0.156458",
+          "sample_sub_share": "0.113945",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "1.389108",
+          "gap_to_allowable": "70.4286",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "1.498901586306104795522168284",
+          "gap_to_benchmark": "83.6867",
+          "sample_without_term_cost_per_sub": "174.3233312921004286589099816"
+        },
+        "summary": "15.6% of sample spend, cost/sub $251.43: 1.39x of allowable and 1.50x of the benchmark. Cheap clicks ($2.40) and a 13.0% signup rate, but signup->sub only 7.3%.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Informational / learning intent; a share of searchers are looking for a tutorial rather than a product. Broad match may also be pulling adjacent 'how to' queries not visible here.",
+        "confidence": "medium",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "251.4286",
+          "ratio": "1.389108287292817679558011050",
+          "gap": "70.4286",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "251.4286",
+          "ratio": "1.498901586306104795522168284",
+          "gap": "83.6867",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "the actual queries grouped under this broad-match term and the matched keyword",
+          "limits": "whether this is one intent or a mixed bucket; negative scoping",
+          "status": "to_confirm"
+        },
+        {
+          "item": "landing page for informational queries",
+          "limits": "whether a tutorial/template page could lift signup->sub",
+          "status": "to_confirm"
+        },
+        {
+          "item": "conversion lag",
+          "limits": "informational visitors may convert later; same-window subs may understate",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Not a scaling candidate at $251.43. Test a how-to/template landing page first; if signup->sub moves toward the sample average, revisit.",
+        "maintain_efficiency": "Bid down or move to a separate ad group with its own budget. A 'how to' phrase negative in the core ad group is conditional on confirming the queries are mostly tutorial-seeking.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Export the search-term report for the matching keyword to see the query mix.",
+        "Run a landing-page test: template/tutorial page vs current page, measured on signup->sub."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 4,
+      "term_id": "st_98934dc150fb",
+      "search_term": "build app without code",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "9800",
+          "cost": "34300",
+          "signup": "1570",
+          "paid_sub": "320",
+          "cpc": "3.5000",
+          "cost_per_signup": "21.8471",
+          "signup_per_click": "0.160204",
+          "paid_sub_per_signup": "0.203822",
+          "cost_per_sub_recomputed": "107.1875",
+          "cost_per_sub_supplied": "107.19",
+          "sample_cost_share": "0.101639",
+          "sample_sub_share": "0.173630",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "0.592196",
+          "gap_to_allowable": "-73.8125",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "0.6390025390197678695662801006",
+          "gap_to_benchmark": "-60.5544",
+          "sample_without_term_cost_per_sub": "199.0610636900853578463558766"
+        },
+        "summary": "Cost/sub $107.19 (0.59x of allowable, 0.64x of benchmark) with the second-highest sub count (320, 17.4% of sample subs). Signup->sub 20.4% is above the sample's larger terms.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "No-code builder intent. Efficient here, but whether Braid positions itself as no-code is unknown; if not, this may be an adjacent audience converting on a different promise.",
+        "confidence": "medium",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "107.1875",
+          "ratio": "0.5921961325966850828729281768",
+          "gap": "-73.8125",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "107.1875",
+          "ratio": "0.6390025390197678695662801006",
+          "gap": "-60.5544",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "no-code positioning and whether a no-code keyword/ad group already exists",
+          "limits": "add vs already-covered; landing-page choice",
+          "status": "to_confirm"
+        },
+        {
+          "item": "impression share",
+          "limits": "scaling headroom",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Expansion candidate: check existing coverage, then consider a dedicated no-code ad group and landing page to protect the 20.4% signup->sub rate while adding volume.",
+        "maintain_efficiency": "Keep; consider isolating so its efficiency is not diluted by broad-match neighbours.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Check the existing keyword list for 'no code' / 'without code' variants before adding anything.",
+        "Confirm product positioning on no-code with product/marketing."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 5,
+      "term_id": "st_a3029027e1c6",
+      "search_term": "vibe coding app builder",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "8600",
+          "cost": "27520",
+          "signup": "1120",
+          "paid_sub": "168",
+          "cpc": "3.2000",
+          "cost_per_signup": "24.5714",
+          "signup_per_click": "0.130233",
+          "paid_sub_per_signup": "0.150000",
+          "cost_per_sub_recomputed": "163.8095",
+          "cost_per_sub_supplied": "163.81",
+          "sample_cost_share": "0.081548",
+          "sample_sub_share": "0.091156",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "0.905025",
+          "gap_to_allowable": "-17.1905",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "0.9765568411947164065746244677",
+          "gap_to_benchmark": "-3.9324",
+          "sample_without_term_cost_per_sub": "185.0447761194029850746268657"
+        },
+        "summary": "Cost/sub $163.81: 0.91x of allowable (below it) but 0.98x of the benchmark (close to it). 8.2% of sample spend, signup->sub 15.0%.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Trend-driven intent ('vibe coding') for an AI-assisted builder. Likely aligned with the product category, but the phrase is new and its searcher mix may shift quickly.",
+        "confidence": "medium",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "163.8095",
+          "ratio": "0.9050248618784530386740331492",
+          "gap": "-17.1905",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "163.8095",
+          "ratio": "0.9765568411947164065746244677",
+          "gap": "-3.9324",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "whether Braid's messaging uses or fits 'vibe coding'",
+          "limits": "landing-page/ad-copy alignment",
+          "status": "to_confirm"
+        },
+        {
+          "item": "trend stability (search volume over time)",
+          "limits": "whether to invest in a dedicated keyword",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Secondary expansion candidate, below allowable. Isolate with matching ad copy before adding budget so that efficiency can be observed separately.",
+        "maintain_efficiency": "Hold. It is within allowable; monitor since it sits near the benchmark.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Check existing keyword coverage for 'vibe coding'.",
+        "Confirm messaging fit with marketing."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 6,
+      "term_id": "st_6de9a251f911",
+      "search_term": "enterprise app development platform",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "2100",
+          "cost": "16800",
+          "signup": "210",
+          "paid_sub": "12",
+          "cpc": "8.0000",
+          "cost_per_signup": "80.0000",
+          "signup_per_click": "0.100000",
+          "paid_sub_per_signup": "0.057143",
+          "cost_per_sub_recomputed": "1400.0000",
+          "cost_per_sub_supplied": "1400.00",
+          "sample_cost_share": "0.049782",
+          "sample_sub_share": "0.006511",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "7.734807",
+          "gap_to_allowable": "1219.0000",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "8.346155611686764010661617640",
+          "gap_to_benchmark": "1232.2581",
+          "sample_without_term_cost_per_sub": "175.1338066630256690333151283"
+        },
+        "summary": "Highest cost/sub in the sample: $1,400.00, 7.73x of allowable. Most expensive clicks ($8.00) and signups ($80.00); only 12 subs from 210 signups (5.7%). 5.0% of sample spend. Small counts: no operator data-sufficiency threshold has been set, so 'low data' is a judgement, not a rule.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Enterprise buyer / evaluator intent. If Braid sells to enterprises via sales, these visitors would appear as leads, not self-serve subs, and cost/sub would not be the right KPI for this term. If Braid has no enterprise motion, the term is off-target.",
+        "confidence": "low",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "1400.0000",
+          "ratio": "7.734806629834254143646408840",
+          "gap": "1219.0000",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "1400.0000",
+          "ratio": "8.346155611686764010661617640",
+          "gap": "1232.2581",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "enterprise offering and sales-assisted path (demo requests, SQLs)",
+          "limits": "the entire keep/negative decision; whether Subs is even the right KPI",
+          "status": "to_confirm"
+        },
+        {
+          "item": "operator min_cost / min_subs thresholds",
+          "limits": "whether 12 subs is enough evidence to act on",
+          "status": "to_confirm"
+        },
+        {
+          "item": "CPC driver (competition on 'enterprise')",
+          "limits": "whether the high CPC is avoidable",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Not scaled on cost/sub. If an enterprise motion exists, route to a demo/contact landing page and judge on leads; otherwise exclude.",
+        "maintain_efficiency": "Conditional negative on 'enterprise' (phrase) if there is no enterprise offering or sales path. If there is one, move the term to a separate ad group with enterprise-specific measurement instead of negating.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Ask sales/product: is there an enterprise plan or sales-assisted path, and are demo requests tracked?",
+        "Check whether any of these 210 signups became sales leads."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 7,
+      "term_id": "st_a9cf56135541",
+      "search_term": "internal tool builder",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "3900",
+          "cost": "15600",
+          "signup": "700",
+          "paid_sub": "175",
+          "cpc": "4.0000",
+          "cost_per_signup": "22.2857",
+          "signup_per_click": "0.179487",
+          "paid_sub_per_signup": "0.250000",
+          "cost_per_sub_recomputed": "89.1429",
+          "cost_per_sub_supplied": "89.14",
+          "sample_cost_share": "0.046226",
+          "sample_sub_share": "0.094954",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "0.492502",
+          "gap_to_allowable": "-91.8571",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "0.5314289393407371682328625108",
+          "gap_to_benchmark": "-78.5990",
+          "sample_without_term_cost_per_sub": "192.9676258992805755395683453"
+        },
+        "summary": "Second-lowest cost/sub in the sample: $89.14 (0.49x of allowable). Second-highest signup->sub in the sample (25.0%) and 175 subs on 4.6% of spend.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Use-case intent: build internal business tools. Converts well, which suggests the product serves this use case, but that is inferred from the data, not confirmed by product.",
+        "confidence": "medium",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "89.1429",
+          "ratio": "0.4925022099447513812154696133",
+          "gap": "-91.8571",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "89.1429",
+          "ratio": "0.5314289393407371682328625108",
+          "gap": "-78.5990",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "whether internal tools is a supported/promoted use case",
+          "limits": "landing-page and ad-copy investment",
+          "status": "to_confirm"
+        },
+        {
+          "item": "existing keyword coverage",
+          "limits": "add vs already covered",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Expansion candidate: confirm coverage, then dedicated ad group + use-case landing page.",
+        "maintain_efficiency": "Keep; isolate to protect efficiency.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Check keyword list and landing pages for an internal-tools use case.",
+        "Confirm with product whether internal tools is a target use case."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 8,
+      "term_id": "st_429e31f7f0f8",
+      "search_term": "ai app builder github",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "7400",
+          "cost": "14800",
+          "signup": "890",
+          "paid_sub": "18",
+          "cpc": "2.0000",
+          "cost_per_signup": "16.6292",
+          "signup_per_click": "0.120270",
+          "paid_sub_per_signup": "0.020225",
+          "cost_per_sub_recomputed": "822.2222",
+          "cost_per_sub_supplied": "822.22",
+          "sample_cost_share": "0.043856",
+          "sample_sub_share": "0.009767",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "4.542664",
+          "gap_to_allowable": "641.2222",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "4.901710306131026296947870508",
+          "gap_to_benchmark": "654.4803",
+          "sample_without_term_cost_per_sub": "176.8054794520547945205479452"
+        },
+        "summary": "Cost/sub $822.22: 4.54x of allowable. Cheapest clicks in the sample ($2.00) and a normal signup rate (12.0%), but signup->sub is only 2.0% (18 subs from 890 signups). 4.4% of sample spend.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Developer intent: looking for an open-source repo, a GitHub-integrated builder, or code export. If Braid has no GitHub integration or does not target developers, this is off-target; if it does, the landing page may be failing this audience.",
+        "confidence": "medium",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "822.2222",
+          "ratio": "4.542664088397790055248618785",
+          "gap": "641.2222",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "822.2222",
+          "ratio": "4.901710306131026296947870508",
+          "gap": "654.4803",
+          "status": "above",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "GitHub integration / code export / developer targeting",
+          "limits": "negative vs landing-page fix",
+          "status": "to_confirm"
+        },
+        {
+          "item": "landing page shown to this query",
+          "limits": "whether developers see anything GitHub-related",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Not scaled. If developers are a target, test a developer/GitHub landing page before deciding.",
+        "maintain_efficiency": "Conditional negative on 'github' (phrase) if there is no GitHub-related feature or developer targeting. If there is, fix the landing page first and re-measure.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Ask product: GitHub integration or code export, yes/no.",
+        "Check what the ad and landing page promise for this query."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    },
+    {
+      "rank_by_cost": 9,
+      "term_id": "st_66770c31f114",
+      "search_term": "scaffold alternative",
+      "match_type_source": "Broad",
+      "evidence": {
+        "source": "output/step1/metrics_search_terms.csv",
+        "numbers": {
+          "clicks": "2600",
+          "cost": "11700",
+          "signup": "520",
+          "paid_sub": "138",
+          "cpc": "4.5000",
+          "cost_per_signup": "22.5000",
+          "signup_per_click": "0.200000",
+          "paid_sub_per_signup": "0.265385",
+          "cost_per_sub_recomputed": "84.7826",
+          "cost_per_sub_supplied": "84.78",
+          "sample_cost_share": "0.034670",
+          "sample_sub_share": "0.074878",
+          "allowable_cost_per_sub": "181",
+          "ratio_to_allowable": "0.468412",
+          "gap_to_allowable": "-96.2174",
+          "benchmark_cost_per_sub": "167.7419",
+          "ratio_to_benchmark": "0.5054348376881387417216569027",
+          "gap_to_benchmark": "-82.9593",
+          "sample_without_term_cost_per_sub": "191.0674486803519061583577713"
+        },
+        "summary": "Lowest cost/sub in the sample: $84.78 (0.47x of allowable, 0.51x of benchmark). Highest signup rate (20.0%) and highest signup->sub (26.5%). Small spend (3.5% of sample) at a $4.50 CPC.",
+        "status": "fact"
+      },
+      "intent_hypothesis": {
+        "text": "Competitor-switching intent: Scaffold is the confirmed main competitor, so these are evaluators comparing alternatives. High readiness to buy is consistent with the ratios.",
+        "confidence": "high",
+        "status": "hypothesis"
+      },
+      "comparison": {
+        "vs_allowable": {
+          "reference": "Non-Brand allowable (candidate brief)",
+          "reference_value": "181",
+          "term_value": "84.7826",
+          "ratio": "0.4684121546961325966850828729",
+          "gap": "-96.2174",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        },
+        "vs_scope_benchmark": {
+          "reference": "scope cost/sub recomputed (step1), not a target",
+          "reference_value": "167.7419",
+          "term_value": "84.7826",
+          "ratio": "0.5054348376881387417216569027",
+          "gap": "-82.9593",
+          "status": "below",
+          "note": "descriptive; cohort alignment of subs to signups unverified"
+        }
+      },
+      "missing_info": [
+        {
+          "item": "existing competitor keywords / campaign",
+          "limits": "whether this is already targeted or is broad-match spillover",
+          "status": "to_confirm"
+        },
+        {
+          "item": "impression share on competitor queries",
+          "limits": "scaling headroom",
+          "status": "to_confirm"
+        },
+        {
+          "item": "trademark/policy constraints on competitor ad copy",
+          "limits": "ad copy for a dedicated ad group",
+          "status": "to_confirm"
+        }
+      ],
+      "conditional_handling": {
+        "posture_selected": null,
+        "scale": "Clear expansion candidate: check coverage, then a dedicated competitor ad group with a comparison landing page and its own budget.",
+        "maintain_efficiency": "Keep and isolate; still worth a dedicated ad group so the efficient volume is protected.",
+        "status": "conditional; no final decision until posture is selected"
+      },
+      "investigate_now": [
+        "Check whether a competitor campaign or 'scaffold' keywords already exist.",
+        "Pull impression share for competitor queries."
+      ],
+      "final_decision": null,
+      "human_amendments": null
+    }
+  ],
+  "summary": {
+    "negative_candidates": [
+      {
+        "term_id": "st_7397eeb3716a",
+        "proposed_negative": "free",
+        "match_type": "phrase",
+        "condition": "only if product confirms no free tier OR cohort-aligned free->paid conversion stays near the same-window rate after the lag window; otherwise isolate, do not negate",
+        "scope_note": "campaign/ad-group IDs unknown; not import-ready",
+        "search_term": "free ai app builder",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_429e31f7f0f8",
+        "proposed_negative": "github",
+        "match_type": "phrase",
+        "condition": "only if product confirms no GitHub integration/code export and developers are not a target; otherwise fix landing page first",
+        "scope_note": "campaign/ad-group IDs unknown; not import-ready",
+        "search_term": "ai app builder github",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_6de9a251f911",
+        "proposed_negative": "enterprise",
+        "match_type": "phrase",
+        "condition": "only if there is no enterprise offering or sales-assisted path; if there is, Subs is the wrong KPI and the term should be measured on leads instead",
+        "scope_note": "campaign/ad-group IDs unknown; small counts, no data-sufficiency threshold set",
+        "search_term": "enterprise app development platform",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_2fe617db21cf",
+        "proposed_negative": "how to",
+        "match_type": "phrase",
+        "condition": "only under maintain_efficiency and only after the query mix confirms mostly tutorial-seeking; a landing-page test is the preferred first step",
+        "scope_note": "would apply to the core ad group only; IDs unknown",
+        "search_term": "how to build an ai app",
+        "status": "conditional"
+      }
+    ],
+    "addition_or_isolation_candidates": [
+      {
+        "term_id": "st_66770c31f114",
+        "action": "isolate into a competitor ad group",
+        "landing_page_test": "comparison page vs current",
+        "precheck": "existing competitor keywords/campaign",
+        "search_term": "scaffold alternative",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_a9cf56135541",
+        "action": "isolate into a use-case ad group",
+        "landing_page_test": "internal-tools use-case page vs current",
+        "precheck": "existing keyword coverage; product confirms use case",
+        "search_term": "internal tool builder",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_98934dc150fb",
+        "action": "isolate into a no-code ad group",
+        "landing_page_test": "no-code page vs current",
+        "precheck": "existing 'no code' keywords; positioning",
+        "search_term": "build app without code",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_a3029027e1c6",
+        "action": "isolate with matching ad copy",
+        "landing_page_test": "vibe-coding messaging vs current",
+        "precheck": "existing coverage; messaging fit",
+        "search_term": "vibe coding app builder",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_7397eeb3716a",
+        "action": "isolate with free-tier landing page and capped bid (if free tier exists)",
+        "landing_page_test": "free-tier page vs current, measured on cohort-aligned subs",
+        "precheck": "free tier exists",
+        "search_term": "free ai app builder",
+        "status": "conditional"
+      },
+      {
+        "term_id": "st_2fe617db21cf",
+        "action": "separate ad group for informational queries",
+        "landing_page_test": "tutorial/template page vs current",
+        "precheck": "query mix from search-term report",
+        "search_term": "how to build an ai app",
+        "status": "conditional"
+      }
+    ],
+    "least_certain_term": {
+      "term_id": "st_7397eeb3716a",
+      "why": "It is 18.4% of sample spend, produces the most signups, and its decision flips entirely on one product fact. Every other high cost/sub term has a smaller spend footprint.",
+      "single_piece_of_information": "Whether Braid has a free tier and, if so, the cohort-aligned free->paid conversion after the lag window. If free signups convert later at a rate that brings cost/sub under $181, the term is an isolation candidate; if not, it is the largest negative candidate.",
+      "search_term": "free ai app builder"
+    },
+    "questions_for_product_or_data_team": [
+      {
+        "to": "product",
+        "question": "Is there a free tier? What is the median and 90-day free->paid conversion?",
+        "unblocks": "free ai app builder decision"
+      },
+      {
+        "to": "product",
+        "question": "Is there a GitHub integration, code export, or developer audience?",
+        "unblocks": "ai app builder github decision"
+      },
+      {
+        "to": "sales/product",
+        "question": "Is there an enterprise plan or sales-assisted path, and are demo requests tracked as conversions?",
+        "unblocks": "enterprise app development platform decision and KPI choice"
+      },
+      {
+        "to": "product/marketing",
+        "question": "Are no-code, internal tools and vibe coding positioning the product supports?",
+        "unblocks": "isolation and landing-page choices for three efficient terms"
+      },
+      {
+        "to": "data",
+        "question": "What are the exact dates, attribution model, and lag between Regs and Subs? Are Subs cohort-aligned to Regs in the same window?",
+        "unblocks": "whether signup->sub ratios are comparable across terms"
+      },
+      {
+        "to": "data",
+        "question": "Is there an FFT/activation event available per search term?",
+        "unblocks": "the inherited bidding-signal method"
+      },
+      {
+        "to": "data/finance",
+        "question": "Customer value or margin behind the $181 allowable, and whether it differs by plan?",
+        "unblocks": "whether $181 is right for enterprise or free-tier intents"
+      },
+      {
+        "to": "account owner",
+        "question": "Existing keyword list, match types, campaign/ad-group structure and IDs; impression share by keyword",
+        "unblocks": "add-vs-covered decisions, negative scoping, and any Editor file"
+      },
+      {
+        "to": "operator",
+        "question": "min_cost / min_subs data-sufficiency thresholds",
+        "unblocks": "whether 12-sub terms are actionable"
+      }
+    ],
+    "other_hypotheses_and_tests": [
+      {
+        "hypothesis": "The sample cost/sub ($183.11) is above the scope benchmark ($167.74); by subtraction the unseen ~35% of scope spend runs at $145.21. The nine rows may be the harder part of the scope, not representative of it.",
+        "test": "Request the full search-term report for the scope.",
+        "status": "hypothesis"
+      },
+      {
+        "hypothesis": "Three low-converting terms (free / github / enterprise) share a pattern: normal or high signup rate, very low signup->sub. That is consistent with either intent mismatch or post-click mismatch; the data cannot separate the two.",
+        "test": "Landing-page audit per term before any negative.",
+        "status": "hypothesis"
+      },
+      {
+        "hypothesis": "Broad match may be grouping several intents under one row (e.g. 'how to build an ai app').",
+        "test": "Search-term report by keyword.",
+        "status": "hypothesis"
+      },
+      {
+        "hypothesis": "Non-Brand Q2 cost/sub ($161.22) rose versus supplied Q1 ($147.50); the scope's contribution to that change cannot be isolated without period alignment.",
+        "test": "Confirm the scope period equals Q2 and get Q1 scope figures.",
+        "status": "hypothesis"
+      }
+    ],
+    "notes": [
+      "No forced negative quota; every negative is conditional on a product or data fact listed with it.",
+      "Existing keywords and account structure are unknown: every addition/isolation requires a coverage check first.",
+      "Campaign/ad-group IDs are unknown: nothing here is an import-ready file."
+    ]
+  },
+  "step1_missing_data": [
+    {
+      "item": "exact_dates_and_year",
+      "status": "missing",
+      "known": "search terms = 'last quarter'; channel table = Q1/Q2 labels",
+      "limits": "confirming that the sample, the scope and the Non-Brand Q2 row cover the same period; any seasonality reading"
+    },
+    {
+      "item": "fft",
+      "status": "unavailable_not_zero",
+      "limits": "applying the inherited FFT bidding-signal method; signup->FFT->paid stage diagnosis"
+    },
+    {
+      "item": "conversion_maturity_and_lag",
+      "status": "missing",
+      "limits": "whether paid_sub_per_signup ratios are comparable across terms; cohort alignment of Subs to the same-period Regs"
+    },
+    {
+      "item": "attribution_definition",
+      "status": "missing",
+      "limits": "comparing channel cost/sub across channels and to allowables; whether Regs/Subs are last-click or otherwise"
+    },
+    {
+      "item": "customer_value_ltv_or_margin",
+      "status": "missing",
+      "limits": "judging whether $181 allowable is appropriate per term; any payback interpretation"
+    },
+    {
+      "item": "landing_page_and_product_context",
+      "status": "missing",
+      "limits": "intent hypotheses for 'free', 'github', 'enterprise', 'internal tool' terms; post-click tests"
+    },
+    {
+      "item": "existing_keywords_and_account_structure",
+      "status": "missing",
+      "limits": "deciding whether a term is already covered, should be isolated, or added; match-type interpretation"
+    },
+    {
+      "item": "campaign_and_ad_group_ids",
+      "status": "missing",
+      "limits": "any Editor-importable negative or keyword file; scoping negatives"
+    },
+    {
+      "item": "impressions",
+      "status": "missing",
+      "limits": "CTR and impression share; cannot be computed from the supplied columns"
+    },
+    {
+      "item": "q1_raw_spend_and_subs",
+      "status": "missing",
+      "limits": "verifying q1_cost_per_sub; QoQ change uses supplied Q1 as-is"
+    },
+    {
+      "item": "tiktok_allowable_cost_per_sub",
+      "status": "unavailable_not_zero",
+      "limits": "TikTok gap-to-allowable and ratio"
+    },
+    {
+      "item": "remaining_scope_search_terms",
+      "status": "missing",
+      "limits": "the ~35% of scope spend outside the sample is only a subtraction; no term-level view of it"
+    },
+    {
+      "item": "paid_total_supplied_cost_per_sub_basis",
+      "status": "unexplained",
+      "limits": "which figure (supplied 135.47 or recomputed) to cite for the account; cause not assumed"
+    },
+    {
+      "item": "operator_thresholds_min_cost_min_subs",
+      "status": "unset",
+      "limits": "data-sufficiency tiering; deferred to operator configuration"
+    }
+  ]
+}

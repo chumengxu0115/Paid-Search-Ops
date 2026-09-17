@@ -1,0 +1,233 @@
+{
+  "summary": {
+    "pass_count": 12,
+    "fail_count": 0,
+    "warning_count": 2,
+    "blocked_count": 3,
+    "missing_count": 14,
+    "overall": "pass"
+  },
+  "confirmed_context": {
+    "channel": "Google Non-Brand",
+    "scope_label": "Non-Brand ai app builder",
+    "scope_spend": 520000,
+    "scope_subscriptions": 3100,
+    "allowable_cost_per_sub": 181,
+    "allowable_status": "confirmed_by_assignment_for_non_brand",
+    "main_competitor": "Scaffold",
+    "period_relative": {
+      "search_terms": "last quarter",
+      "channel_summary": "Q1 / Q2 labels",
+      "note": "relative period is known; only exact dates and year are missing"
+    },
+    "event_mapping": {
+      "Regs": {
+        "canonical": "signup",
+        "status": "operator_mapping_for_exercise"
+      },
+      "Subs": {
+        "canonical": "paid_sub",
+        "status": "operator_mapping_for_exercise_event_definitions_unverified"
+      },
+      "FFT": {
+        "canonical": "fft",
+        "status": "unavailable"
+      }
+    }
+  },
+  "passes": [
+    {
+      "id": "sample_cost_total",
+      "status": "pass",
+      "expected": "337470",
+      "actual": "337470"
+    },
+    {
+      "id": "sample_subs_total",
+      "status": "pass",
+      "expected": "1843",
+      "actual": "1843"
+    },
+    {
+      "id": "channel_spend_sum_excluding_aggregate",
+      "status": "pass",
+      "expected": "1623000",
+      "actual": "1623000"
+    },
+    {
+      "id": "channel_subs_sum_excluding_aggregate",
+      "status": "pass",
+      "expected": "11982",
+      "actual": "11982"
+    },
+    {
+      "id": "aggregate_matches_channel_sum:Paid total",
+      "status": "pass",
+      "aggregate_spend": "1623000",
+      "aggregate_subs": "11982",
+      "channel_sum_spend": "1623000",
+      "channel_sum_subs": "11982",
+      "note": "aggregate is excluded from ranking, shares and sums; counted once, as a reconciliation row"
+    },
+    {
+      "id": "aggregate_rows_unranked",
+      "status": "pass",
+      "aggregate_rows": [
+        "Paid total"
+      ]
+    },
+    {
+      "id": "search_term_cost_per_sub_within_tolerance",
+      "status": "pass",
+      "tolerance": "0.005",
+      "mismatched": []
+    },
+    {
+      "id": "real_channel_cost_per_sub_within_tolerance",
+      "status": "pass",
+      "tolerance": "0.005",
+      "mismatched": []
+    },
+    {
+      "id": "tiktok_allowable_unavailable_not_zero",
+      "status": "pass",
+      "allowable_cost_per_sub": null
+    },
+    {
+      "id": "scope_cost_per_sub_within_tolerance",
+      "status": "pass",
+      "supplied": "167.74",
+      "recomputed": "167.7419"
+    },
+    {
+      "id": "sample_coverage_approximately_reported",
+      "status": "pass",
+      "reported_approx": "0.65",
+      "actual": "0.648981",
+      "tolerance": "0.01",
+      "note": "approximate comparison, not exact equality"
+    },
+    {
+      "id": "no_negative_or_nonfinite_inputs",
+      "status": "pass",
+      "note": "enforced at load time; loader raises on violation"
+    }
+  ],
+  "failures": [],
+  "warnings": [
+    {
+      "id": "allowable_unavailable",
+      "scope": "channels",
+      "channel": "TikTok",
+      "message": "allowable_cost_per_sub is not supplied; gap and ratio left empty (not zero)."
+    },
+    {
+      "id": "supplied_vs_recomputed_mismatch",
+      "scope": "channels",
+      "channel": "Paid total",
+      "metric": "q2_cost_per_sub",
+      "supplied": "135.47",
+      "recomputed": "135.4532",
+      "abs_diff": "0.0168",
+      "tolerance": "0.005",
+      "message": "Supplied Q2 cost/sub differs from q2_spend/q2_subs beyond half-cent tolerance. Supplied value preserved; cause unknown (not assumed to be rounding)."
+    }
+  ],
+  "blocked": [
+    {
+      "id": "threshold_unset:min_cost",
+      "status": "blocked",
+      "reason": "operator-owned threshold is null; not invented",
+      "blocks": "data-sufficiency tiering (Monitor/Keep/Pause style) for the diagnostic phase",
+      "does_not_block": "descriptive metrics in this checkpoint"
+    },
+    {
+      "id": "threshold_unset:min_signups",
+      "status": "blocked",
+      "reason": "operator-owned threshold is null; not invented",
+      "blocks": "data-sufficiency tiering (Monitor/Keep/Pause style) for the diagnostic phase",
+      "does_not_block": "descriptive metrics in this checkpoint"
+    },
+    {
+      "id": "threshold_unset:min_subs",
+      "status": "blocked",
+      "reason": "operator-owned threshold is null; not invented",
+      "blocks": "data-sufficiency tiering (Monitor/Keep/Pause style) for the diagnostic phase",
+      "does_not_block": "descriptive metrics in this checkpoint"
+    }
+  ],
+  "missing_data": [
+    {
+      "item": "exact_dates_and_year",
+      "status": "missing",
+      "known": "search terms = 'last quarter'; channel table = Q1/Q2 labels",
+      "limits": "confirming that the sample, the scope and the Non-Brand Q2 row cover the same period; any seasonality reading"
+    },
+    {
+      "item": "fft",
+      "status": "unavailable_not_zero",
+      "limits": "applying the inherited FFT bidding-signal method; signup->FFT->paid stage diagnosis"
+    },
+    {
+      "item": "conversion_maturity_and_lag",
+      "status": "missing",
+      "limits": "whether paid_sub_per_signup ratios are comparable across terms; cohort alignment of Subs to the same-period Regs"
+    },
+    {
+      "item": "attribution_definition",
+      "status": "missing",
+      "limits": "comparing channel cost/sub across channels and to allowables; whether Regs/Subs are last-click or otherwise"
+    },
+    {
+      "item": "customer_value_ltv_or_margin",
+      "status": "missing",
+      "limits": "judging whether $181 allowable is appropriate per term; any payback interpretation"
+    },
+    {
+      "item": "landing_page_and_product_context",
+      "status": "missing",
+      "limits": "intent hypotheses for 'free', 'github', 'enterprise', 'internal tool' terms; post-click tests"
+    },
+    {
+      "item": "existing_keywords_and_account_structure",
+      "status": "missing",
+      "limits": "deciding whether a term is already covered, should be isolated, or added; match-type interpretation"
+    },
+    {
+      "item": "campaign_and_ad_group_ids",
+      "status": "missing",
+      "limits": "any Editor-importable negative or keyword file; scoping negatives"
+    },
+    {
+      "item": "impressions",
+      "status": "missing",
+      "limits": "CTR and impression share; cannot be computed from the supplied columns"
+    },
+    {
+      "item": "q1_raw_spend_and_subs",
+      "status": "missing",
+      "limits": "verifying q1_cost_per_sub; QoQ change uses supplied Q1 as-is"
+    },
+    {
+      "item": "tiktok_allowable_cost_per_sub",
+      "status": "unavailable_not_zero",
+      "limits": "TikTok gap-to-allowable and ratio"
+    },
+    {
+      "item": "remaining_scope_search_terms",
+      "status": "missing",
+      "limits": "the ~35% of scope spend outside the sample is only a subtraction; no term-level view of it"
+    },
+    {
+      "item": "paid_total_supplied_cost_per_sub_basis",
+      "status": "unexplained",
+      "limits": "which figure (supplied 135.47 or recomputed) to cite for the account; cause not assumed"
+    },
+    {
+      "item": "operator_thresholds_min_cost_min_subs",
+      "status": "unset",
+      "limits": "data-sufficiency tiering; deferred to operator configuration"
+    }
+  ],
+  "scope_note": "This checkpoint produces descriptive metrics only: no negatives, intent labels, forecasts, scaling advice or causal claims."
+}

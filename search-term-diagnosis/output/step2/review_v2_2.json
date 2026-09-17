@@ -1,0 +1,1152 @@
+{
+  "meta": {
+    "step": "step2-review-v2.2",
+    "author": "claude-code-model-interpretation",
+    "supersedes": "review_v2_1",
+    "corrections": [
+      "F1 ranking/count claims are computed placeholders, not hardcoded: enterprise subs/signup is third-lowest; 5 sample terms exceed how-to's required rate",
+      "F2 unknown product capability is not confirmed absence: github, free and enterprise negatives are pending confirmation of the named product fact",
+      "F3 signup-only optimisation is a concern to investigate, not a proven reason to change the bidding event; current bidding setup, lag and usable signal volume are unknown"
+    ],
+    "independent_of": "diagnosis v1 (preserved, not read for content)",
+    "inputs": "supplied datasets via output/step1, config/account_context.json, methodology priors; no operator interview answers",
+    "posture_selected": null,
+    "sources": {
+      "step1_metrics_search_terms_sha256": "14f0778e64d90d6c40702744145621add31fee58a22e656084ec293f7aed043f",
+      "step1_scope_summary_sha256": "593419324ef418845d19ccae2f3fe63eafe4a30dbdf7b5ef0d1e36b6ea55a8ca",
+      "step1_checks_sha256": "461ebb4fd68c31a8ee8f877baaed0c58198e3b659d237fe143afc0317476d4af",
+      "account_context_sha256": "9bd4a272d2923f4cbd1d883c0a8173f3f76a495525b4b81280a9824280a3b30b",
+      "authoring_sha256": "c0180fb8ffe441b7a095dd8431ce42486b04eb751c6b28fa0f5a5ac8c91fc7b3"
+    },
+    "validation": {
+      "aliases_resolved": 9,
+      "groups": 7,
+      "correlations": 0,
+      "all_placeholders_resolved": true
+    }
+  },
+  "observed_performance": [
+    {
+      "alias": "core",
+      "term_id": "st_dd3412fed286",
+      "search_term": "ai app builder",
+      "match_type_source": "Phrase",
+      "rank_by_cost": 1,
+      "numbers": {
+        "clicks": "34000",
+        "cost": "102000",
+        "signup": "4760",
+        "paid_sub": "690",
+        "cpc": "3.0000",
+        "cost_per_signup": "21.4286",
+        "signup_per_click": "0.140000",
+        "paid_sub_per_signup": "0.144958",
+        "cost_per_sub_recomputed": "147.8261",
+        "cost_per_sub_supplied": "147.83",
+        "sample_cost_share": "0.302249",
+        "sample_sub_share": "0.374390",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "0.816719",
+        "gap_to_allowable": "-33.1739",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "0.8812711671919776752260466824",
+        "gap_to_benchmark": "-19.9158",
+        "sample_without_term_cost_per_sub": "204.2237640936686903729401561",
+        "subs_needed_at_allowable": "564",
+        "sub_rate_needed_at_allowable": "0.1184873949579831932773109244",
+        "subs_multiple_needed": "0.8173913043478260869565217391"
+      }
+    },
+    {
+      "alias": "free",
+      "term_id": "st_7397eeb3716a",
+      "search_term": "free ai app builder",
+      "match_type_source": "Phrase",
+      "rank_by_cost": 2,
+      "numbers": {
+        "clicks": "29500",
+        "cost": "61950",
+        "signup": "5600",
+        "paid_sub": "112",
+        "cpc": "2.1000",
+        "cost_per_signup": "11.0625",
+        "signup_per_click": "0.189831",
+        "paid_sub_per_signup": "0.020000",
+        "cost_per_sub_recomputed": "553.1250",
+        "cost_per_sub_supplied": "553.13",
+        "sample_cost_share": "0.183572",
+        "sample_sub_share": "0.060770",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "3.055939",
+        "gap_to_allowable": "372.1250",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "3.297476659081600959569433755",
+        "gap_to_benchmark": "385.3831",
+        "sample_without_term_cost_per_sub": "159.1681109185441941074523397",
+        "subs_needed_at_allowable": "343",
+        "sub_rate_needed_at_allowable": "0.06125",
+        "subs_multiple_needed": "3.0625"
+      }
+    },
+    {
+      "alias": "howto",
+      "term_id": "st_2fe617db21cf",
+      "search_term": "how to build an ai app",
+      "match_type_source": "Broad",
+      "rank_by_cost": 3,
+      "numbers": {
+        "clicks": "22000",
+        "cost": "52800",
+        "signup": "2860",
+        "paid_sub": "210",
+        "cpc": "2.4000",
+        "cost_per_signup": "18.4615",
+        "signup_per_click": "0.130000",
+        "paid_sub_per_signup": "0.073427",
+        "cost_per_sub_recomputed": "251.4286",
+        "cost_per_sub_supplied": "251.43",
+        "sample_cost_share": "0.156458",
+        "sample_sub_share": "0.113945",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "1.389108",
+        "gap_to_allowable": "70.4286",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "1.498901586306104795522168284",
+        "gap_to_benchmark": "83.6867",
+        "sample_without_term_cost_per_sub": "174.3233312921004286589099816",
+        "subs_needed_at_allowable": "292",
+        "sub_rate_needed_at_allowable": "0.1020979020979020979020979021",
+        "subs_multiple_needed": "1.390476190476190476190476190"
+      }
+    },
+    {
+      "alias": "nocode",
+      "term_id": "st_98934dc150fb",
+      "search_term": "build app without code",
+      "match_type_source": "Broad",
+      "rank_by_cost": 4,
+      "numbers": {
+        "clicks": "9800",
+        "cost": "34300",
+        "signup": "1570",
+        "paid_sub": "320",
+        "cpc": "3.5000",
+        "cost_per_signup": "21.8471",
+        "signup_per_click": "0.160204",
+        "paid_sub_per_signup": "0.203822",
+        "cost_per_sub_recomputed": "107.1875",
+        "cost_per_sub_supplied": "107.19",
+        "sample_cost_share": "0.101639",
+        "sample_sub_share": "0.173630",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "0.592196",
+        "gap_to_allowable": "-73.8125",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "0.6390025390197678695662801006",
+        "gap_to_benchmark": "-60.5544",
+        "sample_without_term_cost_per_sub": "199.0610636900853578463558766",
+        "subs_needed_at_allowable": "190",
+        "sub_rate_needed_at_allowable": "0.1210191082802547770700636943",
+        "subs_multiple_needed": "0.59375"
+      }
+    },
+    {
+      "alias": "vibe",
+      "term_id": "st_a3029027e1c6",
+      "search_term": "vibe coding app builder",
+      "match_type_source": "Broad",
+      "rank_by_cost": 5,
+      "numbers": {
+        "clicks": "8600",
+        "cost": "27520",
+        "signup": "1120",
+        "paid_sub": "168",
+        "cpc": "3.2000",
+        "cost_per_signup": "24.5714",
+        "signup_per_click": "0.130233",
+        "paid_sub_per_signup": "0.150000",
+        "cost_per_sub_recomputed": "163.8095",
+        "cost_per_sub_supplied": "163.81",
+        "sample_cost_share": "0.081548",
+        "sample_sub_share": "0.091156",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "0.905025",
+        "gap_to_allowable": "-17.1905",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "0.9765568411947164065746244677",
+        "gap_to_benchmark": "-3.9324",
+        "sample_without_term_cost_per_sub": "185.0447761194029850746268657",
+        "subs_needed_at_allowable": "153",
+        "sub_rate_needed_at_allowable": "0.1366071428571428571428571429",
+        "subs_multiple_needed": "0.9107142857142857142857142857"
+      }
+    },
+    {
+      "alias": "enterprise",
+      "term_id": "st_6de9a251f911",
+      "search_term": "enterprise app development platform",
+      "match_type_source": "Broad",
+      "rank_by_cost": 6,
+      "numbers": {
+        "clicks": "2100",
+        "cost": "16800",
+        "signup": "210",
+        "paid_sub": "12",
+        "cpc": "8.0000",
+        "cost_per_signup": "80.0000",
+        "signup_per_click": "0.100000",
+        "paid_sub_per_signup": "0.057143",
+        "cost_per_sub_recomputed": "1400.0000",
+        "cost_per_sub_supplied": "1400.00",
+        "sample_cost_share": "0.049782",
+        "sample_sub_share": "0.006511",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "7.734807",
+        "gap_to_allowable": "1219.0000",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "8.346155611686764010661617640",
+        "gap_to_benchmark": "1232.2581",
+        "sample_without_term_cost_per_sub": "175.1338066630256690333151283",
+        "subs_needed_at_allowable": "93",
+        "sub_rate_needed_at_allowable": "0.4428571428571428571428571429",
+        "subs_multiple_needed": "7.75"
+      }
+    },
+    {
+      "alias": "internal",
+      "term_id": "st_a9cf56135541",
+      "search_term": "internal tool builder",
+      "match_type_source": "Broad",
+      "rank_by_cost": 7,
+      "numbers": {
+        "clicks": "3900",
+        "cost": "15600",
+        "signup": "700",
+        "paid_sub": "175",
+        "cpc": "4.0000",
+        "cost_per_signup": "22.2857",
+        "signup_per_click": "0.179487",
+        "paid_sub_per_signup": "0.250000",
+        "cost_per_sub_recomputed": "89.1429",
+        "cost_per_sub_supplied": "89.14",
+        "sample_cost_share": "0.046226",
+        "sample_sub_share": "0.094954",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "0.492502",
+        "gap_to_allowable": "-91.8571",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "0.5314289393407371682328625108",
+        "gap_to_benchmark": "-78.5990",
+        "sample_without_term_cost_per_sub": "192.9676258992805755395683453",
+        "subs_needed_at_allowable": "87",
+        "sub_rate_needed_at_allowable": "0.1242857142857142857142857143",
+        "subs_multiple_needed": "0.4971428571428571428571428571"
+      }
+    },
+    {
+      "alias": "github",
+      "term_id": "st_429e31f7f0f8",
+      "search_term": "ai app builder github",
+      "match_type_source": "Broad",
+      "rank_by_cost": 8,
+      "numbers": {
+        "clicks": "7400",
+        "cost": "14800",
+        "signup": "890",
+        "paid_sub": "18",
+        "cpc": "2.0000",
+        "cost_per_signup": "16.6292",
+        "signup_per_click": "0.120270",
+        "paid_sub_per_signup": "0.020225",
+        "cost_per_sub_recomputed": "822.2222",
+        "cost_per_sub_supplied": "822.22",
+        "sample_cost_share": "0.043856",
+        "sample_sub_share": "0.009767",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "4.542664",
+        "gap_to_allowable": "641.2222",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "4.901710306131026296947870508",
+        "gap_to_benchmark": "654.4803",
+        "sample_without_term_cost_per_sub": "176.8054794520547945205479452",
+        "subs_needed_at_allowable": "82",
+        "sub_rate_needed_at_allowable": "0.09213483146067415730337078652",
+        "subs_multiple_needed": "4.555555555555555555555555556"
+      }
+    },
+    {
+      "alias": "scaffold",
+      "term_id": "st_66770c31f114",
+      "search_term": "scaffold alternative",
+      "match_type_source": "Broad",
+      "rank_by_cost": 9,
+      "numbers": {
+        "clicks": "2600",
+        "cost": "11700",
+        "signup": "520",
+        "paid_sub": "138",
+        "cpc": "4.5000",
+        "cost_per_signup": "22.5000",
+        "signup_per_click": "0.200000",
+        "paid_sub_per_signup": "0.265385",
+        "cost_per_sub_recomputed": "84.7826",
+        "cost_per_sub_supplied": "84.78",
+        "sample_cost_share": "0.034670",
+        "sample_sub_share": "0.074878",
+        "allowable_cost_per_sub": "181",
+        "ratio_to_allowable": "0.468412",
+        "gap_to_allowable": "-96.2174",
+        "benchmark_cost_per_sub": "167.7419",
+        "ratio_to_benchmark": "0.5054348376881387417216569027",
+        "gap_to_benchmark": "-82.9593",
+        "sample_without_term_cost_per_sub": "191.0674486803519061583577713",
+        "subs_needed_at_allowable": "65",
+        "sub_rate_needed_at_allowable": "0.125",
+        "subs_multiple_needed": "0.4710144927536231884057971014"
+      }
+    }
+  ],
+  "groups": {
+    "below_allowable": {
+      "members": [
+        "ai app builder",
+        "build app without code",
+        "vibe coding app builder",
+        "internal tool builder",
+        "scaffold alternative"
+      ],
+      "term_count": 5,
+      "cost": "191120",
+      "paid_sub": "1491",
+      "signup": "8670",
+      "cost_per_sub": "128.1824279007377598926894702",
+      "sub_rate": "0.1719723183391003460207612457",
+      "cost_share": "0.5663318220878892938631582067",
+      "sub_share": "0.8090070537167661421595225176"
+    },
+    "above_allowable": {
+      "members": [
+        "free ai app builder",
+        "how to build an ai app",
+        "ai app builder github",
+        "enterprise app development platform"
+      ],
+      "term_count": 4,
+      "cost": "146350",
+      "paid_sub": "352",
+      "signup": "9560",
+      "cost_per_sub": "415.7670454545454545454545455",
+      "sub_rate": "0.03682008368200836820083682008",
+      "cost_share": "0.4336681779121107061368417933",
+      "sub_share": "0.1909929462832338578404774824"
+    },
+    "head_plus_modifier": {
+      "members": [
+        "ai app builder",
+        "free ai app builder",
+        "ai app builder github"
+      ],
+      "term_count": 3,
+      "cost": "178750",
+      "paid_sub": "820",
+      "signup": "11250",
+      "cost_per_sub": "217.9878048780487804878048780",
+      "sub_rate": "0.07288888888888888888888888889",
+      "cost_share": "0.5296767120040299878507719205",
+      "sub_share": "0.4449267498643516006511123169"
+    },
+    "use_case_or_competitor": {
+      "members": [
+        "build app without code",
+        "internal tool builder",
+        "scaffold alternative"
+      ],
+      "term_count": 3,
+      "cost": "61600",
+      "paid_sub": "633",
+      "signup": "2790",
+      "cost_per_sub": "97.31437598736176935229067930",
+      "sub_rate": "0.2268817204301075268817204301",
+      "cost_share": "0.1825347438290811035054967849",
+      "sub_share": "0.3434617471513836136733586544"
+    },
+    "cheapest_three_cpc": {
+      "members": [
+        "ai app builder github",
+        "free ai app builder",
+        "how to build an ai app"
+      ],
+      "term_count": 3,
+      "cost": "129550",
+      "paid_sub": "340",
+      "signup": "9350",
+      "cost_per_sub": "381.0294117647058823529411765",
+      "sub_rate": "0.03636363636363636363636363636",
+      "cost_share": "0.3838859750496340415444335793",
+      "sub_share": "0.1844818231144872490504612046"
+    },
+    "top_three_spend": {
+      "members": [
+        "ai app builder",
+        "free ai app builder",
+        "how to build an ai app"
+      ],
+      "term_count": 3,
+      "cost": "216750",
+      "paid_sub": "1012",
+      "signup": "13220",
+      "cost_per_sub": "214.1798418972332015810276680",
+      "sub_rate": "0.07655068078668683812405446293",
+      "cost_share": "0.6422793137167748244288381189",
+      "sub_share": "0.5491047205642973412913727618"
+    },
+    "phrase_rows": {
+      "members": [
+        "ai app builder",
+        "free ai app builder"
+      ],
+      "term_count": 2,
+      "cost": "163950",
+      "paid_sub": "802",
+      "signup": "10360",
+      "cost_per_sub": "204.4264339152119700748129676",
+      "sub_rate": "0.07741312741312741312741312741",
+      "cost_share": "0.4858209618632767357098408747",
+      "sub_share": "0.4351600651112316874660879002"
+    }
+  },
+  "correlations": {},
+  "patterns": [
+    {
+      "id": "P1",
+      "title": "The subs/signup step, not the cost of a signup, accounts for most of the cost/sub spread",
+      "observed": "Cost/sub is an identity: cost per signup divided by subs per signup. Cost per signup sits in a narrow band for eight of nine terms ($11.06 to $24.57; enterprise is the outlier at $80.00), while subs/signup ranges from 2.0% (free, github) to 26.5% (scaffold) and cost/sub from $84.78 to $1,400.00. Direct comparison: free ($11.06) and github ($16.63) have the two cheapest signups in the sample but the two lowest subs/signup; scaffold and internal tools pay $22.50 and $22.29 per signup, close to the core term's $21.43, and convert those signups at 26.5% (highest) and 25.0% (second-highest). Because the two factors are mathematically coupled, no correlation is reported; the decomposition itself is the evidence.",
+      "supporting": [
+        "free ai app builder",
+        "ai app builder github",
+        "how to build an ai app",
+        "scaffold alternative",
+        "internal tool builder",
+        "build app without code"
+      ],
+      "counterexamples": [
+        "enterprise app development platform"
+      ],
+      "explanations": [
+        "Intent mismatch: some queries bring people who register but were not going to pay (tutorial seekers, free seekers, developers looking for a repo).",
+        "Post-click mismatch: the landing page or onboarding does not serve those intents even though they could pay.",
+        "Lag: same-window subs undercount terms whose users take longer to convert; the ratio would rise with cohort-aligned data.",
+        "Signup definition: 'Regs' may include very low-commitment registrations for some traffic, inflating signups without intent.",
+        "Note for bidding: whichever explanation holds, cost per signup does not track cost/sub here; whether that matters depends on the account's current bidding event, which is unknown."
+      ],
+      "distinguishing_evidence": "Cohort-aligned subs (60/90-day) separate lag from the rest; an FFT/activation event per term separates dead registrations from engaged ones; landing-page review and the matched keyword per row separate intent from post-click mismatch."
+    },
+    {
+      "id": "P2",
+      "title": "The sample splits into two performance tiers around the allowable, and the sample as a whole is above it",
+      "observed": "Five terms below $181 account for 56.6% of sample cost and 80.9% of sample subs at $128.18/sub (sub/signup 17.2%). Four terms above $181 account for 43.4% of cost and 19.1% of subs at $415.77/sub (sub/signup 3.7%). The nine rows together run at $183.11/sub, above the allowable and above the scope benchmark $167.74; by subtraction, the unseen remainder of the scope runs at $145.21.",
+      "supporting": [
+        "ai app builder",
+        "build app without code",
+        "vibe coding app builder",
+        "internal tool builder",
+        "scaffold alternative",
+        "free ai app builder",
+        "how to build an ai app",
+        "ai app builder github",
+        "enterprise app development platform"
+      ],
+      "counterexamples": [
+        "vibe coding app builder",
+        "how to build an ai app"
+      ],
+      "explanations": [
+        "Descriptive only: the split uses the same metric it groups by, so it is a summary, not an independent finding. Vibe coding (0.91x) and how-to (1.39x) sit close to the boundary and could move across it with lag or small count changes.",
+        "The nine rows may be a curated 'hardest' subset of the scope rather than a representative slice: the remainder ($145.21) is cheaper per sub than each of the three largest rows, including the core term ($147.83).",
+        "The scope benchmark being below the allowable while the sample is above it means efficiency in the scope is carried by terms not shown."
+      ],
+      "distinguishing_evidence": "The full search-term report for the scope (the remaining ~35% of spend)."
+    },
+    {
+      "id": "P3",
+      "title": "In this sample, the cheapest clicks convert worst; this is an observation, not a rule about price",
+      "observed": "The three cheapest CPCs in the sample are github ($2.00), free ($2.10) and how-to ($2.40); together they are 38.4% of sample cost, 18.4% of subs, and convert signups at 3.6%. The most expensive click, enterprise ($8.00), converts at 5.7%, third-lowest in the sample. The observation therefore holds for the three cheap terms and fails for the most expensive one; it is not evidence that paying more per click buys better customers.",
+      "supporting": [
+        "ai app builder github",
+        "free ai app builder",
+        "how to build an ai app",
+        "scaffold alternative",
+        "internal tool builder",
+        "build app without code"
+      ],
+      "counterexamples": [
+        "enterprise app development platform"
+      ],
+      "explanations": [
+        "The three cheap terms share modifier words (free, github, how to) that may mark a non-buying stage; the low price and the low conversion could both follow from that, with neither causing the other.",
+        "Braid's landing pages may serve buying intents well and these intents poorly; cheap traffic is not inherently worse.",
+        "Enterprise's price is set by a different set of competitors; its low self-serve conversion may reflect a sales-led buyer rather than intent quality."
+      ],
+      "distinguishing_evidence": "Landing-page review for the three cheap terms; whether enterprise visitors appear in a sales pipeline; the matched keyword and ad group for each row."
+    },
+    {
+      "id": "P4",
+      "title": "Sample-specific observation: use-case and competitor terms convert best here (hypothesis, not proof of value)",
+      "observed": "The three use-case/competitor terms (no-code, internal tools, scaffold alternative) are 18.3% of sample cost but 34.3% of subs, at $97.31/sub with subs/signup 22.7%. The three terms built on the head phrase 'ai app builder' (core, free, github) are 53.0% of cost and 44.5% of subs at $217.99/sub; within that group the modifier separates them (core $147.83, free $553.13, github $822.22). This is an observation about nine rows in one period: it says nothing about the value of the subscribers, their retention, or whether the ratio would hold at higher spend.",
+      "supporting": [
+        "build app without code",
+        "internal tool builder",
+        "scaffold alternative",
+        "free ai app builder",
+        "ai app builder github"
+      ],
+      "counterexamples": [
+        "vibe coding app builder",
+        "enterprise app development platform"
+      ],
+      "explanations": [
+        "Specificity of buying intent: someone naming a use case or a competitor may have already decided to buy something (hypothesis).",
+        "Linguistic form is not the driver: 'vibe coding app builder' is head-plus-modifier and converts at 15.0%; 'enterprise app development platform' is use-case-shaped and converts at 5.7%.",
+        "Volume effect: the use-case terms are small ($61,600.00); efficiency at this size does not imply efficiency at a larger size.",
+        "Customer value is unknown: a cheaper sub from a competitor query is not shown to be worth the same as a sub from the core term."
+      ],
+      "distinguishing_evidence": "Impression share for the use-case terms (demand-limited or share-limited), existing keyword coverage, and retention or value by acquisition term if available."
+    },
+    {
+      "id": "P5",
+      "title": "Allowable-reach arithmetic: which above-allowable terms are within the range of conversion rates observed in the sample",
+      "observed": "At current cost, meeting the $181 allowable would require: how-to 292 subs (10.2% of its signups, 1.39x its observed subs); free 343 subs (6.1%, 3.06x); github 82 subs (9.2%, 4.56x); enterprise 93 subs (44.3%, 7.75x). The highest subs/signup observed in the sample is 26.5%. Reaching the allowable is not financial break-even; the allowable is an operator target and its relation to margin is unknown.",
+      "supporting": [
+        "how to build an ai app",
+        "free ai app builder",
+        "ai app builder github",
+        "enterprise app development platform"
+      ],
+      "counterexamples": [],
+      "explanations": [
+        "How-to needs a rate (10.2%) that 5 other sample terms already exceed; a lag or landing-page effect of that size is plausible.",
+        "Free and github need rates that 6 and 5 other terms reach, but 3.06x and 4.56x their own observed subs; lag alone would have to be large to close that.",
+        "Enterprise needs a rate above anything observed in this sample (0 terms exceed it). That is not impossible (enterprise buyers may behave unlike self-serve buyers, and the count is 12 subs), but keeping the term under a Subs KPI at current cost means expecting a conversion rate no term here has shown. A lower cost per click or a different KPI (sales-assisted leads) would change the arithmetic."
+      ],
+      "distinguishing_evidence": "Cohort-aligned conversion by term; whether an enterprise sales path exists and is tracked; the margin behind the allowable."
+    },
+    {
+      "id": "P6",
+      "title": "Signup rate does not separate good from bad terms; small counts limit two terms",
+      "observed": "Signup/click runs from 10.0% (enterprise) to 20.0% (scaffold). 'free' has the second-highest signup rate (19.0%) and the third-highest cost/sub ($553.13; enterprise $1,400.00 and github $822.22 are higher). 'github' has a signup rate (12.0%) close to how-to's (13.0%) and vibe's (13.0%) yet the second-highest cost/sub. Two terms have very few subs (enterprise 12, github 18), so their subs/signup rates are the least stable; no operator data-sufficiency threshold has been set.",
+      "supporting": [
+        "free ai app builder",
+        "how to build an ai app"
+      ],
+      "counterexamples": [
+        "scaffold alternative",
+        "internal tool builder"
+      ],
+      "explanations": [
+        "A high signup rate on a 'free' query is expected regardless of intent to pay; signup rate measures the ease of registering, not the intent behind it.",
+        "For scaffold and internal tools, high signup rate and high subs/signup coincide, so signup rate is informative for buying-intent queries and misleading for others.",
+        "Small-count terms could look materially different with one more period of data."
+      ],
+      "distinguishing_evidence": "Operator min_cost / min_subs thresholds; an FFT or activation event that separates engaged signups from registrations."
+    },
+    {
+      "id": "P7",
+      "title": "Match type shows no pattern and cannot be read as keyword structure",
+      "observed": "Two rows are Phrase (core, free) and carry 48.6% of sample cost at $204.43/sub; seven are Broad. Broad rows span the best ($84.78) and worst ($1,400.00) cost/sub. The column records the match type that triggered the search term, not the keyword or ad group behind it, and says nothing about how many queries sit in a row.",
+      "supporting": [
+        "scaffold alternative",
+        "enterprise app development platform"
+      ],
+      "counterexamples": [],
+      "explanations": [
+        "Each row is one search term as reported; which keyword matched it, in which ad group, and under which bidding strategy, is not in the data.",
+        "The two Phrase rows may come from one keyword or two; nothing in the data says which."
+      ],
+      "distinguishing_evidence": "Matched keyword, ad group and campaign columns for each row (the standard search-term report fields), plus the bidding strategy per campaign."
+    }
+  ],
+  "observed_vs_explanations": [
+    {
+      "observation": "free: 5,600 signups (most in sample), 112 subs, subs/signup 2.0%, cost/sub $553.13 (third-highest)",
+      "explanations": "no free tier and searchers leave; free tier exists and converts after a lag; landing page contradicts the 'free' promise",
+      "settling_evidence": "product fact on free tier; 90-day cohort conversion for this term; landing-page review"
+    },
+    {
+      "observation": "github: cheapest CPC $2.00, subs/signup 2.0%, 18 subs, cost/sub $822.22 (second-highest)",
+      "explanations": "developer audience not served; open-source seekers who never intended to buy; low count instability",
+      "settling_evidence": "product fact on GitHub/code export; ad and landing page for the query; another period of data"
+    },
+    {
+      "observation": "enterprise: CPC $8.00, cost/signup $80.00, 12 subs, cost/sub $1,400.00 (highest); needs 44.3% subs/signup to reach $181, above the sample maximum 26.5%",
+      "explanations": "enterprise buyers convert through sales, not self-serve; term is off-target; count too small to judge",
+      "settling_evidence": "whether a sales path exists and whether these signups appear as leads"
+    },
+    {
+      "observation": "how-to: subs/signup 7.3%, needs 10.2% to reach $181",
+      "explanations": "tutorial seekers; slower conversion for learners; landing page not built for them",
+      "settling_evidence": "matched keyword for the row; cohort-aligned subs; a template/tutorial landing-page test"
+    },
+    {
+      "observation": "use-case/competitor terms: $97.31/sub on 18.3% of cost (sample-specific)",
+      "explanations": "high buying intent; small terms not yet scaled; already isolated in the account; subscriber value unknown",
+      "settling_evidence": "impression share, existing keyword coverage, value or retention by acquisition term"
+    },
+    {
+      "observation": "sample $183.11 vs scope $167.74 vs remainder $145.21",
+      "explanations": "sample is the hardest subset; period misalignment; different attribution",
+      "settling_evidence": "full scope search-term report with dates"
+    }
+  ],
+  "actions": {
+    "justified_now": [
+      {
+        "action": "Request the full scope search-term report with dates, matched keyword, ad group, campaign and bidding strategy",
+        "why": "P2 and P7: the sample is 64.9% of scope spend and 59.5% of scope subs, runs above the allowable while the scope runs below it, and no row can be tied to a keyword or a bidding lever."
+      },
+      {
+        "action": "Pull cohort-aligned (60/90-day) subs by search term and an FFT/activation event if one exists",
+        "why": "P1 and P6: the subs/signup step accounts for the spread; lag and dead registrations are the two explanations the data cannot separate."
+      },
+      {
+        "action": "Review the ad and landing page served to the free, github, how-to and enterprise queries",
+        "why": "P1 and P3: intent mismatch and post-click mismatch produce the same numbers; this is the cheapest way to tell them apart and needs no account change."
+      },
+      {
+        "action": "Pull impression share for the five below-allowable terms",
+        "why": "P4: efficient small terms are only expansion candidates if they are share-limited rather than demand-limited."
+      },
+      {
+        "action": "Ask the operator for min_cost / min_subs thresholds and the margin behind the $181 allowable",
+        "why": "P5 and P6: two terms have 12 and 18 subs, and 'reaching the allowable' cannot be read as break-even without the margin."
+      },
+      {
+        "action": "Investigate whether the account optimises bidding to signups or cost per signup",
+        "why": "P1: cost per signup is nearly flat across terms whose cost/sub differs by more than ten times, so a signup-based target could favour the free and github queries. This is a concern to check, not a proven reason to change the bidding event: the current bidding setup, lag and usable signal volume are unknown."
+      }
+    ],
+    "requires_evidence": [
+      {
+        "action": "Any negative keyword (free, github, enterprise, how to)",
+        "needs": "the product fact named in the conditional recommendation for that term, the matched keyword/ad group, and what the negative would block in the remaining ~35% of scope",
+        "why": "the data shows low conversion, not irrelevance; a phrase negative also blocks unseen queries whose performance is unknown"
+      },
+      {
+        "action": "Bid or target changes on any term",
+        "needs": "the bidding strategy in use (manual, tCPA, tROAS, maximise conversions) and the keyword each term maps to",
+        "why": "under automated bidding, per-term bid advice is not executable; under tCPA the target, not the bid, is the lever"
+      },
+      {
+        "action": "New ad groups or keyword additions for use-case/competitor terms",
+        "needs": "existing keyword list and structure, impression share, and (for scaffold) trademark policy check",
+        "why": "they may already be isolated; adding a duplicate keyword changes nothing except internal competition"
+      },
+      {
+        "action": "Scaling the core term",
+        "needs": "impression share / lost IS (budget vs rank) for its keyword",
+        "why": "below-allowable performance says nothing about headroom"
+      },
+      {
+        "action": "Treating enterprise as off-target",
+        "needs": "whether a sales-assisted path exists and whether the 210 signups produced leads",
+        "why": "P5: no subs/signup rate seen in this sample would bring it to $181 at current cost, but that is the wrong test if the buyer converts through sales"
+      }
+    ]
+  },
+  "v1_review": [
+    {
+      "v1_statement": "'ai app builder' is 'the core/head keyword' and other rows are 'broad-match spillover'",
+      "unsupported_assumption": "The data has no keyword column; match type is the triggered type. Which keyword served each row, and whether the two Phrase rows share a keyword, is unknown.",
+      "v2_position": "Describe rows as search terms only; matched keyword and structure are requested inputs (P7)."
+    },
+    {
+      "v1_statement": "Proposed phrase negatives on 'free', 'github', 'enterprise', 'how to'",
+      "unsupported_assumption": "A phrase negative blocks every query containing the word, including the unseen ~35% of scope spend and any query on other terms (e.g. a 'free' query that converts). Impact outside the nine rows is unknown; ad-group vs campaign scope is unknown.",
+      "v2_position": "Keep negatives conditional, and add the requirement to see what each would block in the full report before proposing a match type."
+    },
+    {
+      "v1_statement": "'Bid down', 'lower bid', 'capped bid' for free and how-to",
+      "unsupported_assumption": "Assumes manual or bid-cap control. The bidding strategy is unknown; under tCPA/maximise conversions there is no per-term bid to lower.",
+      "v2_position": "Replace with 'reduce exposure by the lever the bidding strategy allows' and list the strategy as a missing input."
+    },
+    {
+      "v1_statement": "'Isolate into its own ad group' for six terms",
+      "unsupported_assumption": "Assumes these terms are not already in dedicated ad groups and that the account is structured by intent. Structure is unknown; v1 did flag a coverage check but still framed isolation as the default action.",
+      "v2_position": "Coverage check is the action; isolation is one possible outcome of it."
+    },
+    {
+      "v1_statement": "'scaffold alternative' is a 'clear expansion candidate'",
+      "unsupported_assumption": "'Clear' overstates: 138 subs on 3.5% of spend with no impression share data. It is the best ratio in the sample; headroom is unknown.",
+      "v2_position": "Best-performing small term; expansion depends on impression share and existing competitor coverage."
+    },
+    {
+      "v1_statement": "Enterprise: 'route to a demo/contact landing page'",
+      "unsupported_assumption": "Assumes an enterprise motion and a demo page exist.",
+      "v2_position": "P5: state the arithmetic (needs 44.3% sub rate) and make the sales-path question the only decision input."
+    },
+    {
+      "v1_statement": "'Removing free leaves the rest at $159.17' presented as a useful scenario",
+      "unsupported_assumption": "Arithmetic is correct and was labelled as such, but it implicitly treats the term's spend as removable without affecting other rows or the unseen remainder.",
+      "v2_position": "Keep as arithmetic; do not use it to imply a post-negative cost/sub."
+    },
+    {
+      "v1_statement": "Reddit 'slightly above' allowable",
+      "unsupported_assumption": "Judgement word on a channel comparison whose attribution basis is unknown.",
+      "v2_position": "Report the ratio only."
+    },
+    {
+      "v1_statement": "Least-certain term is 'free ai app builder'",
+      "unsupported_assumption": "A defensible judgement, but v1 did not show the alternative: how-to is the term closest to the allowable and the most likely to flip on lag or landing page alone (P5).",
+      "v2_position": "Present both candidates with the evidence that would resolve each; the operator picks."
+    }
+  ],
+  "least_certain": {
+    "text": "Two terms compete for 'least certain', for different reasons; the data does not rank them.",
+    "candidates": [
+      {
+        "term": "free ai app builder",
+        "why": "Largest swing: 18.4% of sample spend and the most signups. Needs 3.06x its observed subs to meet $181. The one piece of information: cohort-aligned free-to-paid conversion for this term (and whether a free tier exists at all)."
+      },
+      {
+        "term": "how to build an ai app",
+        "why": "Closest to the line: needs a subs/signup rate of 10.2% against 7.3% observed, a gap that lag or a landing-page change could close. The one piece of information: cohort-aligned subs/signup for this term after a tutorial/template landing-page test."
+      }
+    ]
+  },
+  "conditional_recommendations": [
+    {
+      "alias": "free",
+      "lean": "Largest above-allowable term (18.4% of sample cost, 3.06x); needs 6.1% subs/signup vs 2.0% observed. Lean: reduce exposure before scaling anything else.",
+      "flips_if": "Keep and isolate instead if product confirms a free tier AND cohort-aligned (90-day) subs/signup for this term reaches about 6.1%. Negative candidate ('free', scoped to the matched keyword's ad group) only if product confirms there is no free tier, OR a free tier is confirmed and the cohort rate stays near 2.0%. Whether a free tier exists is currently unknown, so the negative is pending confirmation.",
+      "under_scale": "Same lean; redirect its budget to below-allowable terms with headroom rather than cutting overall spend.",
+      "under_maintain_efficiency": "Same lean, highest priority: it is the largest single contributor to the sample running above $181.",
+      "search_term": "free ai app builder"
+    },
+    {
+      "alias": "github",
+      "lean": "Cost/sub $822.22 is the second-highest in the sample (4.54x); needs 9.2% vs 2.0% observed on 18 subs. Lean: negative candidate ('github'), pending confirmation; whether Braid has a GitHub integration, code export or developer audience is unknown, and unknown is not absence.",
+      "flips_if": "Becomes an actionable negative only if product confirms there is no GitHub-related capability or developer audience. Becomes keep-and-test (developer landing page) if product confirms one exists. Hold judgement if the operator's min_subs threshold is above 18.",
+      "under_scale": "Pending the product fact; if confirmed absent, negative; if confirmed present, landing-page test before any spend increase.",
+      "under_maintain_efficiency": "Pending the product fact; if confirmed absent, negative; if present, landing-page test first.",
+      "search_term": "ai app builder github"
+    },
+    {
+      "alias": "enterprise",
+      "lean": "Highest cost/sub ($1,400.00); needs 44.3% subs/signup, above the sample maximum 26.5%. Lean: stop judging it on self-serve subs.",
+      "flips_if": "If a sales-assisted path is confirmed: move to lead-based measurement and a demo/contact page; the Subs comparison no longer applies. Negative candidate ('enterprise') only if product confirms there is no enterprise offering or sales path; that fact is unknown, so the negative is pending confirmation. If the operator's min_subs threshold is above 12: hold until more data.",
+      "under_scale": "Only with lead-based measurement in place.",
+      "under_maintain_efficiency": "Pending the product fact; negative if confirmed no enterprise path, otherwise measure on leads.",
+      "search_term": "enterprise app development platform"
+    },
+    {
+      "alias": "howto",
+      "lean": "Above allowable (1.39x) but closest to it: needs 10.2% vs 7.3% observed, a rate 5 sample terms exceed. Lean: keep, run a tutorial/template landing-page test before any negative.",
+      "flips_if": "Reduce exposure (by the lever the bidding strategy allows) if cohort-aligned subs/signup stays at or below 7.3% after the landing-page test. Keep as is if cohort data alone lifts it to about 10.2%.",
+      "under_scale": "Not a scaling candidate until it clears $181.",
+      "under_maintain_efficiency": "Second priority after free; landing-page test first because the gap is small.",
+      "search_term": "how to build an ai app"
+    },
+    {
+      "alias": "core",
+      "lean": "Below allowable ($147.83, 0.82x) with the most volume. Lean: keep.",
+      "flips_if": "Scale only if lost impression share (rank or budget) shows headroom for its keyword. Revisit if cohort-aligned cost/sub comes in above $181.",
+      "under_scale": "First expansion candidate, conditional on headroom.",
+      "under_maintain_efficiency": "No change.",
+      "search_term": "ai app builder"
+    },
+    {
+      "alias": "nocode",
+      "lean": "Below allowable ($107.19) with 320 subs. Lean: keep.",
+      "flips_if": "Expand (dedicated keyword/ad group) if not already covered and impression share shows headroom. Nothing in the data turns it into a negative candidate.",
+      "under_scale": "Expansion candidate after coverage check.",
+      "under_maintain_efficiency": "Keep.",
+      "search_term": "build app without code"
+    },
+    {
+      "alias": "internal",
+      "lean": "Below allowable ($89.14). Lean: keep.",
+      "flips_if": "Expand if not already covered, impression share shows headroom, and product confirms internal tools as a supported use case.",
+      "under_scale": "Expansion candidate after coverage check.",
+      "under_maintain_efficiency": "Keep.",
+      "search_term": "internal tool builder"
+    },
+    {
+      "alias": "scaffold",
+      "lean": "Lowest cost/sub ($84.78) on 3.5% of cost. Lean: keep.",
+      "flips_if": "Expand (dedicated competitor ad group) if not already covered, impression share shows headroom, and competitor ad copy passes policy. Small size means expansion efficiency is unproven.",
+      "under_scale": "Expansion candidate after coverage check.",
+      "under_maintain_efficiency": "Keep.",
+      "search_term": "scaffold alternative"
+    },
+    {
+      "alias": "vibe",
+      "lean": "Below allowable ($163.81, 0.91x) but near the scope benchmark. Lean: hold.",
+      "flips_if": "Reduce exposure if cohort-aligned cost/sub moves above $181; expand only if messaging fit is confirmed and headroom exists.",
+      "under_scale": "Secondary candidate after the core term.",
+      "under_maintain_efficiency": "Hold; monitor.",
+      "search_term": "vibe coding app builder"
+    },
+    {
+      "decision": "Bidding signal",
+      "lean": "Concern to investigate, not a conclusion: if the account currently optimises to signups or cost per signup, this sample suggests that signal would favour the free and github queries. The current bidding event, the signup-to-sub lag and the usable signal volume are unknown. In this analysis terms are judged on paid subs.",
+      "flips_if": "Confirm the current bidding event and strategy per campaign first. If bidding is already on subs or an activation event, no concern. If bidding is on signups, the next question is whether an FFT/activation event with enough volume tracks subs/signup across terms; only then is a change worth evaluating.",
+      "under_scale": "Same: investigate before any bidding-event change.",
+      "under_maintain_efficiency": "Same."
+    }
+  ],
+  "negative_candidates": [
+    {
+      "alias": "free",
+      "proposed_negative": "free",
+      "match_type_proposed": "phrase",
+      "status": "pending_confirmation",
+      "confirmation_required": [
+        "product: does a free tier exist (unknown; absence not assumed)",
+        "data: cohort-aligned (90-day) subs/signup for this term vs the 6.1% required",
+        "account: matched keyword and ad group for scoping; what the negative would block in the remaining scope"
+      ],
+      "becomes_actionable_if": "no free tier confirmed, OR free tier confirmed and cohort subs/signup stays near 2.0%",
+      "does_not_apply_if": "free tier confirmed and cohort subs/signup reaches about 6.1% (then isolate with a free-tier landing page instead)",
+      "term_id": "st_7397eeb3716a",
+      "search_term": "free ai app builder"
+    },
+    {
+      "alias": "github",
+      "proposed_negative": "github",
+      "match_type_proposed": "phrase",
+      "status": "pending_confirmation",
+      "confirmation_required": [
+        "product: GitHub integration, code export or developer audience (unknown; absence not assumed)",
+        "operator: min_subs threshold vs 18 observed subs",
+        "account: matched keyword and ad group for scoping"
+      ],
+      "becomes_actionable_if": "product confirms no GitHub-related capability and no developer audience",
+      "does_not_apply_if": "capability or audience confirmed (then developer landing-page test first)",
+      "term_id": "st_429e31f7f0f8",
+      "search_term": "ai app builder github"
+    },
+    {
+      "alias": "enterprise",
+      "proposed_negative": "enterprise",
+      "match_type_proposed": "phrase",
+      "status": "pending_confirmation",
+      "confirmation_required": [
+        "product/sales: enterprise offering or sales-assisted path, and whether demo requests are tracked (unknown; absence not assumed)",
+        "operator: min_subs threshold vs 12 observed subs",
+        "account: matched keyword and ad group for scoping"
+      ],
+      "becomes_actionable_if": "product confirms no enterprise offering or sales path",
+      "does_not_apply_if": "sales path confirmed (then measure on leads; the Subs comparison no longer applies)",
+      "term_id": "st_6de9a251f911",
+      "search_term": "enterprise app development platform"
+    },
+    {
+      "alias": "howto",
+      "proposed_negative": "how to",
+      "match_type_proposed": "phrase",
+      "status": "pending_confirmation",
+      "confirmation_required": [
+        "data: cohort-aligned subs/signup after a tutorial/template landing-page test vs the 10.2% required",
+        "account: matched keyword, ad group and bidding strategy (a negative may not be the right lever)"
+      ],
+      "becomes_actionable_if": "cohort subs/signup stays at or below 7.3% after the landing-page test and reducing exposure is the chosen lever",
+      "does_not_apply_if": "cohort data or the landing-page test lifts it to about 10.2%",
+      "term_id": "st_2fe617db21cf",
+      "search_term": "how to build an ai app"
+    }
+  ],
+  "addition_isolation_candidates": [
+    {
+      "alias": "scaffold",
+      "action": "dedicated competitor ad group / keyword",
+      "landing_page_test": "comparison page vs current",
+      "precheck": [
+        "existing competitor keywords or campaign",
+        "impression share on competitor queries",
+        "trademark/policy review of competitor ad copy"
+      ],
+      "status": "pending_precheck",
+      "note": "best cost/sub in the sample ($84.78); efficiency at larger spend unproven",
+      "term_id": "st_66770c31f114",
+      "search_term": "scaffold alternative"
+    },
+    {
+      "alias": "internal",
+      "action": "dedicated use-case ad group / keyword",
+      "landing_page_test": "internal-tools use-case page vs current",
+      "precheck": [
+        "existing keyword coverage",
+        "impression share",
+        "product confirms internal tools as a supported use case"
+      ],
+      "status": "pending_precheck",
+      "note": "$89.14/sub, second-highest subs/signup",
+      "term_id": "st_a9cf56135541",
+      "search_term": "internal tool builder"
+    },
+    {
+      "alias": "nocode",
+      "action": "dedicated no-code ad group / keyword",
+      "landing_page_test": "no-code page vs current",
+      "precheck": [
+        "existing 'no code' / 'without code' keywords",
+        "impression share",
+        "positioning confirmed by product/marketing"
+      ],
+      "status": "pending_precheck",
+      "note": "$107.19/sub, 320 subs",
+      "term_id": "st_98934dc150fb",
+      "search_term": "build app without code"
+    },
+    {
+      "alias": "vibe",
+      "action": "isolate with matching ad copy",
+      "landing_page_test": "vibe-coding messaging vs current",
+      "precheck": [
+        "existing coverage",
+        "messaging fit confirmed"
+      ],
+      "status": "pending_precheck",
+      "note": "$163.81/sub, near the scope benchmark $167.74",
+      "term_id": "st_a3029027e1c6",
+      "search_term": "vibe coding app builder"
+    },
+    {
+      "alias": "core",
+      "action": "expand spend on the matched keyword",
+      "landing_page_test": null,
+      "precheck": [
+        "lost impression share (rank vs budget) for the matched keyword",
+        "cohort-aligned cost/sub stays below $181"
+      ],
+      "status": "pending_precheck",
+      "note": "$147.83/sub on 30.2% of sample cost",
+      "term_id": "st_dd3412fed286",
+      "search_term": "ai app builder"
+    },
+    {
+      "alias": "free",
+      "action": "isolate with a free-tier landing page and reduced exposure (only if a free tier is confirmed)",
+      "landing_page_test": "free-tier page vs current, measured on cohort-aligned subs",
+      "precheck": [
+        "free tier confirmed",
+        "matched keyword and ad group"
+      ],
+      "status": "pending_precheck",
+      "note": "alternative to the negative candidate",
+      "term_id": "st_7397eeb3716a",
+      "search_term": "free ai app builder"
+    },
+    {
+      "alias": "howto",
+      "action": "tutorial/template landing-page test before any exposure change",
+      "landing_page_test": "template/tutorial page vs current, measured on cohort-aligned subs/signup",
+      "precheck": [
+        "matched keyword and ad group",
+        "bidding strategy"
+      ],
+      "status": "pending_precheck",
+      "note": "needs 10.2% vs 7.3% observed",
+      "term_id": "st_2fe617db21cf",
+      "search_term": "how to build an ai app"
+    }
+  ],
+  "term_missing_information": {
+    "core": [
+      {
+        "item": "lost impression share (rank vs budget) for the matched keyword",
+        "changes_decision": "decides whether 'scale' is executable at all"
+      },
+      {
+        "item": "matched keyword and ad group",
+        "changes_decision": "which lever a bid or budget change goes through"
+      },
+      {
+        "item": "cohort-aligned cost/sub",
+        "changes_decision": "keep vs revisit if it rises above $181"
+      }
+    ],
+    "free": [
+      {
+        "item": "free tier exists?",
+        "changes_decision": "negative (if confirmed absent) vs isolate (if present)"
+      },
+      {
+        "item": "90-day cohort subs/signup for this term",
+        "changes_decision": "isolate if about 6.1%; negative candidate if near 2.0%"
+      },
+      {
+        "item": "landing page served",
+        "changes_decision": "post-click fix vs intent judgement"
+      }
+    ],
+    "howto": [
+      {
+        "item": "cohort-aligned subs/signup after a landing-page test",
+        "changes_decision": "keep if about 10.2%; reduce exposure if at or below 7.3%"
+      },
+      {
+        "item": "matched keyword, ad group and bidding strategy",
+        "changes_decision": "which lever (negative, target, budget) is available"
+      }
+    ],
+    "nocode": [
+      {
+        "item": "existing no-code keyword coverage",
+        "changes_decision": "add vs already covered"
+      },
+      {
+        "item": "impression share",
+        "changes_decision": "expansion possible or demand-limited"
+      },
+      {
+        "item": "no-code positioning",
+        "changes_decision": "landing-page and ad-copy investment"
+      }
+    ],
+    "vibe": [
+      {
+        "item": "messaging fit with 'vibe coding'",
+        "changes_decision": "expand vs hold"
+      },
+      {
+        "item": "cohort-aligned cost/sub",
+        "changes_decision": "hold vs reduce exposure if above $181"
+      }
+    ],
+    "enterprise": [
+      {
+        "item": "enterprise offering or sales-assisted path; demo tracking",
+        "changes_decision": "measure on leads (if present) vs negative candidate (if confirmed absent)"
+      },
+      {
+        "item": "operator min_subs threshold",
+        "changes_decision": "whether 12 subs is actionable"
+      }
+    ],
+    "internal": [
+      {
+        "item": "existing keyword coverage",
+        "changes_decision": "add vs already covered"
+      },
+      {
+        "item": "product confirms internal tools as a use case",
+        "changes_decision": "landing-page investment"
+      },
+      {
+        "item": "impression share",
+        "changes_decision": "expansion possible or demand-limited"
+      }
+    ],
+    "github": [
+      {
+        "item": "GitHub integration, code export or developer audience",
+        "changes_decision": "negative (if confirmed absent) vs developer landing-page test (if present)"
+      },
+      {
+        "item": "operator min_subs threshold",
+        "changes_decision": "whether 18 subs is actionable"
+      }
+    ],
+    "scaffold": [
+      {
+        "item": "existing competitor keywords / campaign",
+        "changes_decision": "add vs already covered"
+      },
+      {
+        "item": "impression share on competitor queries",
+        "changes_decision": "expansion headroom"
+      },
+      {
+        "item": "trademark/policy check",
+        "changes_decision": "ad copy for a dedicated ad group"
+      }
+    ]
+  },
+  "term_evidence_notes": {
+    "core": "30.2% of sample cost, 37.4% of subs; cost/sub $147.83 (0.82x of allowable, 0.88x of benchmark); subs/signup 14.5%.",
+    "free": "18.4% of sample cost; most signups (5,600) and cheapest cost per signup ($11.06); subs/signup 2.0% (lowest); cost/sub $553.13 (third-highest, 3.06x).",
+    "howto": "15.6% of sample cost; cost/sub $251.43 (1.39x); subs/signup 7.3%; needs 10.2% to reach $181, a rate 5 sample terms exceed.",
+    "nocode": "cost/sub $107.19 (0.59x); 320 subs (17.4% of sample subs); subs/signup 20.4% (third-highest).",
+    "vibe": "cost/sub $163.81 (0.91x of allowable, 0.98x of benchmark); subs/signup 15.0%.",
+    "enterprise": "cost/sub $1,400.00 (highest, 7.73x); CPC $8.00 (highest); 12 subs from 210 signups (5.7%, third-lowest); needs 44.3%, above the sample maximum 26.5%.",
+    "internal": "cost/sub $89.14 (0.49x); subs/signup 25.0% (second-highest); 4.6% of sample cost.",
+    "github": "cost/sub $822.22 (second-highest, 4.54x); cheapest CPC ($2.00); subs/signup 2.0% on 18 subs.",
+    "scaffold": "cost/sub $84.78 (lowest, 0.47x); highest subs/signup (26.5%) and highest signup rate; 3.5% of sample cost."
+  },
+  "term_intent_hypotheses": {
+    "core": {
+      "text": "Core category intent: user wants a tool that builds AI apps. Closest match to the scope label itself; the matched keyword is unknown.",
+      "confidence": "high",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "free": {
+      "text": "Price-sensitive or exploratory intent: wants to try without paying. Whether that is on-path depends entirely on whether Braid has a free tier and how long free->paid takes.",
+      "confidence": "medium",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "howto": {
+      "text": "Informational / learning intent; a share of searchers are looking for a tutorial rather than a product. Which keyword matched this term is unknown.",
+      "confidence": "medium",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "nocode": {
+      "text": "No-code builder intent. Efficient here, but whether Braid positions itself as no-code is unknown; if not, this may be an adjacent audience converting on a different promise.",
+      "confidence": "medium",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "vibe": {
+      "text": "Trend-driven intent ('vibe coding') for an AI-assisted builder. Likely aligned with the product category, but the phrase is new and its searcher mix may shift quickly.",
+      "confidence": "medium",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "enterprise": {
+      "text": "Enterprise buyer / evaluator intent. If Braid sells to enterprises via sales, these visitors would appear as leads, not self-serve subs, and cost/sub would not be the right KPI for this term. If Braid has no enterprise motion, the term is off-target.",
+      "confidence": "low",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "internal": {
+      "text": "Use-case intent: build internal business tools. Converts well, which suggests the product serves this use case, but that is inferred from the data, not confirmed by product.",
+      "confidence": "medium",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "github": {
+      "text": "Developer intent: looking for an open-source repo, a GitHub-integrated builder, or code export. If Braid has no GitHub integration or does not target developers, this is off-target; if it does, the landing page may be failing this audience.",
+      "confidence": "medium",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    },
+    "scaffold": {
+      "text": "Competitor-switching intent: Scaffold is the confirmed main competitor, so these are evaluators comparing alternatives. High readiness to buy is consistent with the ratios.",
+      "confidence": "high",
+      "status": "hypothesis",
+      "source": "review_v2_2 (reviewed from diagnosis_v1)"
+    }
+  },
+  "channel_context_observations": [
+    {
+      "observation": "Google Non-Brand is the largest channel (43.2% of paid spend) at $161.22/sub, 0.89x of its $181 allowable; supplied Q1 was $147.50 and cannot be recomputed (no Q1 spend/subs).",
+      "status": "fact"
+    },
+    {
+      "observation": "Channels above their allowable by ratio: Google Performance Max 1.59x ($287.80 vs $181), Meta prospecting 1.40x ($198.90 vs $142), Reddit 1.12x ($176.47 vs $158). Ratios only; attribution basis and causes are not established.",
+      "status": "fact"
+    },
+    {
+      "observation": "Paid total supplied cost/sub ($135.47) differs from the recomputed $135.45; cause unknown, both retained.",
+      "status": "fact"
+    },
+    {
+      "observation": "TikTok has no allowable; no gap is computed.",
+      "status": "fact"
+    }
+  ],
+  "table_note": "'Subs needed at $181' = ceil(cost / 181); 'sub rate needed' = that / signups. Arithmetic at current cost, not a forecast. Reaching the allowable is an operator target, not financial break-even: margin and customer value are unknown.",
+  "method_note": "Cross-term patterns are computed over 9 rows in one period. Groups are arithmetic sums of the rows listed. Rank correlations from v2 are omitted: cost/sub equals cost per signup divided by subs per signup, so correlations among these metrics restate an identity and carry no causal information; the direct comparisons in P1 replace them. 'Subs needed at $181' is cost divided by the allowable, rounded up, at current cost: a statement of what reaching the operator's target would require, not a forecast and not financial break-even. No posture is chosen and the allowable is not adjusted. The methodology prior (bid on an early signal, judge on paid subs) is applied only as a caution in P1/P6: on this sample the early signals (signup rate, cost per signup) do not track paid subs, which is a reason to check the current bidding event, not a finding that it is wrong."
+}

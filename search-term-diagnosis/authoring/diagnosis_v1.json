@@ -1,0 +1,205 @@
+{
+  "_comment": "Model-authored interpretation (Claude Code, Step 2 v1). Numbers are NEVER typed here: every {placeholder} is filled by src/build_diagnosis.py from output/step1 and config/account_context.json; an unknown placeholder or term_id fails the build. Human amendments belong in a separate file, not here.",
+  "author": "claude-code-model-interpretation",
+  "version": "v1",
+  "status_legend": {
+    "fact": "taken from supplied data or confirmed context",
+    "hypothesis": "model interpretation; not verified",
+    "to_confirm": "needs product/data/operator input before it can become a decision"
+  },
+  "terms": {
+    "st_dd3412fed286": {
+      "search_term": "ai app builder",
+      "evidence_summary": "Largest term: {cost_share_pct} of sample spend and {sub_share_pct} of sample subs. Cost/sub {cost_per_sub} is {ratio_to_allowable} of the $181 allowable and {ratio_to_benchmark} of the scope benchmark ({benchmark}). Signup rate {signup_per_click_pct}, signup->sub {paid_sub_per_signup_pct}. Phrase match on the core category term.",
+      "intent_hypothesis": {"text": "Core category intent: user wants a tool that builds AI apps. Closest match to the scope label itself.", "confidence": "high", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "existing keyword and match type this term is served by", "limits": "whether it is already the head keyword or a broad-match spillover; bid/isolation decisions"},
+        {"item": "impression share / lost IS", "limits": "whether there is headroom to scale on this term at all"},
+        {"item": "conversion lag", "limits": "whether {paid_sub} subs are mature for the same-period {signup} signups"}
+      ],
+      "under_scale": "Primary expansion candidate: below allowable with the most volume. Confirm headroom (impression share) before raising bids or budget; adding spend without headroom would not add subs.",
+      "under_maintain_efficiency": "Keep as is. It anchors the sample below the benchmark; no change unless a cohort-aligned cost/sub comes in above $181.",
+      "investigate_now": [
+        "Pull impression share and top-of-page rate for the matching keyword(s).",
+        "Confirm which keyword/ad group serves this phrase-match term."
+      ]
+    },
+    "st_7397eeb3716a": {
+      "search_term": "free ai app builder",
+      "evidence_summary": "Second-largest spend ({cost_share_pct} of sample). Highest signup count in the sample ({signup}, {signup_per_click_pct} of clicks) and cheapest signups ({cost_per_signup}), but signup->sub is {paid_sub_per_signup_pct}, so cost/sub is {cost_per_sub}: {ratio_to_allowable} of allowable and {ratio_to_benchmark} of the benchmark. Removing it arithmetically leaves the rest of the sample at {sample_without_term_cost_per_sub}/sub (arithmetic, not a forecast).",
+      "intent_hypothesis": {"text": "Price-sensitive or exploratory intent: wants to try without paying. Whether that is on-path depends entirely on whether Braid has a free tier and how long free->paid takes.", "confidence": "medium", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "does Braid have a free tier, and what is the free->paid conversion window", "limits": "whether the {paid_sub} subs are immature (lag) or the intent is genuinely low-value; the whole negative-vs-keep decision"},
+        {"item": "FFT or activation events for these signups", "limits": "whether the {signup} signups show product usage or are dead accounts"},
+        {"item": "landing page shown", "limits": "whether the 'free' promise on the SERP is matched or contradicted post-click"}
+      ],
+      "under_scale": "Do not scale on cost/sub; the signup volume is attractive only if a bidding signal (FFT/activation) confirms these signups progress. Candidate to isolate into its own ad group with a free-tier landing page and a lower bid so it stops sharing budget with the core term.",
+      "under_maintain_efficiency": "Conditional negative on 'free' (phrase) if the product has no free tier or the free cohort does not convert after the lag window. If a free tier exists, isolate and cap rather than negate: this term produces the most signups in the sample.",
+      "investigate_now": [
+        "Ask product: free tier yes/no, and the median days from free signup to paid.",
+        "Pull cohort-aligned subs for these signups (60/90-day) instead of same-window subs.",
+        "Check the landing page for this term against the 'free' promise."
+      ]
+    },
+    "st_2fe617db21cf": {
+      "search_term": "how to build an ai app",
+      "evidence_summary": "{cost_share_pct} of sample spend, cost/sub {cost_per_sub}: {ratio_to_allowable} of allowable and {ratio_to_benchmark} of the benchmark. Cheap clicks ({cpc}) and a {signup_per_click_pct} signup rate, but signup->sub only {paid_sub_per_signup_pct}.",
+      "intent_hypothesis": {"text": "Informational / learning intent; a share of searchers are looking for a tutorial rather than a product. Broad match may also be pulling adjacent 'how to' queries not visible here.", "confidence": "medium", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "the actual queries grouped under this broad-match term and the matched keyword", "limits": "whether this is one intent or a mixed bucket; negative scoping"},
+        {"item": "landing page for informational queries", "limits": "whether a tutorial/template page could lift signup->sub"},
+        {"item": "conversion lag", "limits": "informational visitors may convert later; same-window subs may understate"}
+      ],
+      "under_scale": "Not a scaling candidate at {cost_per_sub}. Test a how-to/template landing page first; if signup->sub moves toward the sample average, revisit.",
+      "under_maintain_efficiency": "Bid down or move to a separate ad group with its own budget. A 'how to' phrase negative in the core ad group is conditional on confirming the queries are mostly tutorial-seeking.",
+      "investigate_now": [
+        "Export the search-term report for the matching keyword to see the query mix.",
+        "Run a landing-page test: template/tutorial page vs current page, measured on signup->sub."
+      ]
+    },
+    "st_98934dc150fb": {
+      "search_term": "build app without code",
+      "evidence_summary": "Cost/sub {cost_per_sub} ({ratio_to_allowable} of allowable, {ratio_to_benchmark} of benchmark) with the second-highest sub count ({paid_sub}, {sub_share_pct} of sample subs). Signup->sub {paid_sub_per_signup_pct} is above the sample's larger terms.",
+      "intent_hypothesis": {"text": "No-code builder intent. Efficient here, but whether Braid positions itself as no-code is unknown; if not, this may be an adjacent audience converting on a different promise.", "confidence": "medium", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "no-code positioning and whether a no-code keyword/ad group already exists", "limits": "add vs already-covered; landing-page choice"},
+        {"item": "impression share", "limits": "scaling headroom"}
+      ],
+      "under_scale": "Expansion candidate: check existing coverage, then consider a dedicated no-code ad group and landing page to protect the {paid_sub_per_signup_pct} signup->sub rate while adding volume.",
+      "under_maintain_efficiency": "Keep; consider isolating so its efficiency is not diluted by broad-match neighbours.",
+      "investigate_now": [
+        "Check the existing keyword list for 'no code' / 'without code' variants before adding anything.",
+        "Confirm product positioning on no-code with product/marketing."
+      ]
+    },
+    "st_a3029027e1c6": {
+      "search_term": "vibe coding app builder",
+      "evidence_summary": "Cost/sub {cost_per_sub}: {ratio_to_allowable} of allowable (below it) but {ratio_to_benchmark} of the benchmark (close to it). {cost_share_pct} of sample spend, signup->sub {paid_sub_per_signup_pct}.",
+      "intent_hypothesis": {"text": "Trend-driven intent ('vibe coding') for an AI-assisted builder. Likely aligned with the product category, but the phrase is new and its searcher mix may shift quickly.", "confidence": "medium", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "whether Braid's messaging uses or fits 'vibe coding'", "limits": "landing-page/ad-copy alignment"},
+        {"item": "trend stability (search volume over time)", "limits": "whether to invest in a dedicated keyword"}
+      ],
+      "under_scale": "Secondary expansion candidate, below allowable. Isolate with matching ad copy before adding budget so that efficiency can be observed separately.",
+      "under_maintain_efficiency": "Hold. It is within allowable; monitor since it sits near the benchmark.",
+      "investigate_now": [
+        "Check existing keyword coverage for 'vibe coding'.",
+        "Confirm messaging fit with marketing."
+      ]
+    },
+    "st_6de9a251f911": {
+      "search_term": "enterprise app development platform",
+      "evidence_summary": "Highest cost/sub in the sample: {cost_per_sub}, {ratio_to_allowable} of allowable. Most expensive clicks ({cpc}) and signups ({cost_per_signup}); only {paid_sub} subs from {signup} signups ({paid_sub_per_signup_pct}). {cost_share_pct} of sample spend. Small counts: no operator data-sufficiency threshold has been set, so 'low data' is a judgement, not a rule.",
+      "intent_hypothesis": {"text": "Enterprise buyer / evaluator intent. If Braid sells to enterprises via sales, these visitors would appear as leads, not self-serve subs, and cost/sub would not be the right KPI for this term. If Braid has no enterprise motion, the term is off-target.", "confidence": "low", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "enterprise offering and sales-assisted path (demo requests, SQLs)", "limits": "the entire keep/negative decision; whether Subs is even the right KPI"},
+        {"item": "operator min_cost / min_subs thresholds", "limits": "whether {paid_sub} subs is enough evidence to act on"},
+        {"item": "CPC driver (competition on 'enterprise')", "limits": "whether the high CPC is avoidable"}
+      ],
+      "under_scale": "Not scaled on cost/sub. If an enterprise motion exists, route to a demo/contact landing page and judge on leads; otherwise exclude.",
+      "under_maintain_efficiency": "Conditional negative on 'enterprise' (phrase) if there is no enterprise offering or sales path. If there is one, move the term to a separate ad group with enterprise-specific measurement instead of negating.",
+      "investigate_now": [
+        "Ask sales/product: is there an enterprise plan or sales-assisted path, and are demo requests tracked?",
+        "Check whether any of these {signup} signups became sales leads."
+      ]
+    },
+    "st_a9cf56135541": {
+      "search_term": "internal tool builder",
+      "evidence_summary": "Second-lowest cost/sub in the sample: {cost_per_sub} ({ratio_to_allowable} of allowable). Second-highest signup->sub in the sample ({paid_sub_per_signup_pct}) and {paid_sub} subs on {cost_share_pct} of spend.",
+      "intent_hypothesis": {"text": "Use-case intent: build internal business tools. Converts well, which suggests the product serves this use case, but that is inferred from the data, not confirmed by product.", "confidence": "medium", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "whether internal tools is a supported/promoted use case", "limits": "landing-page and ad-copy investment"},
+        {"item": "existing keyword coverage", "limits": "add vs already covered"}
+      ],
+      "under_scale": "Expansion candidate: confirm coverage, then dedicated ad group + use-case landing page.",
+      "under_maintain_efficiency": "Keep; isolate to protect efficiency.",
+      "investigate_now": [
+        "Check keyword list and landing pages for an internal-tools use case.",
+        "Confirm with product whether internal tools is a target use case."
+      ]
+    },
+    "st_429e31f7f0f8": {
+      "search_term": "ai app builder github",
+      "evidence_summary": "Cost/sub {cost_per_sub}: {ratio_to_allowable} of allowable. Cheapest clicks in the sample ({cpc}) and a normal signup rate ({signup_per_click_pct}), but signup->sub is only {paid_sub_per_signup_pct} ({paid_sub} subs from {signup} signups). {cost_share_pct} of sample spend.",
+      "intent_hypothesis": {"text": "Developer intent: looking for an open-source repo, a GitHub-integrated builder, or code export. If Braid has no GitHub integration or does not target developers, this is off-target; if it does, the landing page may be failing this audience.", "confidence": "medium", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "GitHub integration / code export / developer targeting", "limits": "negative vs landing-page fix"},
+        {"item": "landing page shown to this query", "limits": "whether developers see anything GitHub-related"}
+      ],
+      "under_scale": "Not scaled. If developers are a target, test a developer/GitHub landing page before deciding.",
+      "under_maintain_efficiency": "Conditional negative on 'github' (phrase) if there is no GitHub-related feature or developer targeting. If there is, fix the landing page first and re-measure.",
+      "investigate_now": [
+        "Ask product: GitHub integration or code export, yes/no.",
+        "Check what the ad and landing page promise for this query."
+      ]
+    },
+    "st_66770c31f114": {
+      "search_term": "scaffold alternative",
+      "evidence_summary": "Lowest cost/sub in the sample: {cost_per_sub} ({ratio_to_allowable} of allowable, {ratio_to_benchmark} of benchmark). Highest signup rate ({signup_per_click_pct}) and highest signup->sub ({paid_sub_per_signup_pct}). Small spend ({cost_share_pct} of sample) at a {cpc} CPC.",
+      "intent_hypothesis": {"text": "Competitor-switching intent: Scaffold is the confirmed main competitor, so these are evaluators comparing alternatives. High readiness to buy is consistent with the ratios.", "confidence": "high", "status": "hypothesis"},
+      "missing_info": [
+        {"item": "existing competitor keywords / campaign", "limits": "whether this is already targeted or is broad-match spillover"},
+        {"item": "impression share on competitor queries", "limits": "scaling headroom"},
+        {"item": "trademark/policy constraints on competitor ad copy", "limits": "ad copy for a dedicated ad group"}
+      ],
+      "under_scale": "Clear expansion candidate: check coverage, then a dedicated competitor ad group with a comparison landing page and its own budget.",
+      "under_maintain_efficiency": "Keep and isolate; still worth a dedicated ad group so the efficient volume is protected.",
+      "investigate_now": [
+        "Check whether a competitor campaign or 'scaffold' keywords already exist.",
+        "Pull impression share for competitor queries."
+      ]
+    }
+  },
+  "summary": {
+    "negative_candidates": [
+      {"term_id": "st_7397eeb3716a", "proposed_negative": "free", "match_type": "phrase",
+       "condition": "only if product confirms no free tier OR cohort-aligned free->paid conversion stays near the same-window rate after the lag window; otherwise isolate, do not negate",
+       "scope_note": "campaign/ad-group IDs unknown; not import-ready"},
+      {"term_id": "st_429e31f7f0f8", "proposed_negative": "github", "match_type": "phrase",
+       "condition": "only if product confirms no GitHub integration/code export and developers are not a target; otherwise fix landing page first",
+       "scope_note": "campaign/ad-group IDs unknown; not import-ready"},
+      {"term_id": "st_6de9a251f911", "proposed_negative": "enterprise", "match_type": "phrase",
+       "condition": "only if there is no enterprise offering or sales-assisted path; if there is, Subs is the wrong KPI and the term should be measured on leads instead",
+       "scope_note": "campaign/ad-group IDs unknown; small counts, no data-sufficiency threshold set"},
+      {"term_id": "st_2fe617db21cf", "proposed_negative": "how to", "match_type": "phrase",
+       "condition": "only under maintain_efficiency and only after the query mix confirms mostly tutorial-seeking; a landing-page test is the preferred first step",
+       "scope_note": "would apply to the core ad group only; IDs unknown"}
+    ],
+    "addition_or_isolation_candidates": [
+      {"term_id": "st_66770c31f114", "action": "isolate into a competitor ad group", "landing_page_test": "comparison page vs current", "precheck": "existing competitor keywords/campaign"},
+      {"term_id": "st_a9cf56135541", "action": "isolate into a use-case ad group", "landing_page_test": "internal-tools use-case page vs current", "precheck": "existing keyword coverage; product confirms use case"},
+      {"term_id": "st_98934dc150fb", "action": "isolate into a no-code ad group", "landing_page_test": "no-code page vs current", "precheck": "existing 'no code' keywords; positioning"},
+      {"term_id": "st_a3029027e1c6", "action": "isolate with matching ad copy", "landing_page_test": "vibe-coding messaging vs current", "precheck": "existing coverage; messaging fit"},
+      {"term_id": "st_7397eeb3716a", "action": "isolate with free-tier landing page and capped bid (if free tier exists)", "landing_page_test": "free-tier page vs current, measured on cohort-aligned subs", "precheck": "free tier exists"},
+      {"term_id": "st_2fe617db21cf", "action": "separate ad group for informational queries", "landing_page_test": "tutorial/template page vs current", "precheck": "query mix from search-term report"}
+    ],
+    "least_certain_term": {
+      "term_id": "st_7397eeb3716a",
+      "why": "It is {cost_share_pct} of sample spend, produces the most signups, and its decision flips entirely on one product fact. Every other high cost/sub term has a smaller spend footprint.",
+      "single_piece_of_information": "Whether Braid has a free tier and, if so, the cohort-aligned free->paid conversion after the lag window. If free signups convert later at a rate that brings cost/sub under $181, the term is an isolation candidate; if not, it is the largest negative candidate."
+    },
+    "questions_for_product_or_data_team": [
+      {"to": "product", "question": "Is there a free tier? What is the median and 90-day free->paid conversion?", "unblocks": "free ai app builder decision"},
+      {"to": "product", "question": "Is there a GitHub integration, code export, or developer audience?", "unblocks": "ai app builder github decision"},
+      {"to": "sales/product", "question": "Is there an enterprise plan or sales-assisted path, and are demo requests tracked as conversions?", "unblocks": "enterprise app development platform decision and KPI choice"},
+      {"to": "product/marketing", "question": "Are no-code, internal tools and vibe coding positioning the product supports?", "unblocks": "isolation and landing-page choices for three efficient terms"},
+      {"to": "data", "question": "What are the exact dates, attribution model, and lag between Regs and Subs? Are Subs cohort-aligned to Regs in the same window?", "unblocks": "whether signup->sub ratios are comparable across terms"},
+      {"to": "data", "question": "Is there an FFT/activation event available per search term?", "unblocks": "the inherited bidding-signal method"},
+      {"to": "data/finance", "question": "Customer value or margin behind the $181 allowable, and whether it differs by plan?", "unblocks": "whether $181 is right for enterprise or free-tier intents"},
+      {"to": "account owner", "question": "Existing keyword list, match types, campaign/ad-group structure and IDs; impression share by keyword", "unblocks": "add-vs-covered decisions, negative scoping, and any Editor file"},
+      {"to": "operator", "question": "min_cost / min_subs data-sufficiency thresholds", "unblocks": "whether 12-sub terms are actionable"}
+    ],
+    "other_hypotheses_and_tests": [
+      {"hypothesis": "The sample cost/sub ({sample_cost_per_sub}) is above the scope benchmark ({benchmark}); by subtraction the unseen ~35% of scope spend runs at {remainder_cost_per_sub}. The nine rows may be the harder part of the scope, not representative of it.", "test": "Request the full search-term report for the scope.", "status": "hypothesis"},
+      {"hypothesis": "Three low-converting terms (free / github / enterprise) share a pattern: normal or high signup rate, very low signup->sub. That is consistent with either intent mismatch or post-click mismatch; the data cannot separate the two.", "test": "Landing-page audit per term before any negative.", "status": "hypothesis"},
+      {"hypothesis": "Broad match may be grouping several intents under one row (e.g. 'how to build an ai app').", "test": "Search-term report by keyword.", "status": "hypothesis"},
+      {"hypothesis": "Non-Brand Q2 cost/sub ({non_brand_cost_per_sub}) rose versus supplied Q1 ({non_brand_q1_cost_per_sub}); the scope's contribution to that change cannot be isolated without period alignment.", "test": "Confirm the scope period equals Q2 and get Q1 scope figures.", "status": "hypothesis"}
+    ]
+  },
+  "channel_context_observations": [
+    "Google Non-Brand is the largest channel ({non_brand_spend_share} of paid spend) at {non_brand_cost_per_sub}/sub, below its $181 allowable, and up from supplied Q1 {non_brand_q1_cost_per_sub}. Q1 cannot be recomputed.",
+    "Google Performance Max ({pmax_cost_per_sub}/sub vs $181 allowable) and Meta prospecting ({meta_prospecting_cost_per_sub}/sub vs $142) are the channels above allowable. Reddit is slightly above ($158). These are descriptive comparisons; causes are not established here.",
+    "Paid total supplied cost/sub ({paid_total_supplied}) differs from the recomputed {paid_total_recomputed}; cause unknown, both retained.",
+    "TikTok has no allowable; no gap is computed."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "implementation_version": "step1-0.1.0",
+  "python_version": "3.9.6",
+  "command": [
+    "compute_metrics.py"
+  ],
+  "started_utc": "2026-09-17T16:24:47.697375+00:00",
+  "duration_seconds": 0.0053,
+  "inputs": {
+    "search_terms": {
+      "path": "data/search_terms.csv",
+      "sha256": "eb5b1fbae6f8090dc9d71feafe20bda53adb2732da0a8314b7bac0f9227d8309"
+    },
+    "channel_summary": {
+      "path": "data/channel_summary.csv",
+      "sha256": "a1e9c4a9c20eb3943a22771c607aefd49303fda840290daf5f944a58142e5b9c"
+    },
+    "context": {
+      "path": "context/braid-confirmed.json",
+      "sha256": "98f0f525d95511f1e140ce8b083abc695e0eef2b57d23ea9dcc078a2c6ddea21"
+    },
+    "config": {
+      "path": "config/step1.json",
+      "sha256": "140ddd9e568f967b29c802b6200d022b3c324de779e42e6f265e98926a112f3d"
+    }
+  },
+  "implementation_sha256": "58df63d1113f87f696a91861ab9421fc98e18e9d989027bfff33fb4f948aa7c5",
+  "outputs": [
+    "checks.json",
+    "metrics_channels.csv",
+    "metrics_search_terms.csv",
+    "scope_summary.json"
+  ],
+  "overall": "pass"
+}

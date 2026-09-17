@@ -1,0 +1,41 @@
+{
+  "source": "Growth Marketing Manager, Paid Channels — Live Working Session, Paid Search (Candidate Brief), supplied by the user",
+  "data_status": "synthetic_interview_exercise",
+  "account": "Braid",
+  "task1": {
+    "source_section": "Task 1 — Search terms",
+    "period_label": "last quarter",
+    "exact_dates": null,
+    "channel": "Google Non-Brand",
+    "scope_label": "Non-Brand ai app builder",
+    "scope_spend": 520000,
+    "scope_subscriptions": 3100,
+    "scope_cost_per_sub_reported": 167.74,
+    "sample_spend_coverage_reported": 0.65,
+    "sample_coverage_is_approximate": true,
+    "allowable_cost_per_sub": 181,
+    "allowable_status": "confirmed_by_assignment_for_non_brand",
+    "main_competitor": "Scaffold",
+    "currency": "USD",
+    "currency_status": "working interpretation of dollar amounts in the exercise",
+    "event_mapping": {
+      "Regs": {"canonical": "signup", "status": "operator_mapping_for_exercise"},
+      "Subs": {"canonical": "paid_sub", "status": "operator_mapping_for_exercise_event_definitions_unverified"},
+      "FFT": {"canonical": "fft", "status": "unavailable"}
+    }
+  },
+  "task2_background_not_current_build_scope": {
+    "pmax_prior_quarter_spend": 81000,
+    "pmax_asset_groups": 1,
+    "pmax_assets": "All Google-recommended assets",
+    "pmax_audience_signals_added": false,
+    "brand_exclusions_switched_off_week": 3,
+    "pmax_spend_share_on_terms_containing_braid": 0.38,
+    "branded_impression_share_before": 0.91,
+    "branded_impression_share_after": 0.84,
+    "branded_spend_change": "flat",
+    "google_position": "Still in learning; requests more budget",
+    "cfo_proposal": "Cut branded budget to zero and redeploy to Non-Brand",
+    "interpretation": "Attributed positions and observations from the exercise, not accepted conclusions or instructions to execute"
+  }
+}
