@@ -1,99 +1,103 @@
 # Search Ops
 
-An AI-assisted paid-search diagnostic workflow built with Claude Code: calculate the evidence, interpret search intent, expose missing information, and review conditional actions in a local dashboard.
+A paid-search **search-term** diagnostic workflow built with Claude Code: Python calculates and validates the evidence, Claude Code authors the interpretation, and a dependency-free local dashboard shows the saved results and records human judgment.
 
-The methodology builds on my [keyword-diagnose project](https://github.com/chumengxu0115/paid-search-keyword-diagnose), first committed on June 22, 2026, and my experience managing paid search for Bubble. This is a separate search-term implementation, not a claim that the original keyword tool directly runs these inputs.
+The methodology comes from my [keyword-diagnose project](https://github.com/chumengxu0115/paid-search-keyword-diagnose) (first committed June 22, 2026) and my experience running paid search for Bubble. This repository is a separate implementation for search-term data; it does not claim that the original keyword tool runs these inputs.
 
-## The problem
+## The business problem
 
-Cheap registrations are not necessarily cheap subscribers. An operator needs to connect acquisition metrics to downstream outcomes, understand which customer intents differ, and decide what is justified when product context or attribution data is missing.
+Cheap registrations are not necessarily cheap subscribers. Given a search-term report with clicks, cost, registrations and subscriptions, an operator has to connect acquisition efficiency to the downstream outcome, work out which intents behave differently, and decide what is justified when product context, dates, attribution and account structure are missing.
 
-This example uses Braid synthetic interview data: nine search terms and a paid-channel summary. It contains no actual Bubble or Runway account performance. Braid and Scaffold are names supplied by the exercise. Product capabilities that were not supplied remain unknown.
+## What is inherited from the Bubble methodology, and what is not
 
-## Open the demo
+Inherited as principles (no source code was reused):
 
-Python 3.9+ is sufficient. No package installation or API key is required to view the saved example.
+- Funnel framing: Clicks → Signup → FFT (first-feature trial) → Paid Sub. Here Regs maps to Signup and Subs provisionally to Paid Sub; FFT is unavailable and is shown as unavailable, never zero.
+- Bidding signal vs business KPI: bid on an early signal, judge on paid outcomes, and verify the lag before transferring the assumption to another account.
+- Review by spend, then check data sufficiency and attribution before acting.
+- Thresholds and product context belong to the operator; when they are unset, the tooling blocks the dependent decision checks instead of inventing defaults.
 
-```bash
-python3 -m http.server 8781 --bind 127.0.0.1
-```
+Why this is a separate implementation: the original tool diagnoses **keywords** and depends on columns this exercise does not have (impression share lost, quality score, landing-page experience, campaign reports, an existing keyword list). Search-term rows carry only the triggering match type, so keyword structure, negative scope and bidding levers are treated as missing inputs rather than inferred.
 
-Open http://127.0.0.1:8781/ui/ from the repository root.
+## The data
 
-- **Business Insights:** distinct account/scope/sample metrics, cross-term patterns and strategic posture.
-- **Search Terms:** evidence and conditional recommendations, plus editable human notes and decisions.
-- **Action Plan:** negative candidates, additions/isolation candidates and landing-page tests.
-- **Data & Run Log:** missing information, validation results and analysis provenance.
+`data/search_terms.csv` (nine rows) and `data/channel_summary.csv` are the synthetic fixtures supplied for a candidate brief. They contain no real Bubble, Runway or Braid account performance. The brief confirms a Non-Brand allowable of **$181/sub**, that the nine terms belong to the Non-Brand "ai app builder" scope, and that Scaffold is the main competitor. Product capabilities that were not supplied (free tier, GitHub integration, enterprise sales path) remain unknown; unknown is not treated as confirmed absent.
 
-Choose a term and click **Add my input**. Notes save in that browser only. Export/import preserves a feedback file tied to the analysis identity. Selecting Scale or Maintain efficiency displays a saved recommendation branch; it does not call a model or change the allowable.
+Three levels are kept distinct throughout:
 
-## How the workflow works
+| Level | Spend | Subs | Recomputed cost/sub |
+|---|---:|---:|---:|
+| All Google Non-Brand (Q2 label) | $701,000 | 4,348 | $161.22 |
+| Non-Brand "ai app builder" scope | $520,000 | 3,100 | $167.74 |
+| Nine-term sample (64.9% of scope spend) | $337,470 | 1,843 | $183.11 |
+
+$167.74 is the observed scope benchmark; $181 is the allowable. Neither posture (scale / maintain efficiency) changes the allowable. Subs/signup is a descriptive same-window ratio, not a verified cohort conversion rate.
+
+## How it works
 
 ```text
-CSV + confirmed account context
-          ↓
-Python: validate inputs and calculate metrics
-          ↓
-Claude Code: author evidence-linked interpretation
-          ↓
-Python: resolve numeric references and validate outputs
-          ↓
-Dashboard: inspect evidence, compare options, record human judgment
-          ↓
-Optional exported feedback → a subsequent Claude Code review
+CSV fixtures + confirmed context (context/, config/)
+        ↓
+src/compute_metrics.py      Python: parse, validate, recompute, reconcile → output/step1/
+        ↓
+authoring/*.json            Claude Code: interpretation with {placeholders}, versioned v1 → v2 → v2.1 → v2.2
+        ↓
+src/build_review_v2.py      Python: fill every number from step 1, fail on any unresolved reference
+src/build_canonical.py      Python: one UI-ready artifact, operator fields empty by construction
+        ↓
+ui/                         Dashboard: read the artifact, capture human notes and decisions (browser-local)
+        ↓
+operator_feedback.json      Manual handoff to a later Claude Code review
 ```
 
-Claude Code built the calculation and diagnostic tooling and authored the saved analysis in actual sessions. The initial visual prototype was explored with Codex; Claude Code implemented the integrated UI. Codex also reviewed the outputs and prepared the final documentation.
+- **Rebuilding artifacts does not regenerate reasoning.** The builders render and validate *saved* model-authored text; they never call a model. New data or new business facts require a new authored version in a Claude Code session.
+- **Feedback is browser-local.** Notes, questions, insights and decisions autosave to localStorage, keyed by analysis identity and term ID, and can be exported/imported as `operator_feedback.json`. The canonical artifact's validator requires empty operator fields, so feedback never overwrites the baseline. Keep exported feedback in the git-ignored `operator/` folder.
+- **No live actions.** No Ads API, no bidding changes, no automatic reanalysis button, no simulated execution, and no performance-lift claim: no account was changed.
 
-The Python builders **render and validate saved model-authored reasoning**. They do not make a live model call. Updated data or business context requires a fresh reasoning review in Claude Code, not just replacing numbers. The browser has no autonomous reanalysis or advertising-account execution. The optional feedback-to-reanalysis loop is a manual handoff, not an integrated or verified automatic feature.
+## Setup and commands
 
-## Evidence, targets and uncertainty
-
-The exercise confirms a Non-Brand allowable of **$181/sub** and Scaffold as the main competitor. Keep three levels separate:
-
-| Scope | Spend | Subscriptions | Recomputed cost/sub |
-|---|---:|---:|---:|
-| All Google Non-Brand | $701,000 | 4,348 | $161.22 |
-| Non-Brand ai app builder scope | $520,000 | 3,100 | $167.74 |
-| Nine-term sample | $337,470 | 1,843 | $183.11 |
-
-The $167.74 figure is observed performance, not the $181 allowable. Scale and efficiency are operator choices; neither automatically changes the allowable. Regs maps to Signup and Subs provisionally to Paid Sub for the exercise. FFT is unavailable. Subs/Signup is a descriptive ratio, not a verified mature-cohort conversion rate.
-
-Example independent finding: no-code, internal tools and competitor-alternative terms together use **18.3% of sample spend** and produce **34.3% of subscriptions**, at **$97.31/sub**. This supports investigating intent-specific messaging; it does not establish higher LTV or future efficiency at scale.
-
-Missing context affects decisions: enterprise traffic may need sales-assisted measurement; free traffic may have a longer paid-conversion lag; negative keywords need product relevance and account scope checks. Unknown does not mean confirmed absent.
-
-## Reproduce the saved analysis
+Python 3.9+ standard library only; no packages, no API key.
 
 ```bash
-python3 src/compute_metrics.py
-python3 src/build_diagnosis.py
-python3 src/build_review_v2.py --authoring authoring/review_v2_2.json
-python3 src/build_canonical.py
+# View the saved demo (serve from the repository root; port 8765 is used by another local prototype)
+python3 -m http.server 8781 --bind 127.0.0.1
+# then open http://127.0.0.1:8781/ui/
+
+# Reproduce the saved analysis from the fixtures
+python3 src/compute_metrics.py                                        # → output/step1/
+python3 src/build_diagnosis.py                                        # → output/step2/diagnosis.* (historical v1)
+python3 src/build_review_v2.py --authoring authoring/review_v2_2.json # → output/step2/review_v2_2.*
+python3 src/build_canonical.py                                        # → output/canonical/search_ops_analysis.json
+
+# Tests (49 cases: parsing, totals, aggregate exclusion, undefined ratios, placeholder references, canonical invariants)
 python3 -m unittest discover -s tests -v
 ```
 
-The canonical builder reads the historical v1 artifact for provenance but uses the reviewed v2.2 interpretation for the current recommendations. Historical authored versions remain available. Rebuilding records new local run provenance; the committed demo snapshot uses repository-relative paths.
+Rebuilding rewrites `output/step1/run_log.json` and the artifact's `sources` with your local absolute paths and a new timestamp; the committed snapshot uses repository-relative paths. Deterministic outputs (metrics, checks, reviews, canonical terms) are byte-identical across runs.
 
-For a new dataset, use Claude Code to inspect the schemas, adapt an account profile, execute deterministic calculations, and author a new version referencing the resulting evidence. The supplied configuration includes fixture-specific reconciliation totals; this release is not a universal CSV importer. Do not reuse Braid thresholds or identity mappings silently for another account.
+Dashboard details, including the development self-test URL, are in [`ui/README.md`](ui/README.md). Do not open `?selftest=1` in a browser profile whose notes you want to keep; it writes test feedback.
+
+## What works today
+
+- Validated metrics with half-cent reconciliation, explicit warnings (e.g. supplied paid-total cost/sub $135.47 vs recomputed $135.45, cause not assumed) and a missing-data register that states which decision each gap limits.
+- Reviewed cross-term insights (v2.2) with supporting terms, counterexamples and separated explanations; corrections are logged in `output/step2/review_v2_*_changelog.md`.
+- Nine terms with evidence, intent hypotheses, allowable and benchmark comparisons, conditional recommendations under both postures, and the fact that would change each decision.
+- Conditional negatives (pending confirmation), addition/isolation candidates with pre-checks, landing-page tests, and a least-certain pair for the operator to choose between.
+- Dashboard with per-term human input, fact/assumption labelling, browser persistence and validated feedback export/import.
+
+## Not implemented
+
+- Generic CSV import: `config/step1.json` carries fixture-specific reconciliation totals and column names; another account needs its own config, context and a new authored review.
+- Automatic feedback-driven reanalysis; the handoff is manual.
+- Keyword/ad-group joins, negative-keyword export files, bidding changes, any Ads API or warehouse integration, deployment.
+- Real-device checks at a 390 px viewport, the file-picker import path and screen-reader behaviour were not verified in the headless environment used for testing.
+
+## Attribution
+
+Codex created the initial visual prototype that set the dashboard's look, drafted the documentation, and performed read-only QA. Claude Code built the calculation and validation tooling, authored the saved analysis in real sessions, and implemented the integrated dashboard. I set the business framework, the allowable/benchmark distinction, the scope and event mappings, reviewed every version, and own the decisions recorded in the dashboard.
 
 ## Repository map
 
-- `data/`: supplied synthetic fixtures.
-- `config/`, `context/`: account mappings, confirmed facts and task scope.
-- `src/`: deterministic calculations and artifact builders.
-- `authoring/`: versioned Claude-authored reasoning with numeric placeholders.
-- `output/`: saved example metrics, reviews and canonical UI data.
-- `ui/`: dependency-free local dashboard.
-- `tests/`: arithmetic, missing-data, references and artifact checks.
-- `docs/`: walkthrough and operator comparison.
+`data/` fixtures · `context/`, `config/` confirmed facts and account settings · `src/` calculators and builders · `authoring/` versioned Claude-authored reasoning · `output/` saved metrics, reviews and canonical artifact (schema in `output/canonical/SCHEMA.md`) · `ui/` dashboard · `tests/` · `docs/` walkthrough and retrospective comparison · `RUN_STEP_1.md`, `RUN_STEP_2.md` step-level run notes.
 
-## Validation and limits
-
-The Python suite checks input parsing, totals, aggregate exclusion, undefined ratios, numeric references, output completeness and canonical constraints. These checks do not establish that a marketing hypothesis is true.
-
-Claude Code reported browser interaction checks for term selection, saved posture branches, browser persistence, safe text rendering and feedback import/export. Real-browser screen-reader behavior, the actual file-picker path and a 390px viewport were not fully verified in that headless environment. Do not run the development `?selftest=1` page in a browser profile with notes you want to preserve: it modifies test feedback.
-
-No live Ads API, automated bidding changes, production warehouse integration, causal lift measurement or deployed backend is included. No live advertising action has been performed.
-
-Start with the [eight-minute walkthrough](docs/INTERVIEW_WALKTHROUGH.md). The [operator comparison](docs/OPERATOR_CROSSCHECK.md) was written after the independent analysis and is not an input to it.
+Start with the [eight-minute walkthrough](docs/INTERVIEW_WALKTHROUGH.md). The [operator comparison](docs/OPERATOR_CROSSCHECK.md) is retrospective: it was written after the independent analysis and was not an input to it.

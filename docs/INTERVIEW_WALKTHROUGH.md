@@ -1,59 +1,59 @@
-# Eight-minute interview walkthrough
+# Eight-minute walkthrough
 
-## Prepare
+## Before you start
 
-Open the local dashboard and this repository. Keep the saved canonical example available so the demo does not depend on a live model response. Use the same browser origin to retain notes. Do not open the self-test URL in your presentation browser profile.
+- Serve the repository root (`python3 -m http.server 8781 --bind 127.0.0.1`) and open <http://127.0.0.1:8781/ui/>.
+- The demo reads the saved canonical artifact; nothing depends on a live model response.
+- Use one browser profile so notes persist. Do not open `?selftest=1` in that profile.
 
-## 0:00–1:00 — Why I built it
+## 0:00–1:00 · Why I built it
 
-“I previously built a keyword-diagnosis workflow from my work on Bubble. For this interview, I adapted those principles into a separate search-term tool and tested it on the supplied Braid exercise. I wanted a repeatable way to connect acquisition efficiency to subscription outcomes, without needing an analyst for every question.”
+"At Bubble I built a keyword-diagnosis workflow. For this exercise I carried the principles over to a separate search-term tool and ran it on the supplied Braid data: connect acquisition cost to subscriptions, show exactly what is missing, and keep the decision with the operator."
 
-Show the original repository and its June 22, 2026 history if useful. Explain that the methodology transferred; the implementation was rebuilt for different inputs.
+If asked, show the original repository (commits dated June 22, 2026). The method transferred; the implementation was rebuilt for different inputs.
 
-## 1:00–2:30 — Business Insights
+## 1:00–2:30 · Business Insights
 
-Show the distinction between the $181 allowable and the $167.74 observed scope benchmark. The nine-row sample costs $183.11/sub and covers approximately 65% of scope spend; it is not the full account.
+- Four cards: total paid (aggregate), all Google Non-Brand, the "ai app builder" scope, the nine-term sample. The sample runs at **$183.11/sub** and covers **64.9%** of scope spend; it is not the account.
+- **$181** is the allowable from the brief; **$167.74** is what the scope actually ran at. Different things.
+- Expand P4: no-code, internal tools and "scaffold alternative" take **18.3%** of sample spend and deliver **34.3%** of subscriptions at **$97.31/sub**. Say plainly that this is a sample-specific pattern with counterexamples (vibe coding, enterprise), not proof of customer value or of efficiency at scale.
 
-Open the use-case/competitor finding: 18.3% of sample spend produces 34.3% of subscriptions at $97.31/sub. Explain that this is a sample-specific pattern, not proof of customer value or a promise of scalable efficiency.
+## 2:30–4:00 · One concrete decision
 
-## 2:30–4:00 — One concrete decision
+Click **Review terms & add your input →**, then select **free ai app builder**: the cheapest registrations in the sample (**$11.06** each) and **$553.13** per subscription. Compare **internal tool builder**: **$22.29** per registration, **$89.14** per subscription.
 
-Select free ai app builder. It has $11.06 registrations but $553.13 subscriptions. Compare internal tool builder at $22.29 per registration and $89.14 per subscription.
+"If I optimised for cheap registrations I would buy the wrong traffic. But the data cannot tell me whether free users convert later, whether there is a free tier, or whether the landing page is the problem."
 
-“Optimizing for cheap registrations could lead me toward the wrong traffic. But the data does not tell me whether free users convert later, whether the product has a free tier, or which activation step is missing.”
+Show the missing-information list (each item says what it would change) and the conditional recommendation. Do not pretend the product questions are answered.
 
-Show the missing-information section and conditional action, rather than pretending those questions have been answered.
+## 4:00–5:00 · Human judgment
 
-## 4:00–5:00 — Human judgment
+Click **Add my input**. Optionally add a note such as "Cohort and landing-page review before any exclusion of this intent" and leave it marked **Unverified assumption**; switch to **Confirmed fact** only for something the product team actually confirmed.
 
-Click Add my input. Optionally enter: “Prioritize a cohort and landing-page review before deciding whether to exclude this intent.” Mark it as operator judgment, not a confirmed product fact.
+Go back to Business Insights and switch the posture selector. "It shows the branch that was already written for that posture. It does not call a model and it does not change the allowable."
 
-Show the Scale/Maintain efficiency selector. Explain that it displays already-authored branches, not a live model response.
+"My notes stay separate from the model's recommendation, save on this browser only, and export as a feedback file for a later Claude Code review. That reanalysis is a manual handoff." Do not perform or claim a live revision.
 
-“My context and decision stay separate from the model's recommendation. Notes save locally and can be exported to Claude Code for a subsequent review. That reanalysis handoff is currently manual.”
+## 5:00–6:00 · Action Plan
 
-Do not perform or claim an untested revision live.
+Conditional negatives are **pending confirmation** with the fact that would make them actionable; additions have pre-checks because existing keywords and structure are unknown; landing-page tests are proposals. The "Operator decision" column shows the human decision from Search Terms and is never marked executed.
 
-## 5:00–6:00 — Action Plan
+## 6:00–7:00 · How it was built
 
-Show conditional negatives, isolation/addition candidates and landing-page tests. Point out pending confirmations and unknown campaign scope. The tool proposes actions; it does not execute them.
+Open `src/compute_metrics.py`, `authoring/review_v2_2.json` and `output/canonical/search_ops_analysis.json`. Python computes and validates; Claude Code authored the interpretation with numeric placeholders that a build step fills and checks; the dashboard reads the saved artifact.
 
-## 6:00–7:00 — How it was built
+"I built and ran the workflow with Claude Code and reviewed its output. I corrected real mistakes along the way, for example treating search terms as keywords, reading rank correlations between coupled metrics as evidence, and overstating what a nine-row pattern proves. The change logs are in the repo."
 
-Show `src/compute_metrics.py`, one authored review and the canonical artifact. Python computes the metrics; Claude Code authored interpretations; validation links numbers to evidence; the UI reads the saved artifact.
+## 7:00–8:00 · Self-sufficiency and next step
 
-“I used Claude Code to build and run the workflow, then reviewed its output. I corrected real mistakes, including confusing search terms with keywords and overstating what small-sample patterns prove.”
+Open Data & Run Log. Point at a genuine data issue: supplied paid-total cost/sub is **$135.47**, the raw totals give **$135.45**; both are kept and flagged, no cause invented.
 
-## 7:00–8:00 — Self-sufficiency and next step
-
-Open Data & Run Log. Show a genuine data issue: the supplied paid-total cost/sub is $135.47, while raw totals calculate to about $135.45. Both are retained and the difference is flagged without inventing a cause.
-
-“The tool helps me calculate what is available, identify exactly what is missing, and make the next request specific. If I extended it, I would first add reliable input refresh and a feedback-driven rerun—not automate account changes before the evidence is ready.”
+"The tool lets me compute what is available, name what is missing, and make the next request specific. The next step would be a reliable input refresh and a feedback-driven rerun, not automating account changes before the evidence is there."
 
 ## Likely questions
 
-- **Does this call an LLM from the browser?** No. Claude Code generated the saved analysis; the browser presents it. Reanalysis is a separate Claude Code task.
-- **What did you contribute?** The business framework, target/benchmark distinction, scope, data mappings, review and corrections, and operator decisions.
-- **Is this real company performance?** No. It is the supplied synthetic interview exercise; the code and runs are real.
-- **Will it work on another account?** The method transfers, but schemas, event meanings, targets and reconciliation checks must be configured and the model reasoning regenerated.
-- **Has it improved performance?** No account changes were made, so there is no lift claim.
+- **Does the browser call an LLM?** No. Claude Code produced the saved analysis; the page renders it. Reanalysis is a separate Claude Code task.
+- **What did you contribute?** The business framework, the target/benchmark distinction, scope and event mappings, the review and corrections of each version, and the decisions.
+- **Is this real performance?** No; synthetic interview data. The code, runs and tests are real.
+- **Would it work on another account?** The method transfers; schemas, event definitions, targets and reconciliation checks must be configured and the reasoning re-authored.
+- **Did it improve anything?** No account was changed, so there is no lift to claim.
