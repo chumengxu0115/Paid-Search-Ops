@@ -1,0 +1,60 @@
+# Publishes the search-term dashboard as a static GitHub Pages site.
+# Only the UI and the canonical analysis JSON it fetches are deployed;
+# source, tests, drafting history and operator feedback stay out of the site.
+name: Deploy dashboard to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "search-term-diagnosis/ui/**"
+      - "search-term-diagnosis/output/canonical/search_ops_analysis.json"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble static site (UI + analysis JSON, same relative layout as the repo)
+        run: |
+          set -eu
+          mkdir -p site/search-term-diagnosis/ui site/search-term-diagnosis/output/canonical
+          cp search-term-diagnosis/ui/index.html search-term-diagnosis/ui/app.js search-term-diagnosis/ui/style.css site/search-term-diagnosis/ui/
+          cp search-term-diagnosis/output/canonical/search_ops_analysis.json site/search-term-diagnosis/output/canonical/
+          cat > site/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>Search Ops dashboard</title>
+          <meta http-equiv="refresh" content="0; url=search-term-diagnosis/ui/">
+          <link rel="canonical" href="search-term-diagnosis/ui/">
+          <p>Redirecting to the <a href="search-term-diagnosis/ui/">Search Ops dashboard</a>…</p>
+          HTML
+          touch site/.nojekyll
+          find site -type f | sort
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
