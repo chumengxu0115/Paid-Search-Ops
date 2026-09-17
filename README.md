@@ -54,6 +54,21 @@ operator_feedback.json      Manual handoff to a later Claude Code review
 - **Feedback is browser-local.** Notes, questions, insights and decisions autosave to localStorage, keyed by analysis identity and term ID, and can be exported/imported as `operator_feedback.json`. The canonical artifact's validator requires empty operator fields, so feedback never overwrites the baseline. Keep exported feedback in the git-ignored `operator/` folder.
 - **No live actions.** No Ads API, no bidding changes, no automatic reanalysis button, no simulated execution, and no performance-lift claim: no account was changed.
 
+## Six roles (architecture)
+
+Search Ops is designed as six paid-search roles that share one account-context layer and hand work to each other through files. Only one role is implemented here; the design is in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+| # | Role | Owns | Status |
+|---|---|---|---|
+| 1 | Account Strategist | Business context, objectives, posture, measurement constraints; consolidates recommendations for human review; never invents targets or product facts | Context layer and dashboard inputs exist; no agent |
+| 2 | Campaign | Campaign structure, budgets, bidding strategy and lever availability | Defined only |
+| 3 | Ad Group | Intent grouping, match-type policy, scoped negatives, coverage checks | Defined only |
+| 4 | Ad Copy | Ad/landing-page fit per intent, test design | Defined only |
+| 5 | Keyword Diagnosis | Keyword-level buckets, campaign health, PMax intent, cannibalisation | Exists as the separate [keyword-diagnose](https://github.com/chumengxu0115/paid-search-keyword-diagnose) project; not integrated |
+| 6 | Search-Term Diagnosis | Term metrics, cross-term patterns, conditional recommendations, candidates, missing-data register, dashboard | **Implemented** (this repository) |
+
+The architecture document includes one proposed handoff example using the existing search-term findings; it is a proposed workflow, not an executed multi-agent run. Role and handoff structure is inspired by [GrowthOS](https://github.com/scottjs12/GrowthOS) (Scott Schmidt), adapted to a single, non-executing paid-search function.
+
 ## Setup and commands
 
 Python 3.9+ standard library only; no packages, no API key.
@@ -98,6 +113,6 @@ Codex created the initial visual prototype that set the dashboard's look, drafte
 
 ## Repository map
 
-`data/` fixtures · `context/`, `config/` confirmed facts and account settings · `src/` calculators and builders · `authoring/` versioned Claude-authored reasoning · `output/` saved metrics, reviews and canonical artifact (schema in `output/canonical/SCHEMA.md`) · `ui/` dashboard · `tests/` · `docs/` walkthrough and retrospective comparison · `RUN_STEP_1.md`, `RUN_STEP_2.md` step-level run notes.
+`data/` fixtures · `context/`, `config/` confirmed facts and account settings · `src/` calculators and builders · `authoring/` versioned Claude-authored reasoning · `output/` saved metrics, reviews and canonical artifact (schema in `output/canonical/SCHEMA.md`) · `ui/` dashboard · `tests/` · `docs/` architecture, walkthrough and retrospective comparison · `RUN_STEP_1.md`, `RUN_STEP_2.md` step-level run notes.
 
 Start with the [eight-minute walkthrough](docs/INTERVIEW_WALKTHROUGH.md). The [operator comparison](docs/OPERATOR_CROSSCHECK.md) is retrospective: it was written after the independent analysis and was not an input to it.
