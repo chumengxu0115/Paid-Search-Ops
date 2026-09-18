@@ -9,7 +9,16 @@ A paid-search decision-support toolkit in two modules: the original keyword-diag
 
 The intended six-role design (Account Strategist, Campaign, Ad Group, Ad Copy, Keyword Diagnosis, Search-Term Diagnosis) and the honest status of each role are in [`search-term-diagnosis/docs/ARCHITECTURE.md`](search-term-diagnosis/docs/ARCHITECTURE.md). Two roles exist (one per module); four are defined only; there is no orchestration runtime.
 
-## Quick start (search-term dashboard)
+## Live demo (GitHub Pages)
+
+**<https://chumengxu0115.github.io/Paid-Search-Ops/>** → redirects to the search-term dashboard at `search-term-diagnosis/ui/`.
+
+- Simulated data: the dashboard is labelled `INTERVIEW DATA · SIMULATED`. The nine search terms and channel summary are synthetic fixtures from a candidate brief, not real account performance.
+- Static only: the site holds `search-term-diagnosis/ui/` (without the development self-test) and the canonical `search_ops_analysis.json` it reads. No source, tests, drafting history or operator feedback is published, and nothing runs server-side.
+- Notes are per browser: operator input (notes, decisions, posture selection) is saved in that browser's localStorage under the analysis identity. Notes made on a local `http://127.0.0.1` copy do not transfer to the public site, and vice versa; use **Export feedback** / **Import feedback JSON** to move them.
+- Deployment: `.github/workflows/pages.yml` rebuilds the site on pushes to `main` that touch the UI or the canonical JSON.
+
+## Quick start (local search-term dashboard)
 
 ```bash
 cd search-term-diagnosis

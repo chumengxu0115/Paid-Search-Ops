@@ -2,6 +2,8 @@
 
 Plain HTML/CSS/JavaScript, no dependencies, no build step. Reads `output/canonical/search_ops_analysis.json` (read-only) and stores operator feedback in the browser's localStorage.
 
+Public copy (simulated interview data): <https://chumengxu0115.github.io/Paid-Search-Ops/>. Deployed by `.github/workflows/pages.yml` with `index.html`, `app.js`, `style.css` and the canonical JSON only; `selftest.js` is not published. localStorage is per origin, so notes saved on the public site and on a local server are separate; move them with export/import.
+
 ## Run
 
 From the module folder `search-term-diagnosis/` (the page fetches `../output/canonical/...`, so the server must serve that folder or a parent of it):
